@@ -1,13 +1,14 @@
 from pydantic import BaseModel
+from enum import Enum
 
-class ItemBase(BaseModel):
+class TaxPayers(BaseModel):
     name: str
     description: str
 
-class ItemCreate(ItemBase):
+class TaxPayerCreate(TaxPayers):
     pass
 
-class Item(ItemBase):
+class TaxPayer(TaxPayers):
     id: int
 
     class Config:
