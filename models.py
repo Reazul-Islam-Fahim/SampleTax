@@ -16,7 +16,7 @@ class Taxpayer(Base):
     etin = Column (String(12), unique= True, index= True, nullable= False)
     name = Column(String(100), index = True, nullable= False)
     gender = Column(Enum(Gender), index=True, nullable= False)
-    employment_type = Column(Enum, index= True, nullable= False)
+    employment_type = Column(Enum(Gender), index= True, nullable= False)
     company_name = Column(String(500), index = True, nullable= False)
     
     
