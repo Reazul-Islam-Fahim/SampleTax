@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from . import models, schemas
+import models, schemas
 
 def get_tax_payer(db: Session, tax_payer_id: int):
     return db.query(models.Taxpayer).filter(models.Taxpayer.id == tax_payer_id).first()
