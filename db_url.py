@@ -1,0 +1,1 @@
+SQLALCHEMY_DATABASE_URL = f"postgresql://postgres:sys@192.168.2.106/postgres"
