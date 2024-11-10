@@ -1,8 +1,6 @@
 from pydantic import BaseModel
-from enum import Enum
 from models import *
 from datetime import date
-from phonenumbers import phonenumber
 
 
 class TaxPayers(BaseModel):
