@@ -4,7 +4,6 @@ from datetime import date
 
 
 class TaxPayers(BaseModel):
-    id : int
     name: str
     nid : int
     etin : int
@@ -19,17 +18,17 @@ class TaxPayers(BaseModel):
     disable : Disable
     parent_of_disable : ParentOfDiasable
     age_above_65 : AgeAbove65
-    dob : date
+    date_of_birth : date
     Spouse_name : str
-    spouse_tin : int
+    spouse_tin : int | None = None
     address : str
-    telephone : str
+    telephone : str | None = None
     mobile : str
     email : str
     employer_name : str
     name_of_organization : str
     bin_no : str
-    name_tin_partners : str
+    name_tin_partners : str |None = None 
     
 
 class TaxPayerCreate(TaxPayers):
