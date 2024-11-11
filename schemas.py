@@ -51,7 +51,7 @@ class SalaryIncomeRecord(BaseModel):
         orm_mode = True
 
 
-class PrivateSalaryIncomeRecord(SalaryIncomeRecord):
+class PrivateSalary_IncomeRecord(SalaryIncomeRecord):
     rent_free_accommodation: int = 0
     accommodation_at_concessional_rate: int = 0
     rent_paid_by_taxpayer: int = 0
@@ -78,7 +78,7 @@ class PrivateSalaryIncomeRecord(SalaryIncomeRecord):
     
     
     
-class GovSalaryIncomeRecord(BaseModel):
+class GovSalary_IncomeRecord(BaseModel):
     arrear_pay: int = 0
     special_allowance: int = 0
     conveyance_allowance: int = 0

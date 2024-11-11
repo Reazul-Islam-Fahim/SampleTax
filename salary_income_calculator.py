@@ -143,7 +143,7 @@ async def calculate_income(income_input: IncomeInput = Query(...)):
     try:
         with connection.cursor() as cursor:
             cursor.execute(
-                f"INSERT INTO {income_input.table_name} (ID, TOTAL_INCOME, TAXABLE_INCOME, TAX_LIABILITY) VALUES (:1, :2, :3, :4)",
+                f"INSERT INTO {income_input.table_name} (ID, TOTAL_INCOME, TAXABLE_INCOME, TAX_LIABILITY) VALUES (%s %s %s %s)",
                 (income_input.id, total_income, taxable_income, tax_liability)
             )
             connection.commit()

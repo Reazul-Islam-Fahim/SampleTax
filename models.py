@@ -86,7 +86,6 @@ class Taxpayer(Base):
     
     
     
-    
 class PrivateSalaryIncomeRecord(Base):
     __tablename__ = "private_salary_income_records"  # Use the correct table name
 
@@ -100,7 +99,7 @@ class PrivateSalaryIncomeRecord(Base):
     rent_paid_by_taxpayer = Column(Integer, default=0)
     vehicle_facility_months = Column(Integer, default=0)
     is_higher_cc = Column(String, default='N')  # 'Y' or 'N'
-    other_non_cash_benefits = Column(str, default=0)  # Store as JSON (dictionary)
+    other_non_cash_benefits = Column(Integer, default=0)  # Store as JSON (dictionary)
     num_autistic_children = Column(Integer, default=0)
     arrear_salary = Column(Integer, default=0)
     education_allowance = Column(Integer, default=0)
@@ -118,13 +117,10 @@ class PrivateSalaryIncomeRecord(Base):
     allowances = Column(Integer, default=0)
     perquisites = Column(Integer, default=0)
     
-    etin = Column(Integer, ForeignKey('TaxPayer.etin'), nullable=False)
+    etin = Column(String(12), ForeignKey('TaxPayer.etin'), nullable=False)
 
     # Define a relationship to the Taxpayer table
     TaxPayer = relationship("TaxPayer", back_populates="private_salary_income_records")
-    
-    
-    
     
     
     
@@ -151,7 +147,7 @@ class GovSalaryIncomeRecord(Base):
     gratuity = Column(Integer, default=0)
     others = Column(Integer, default=0)
     
-    etin = Column(Integer, ForeignKey('TaxPayer.etin'), nullable=False)
+    etin = Column(String(12), ForeignKey('TaxPayer.etin'), nullable=False)
 
     # Define a relationship to the Taxpayer table
     TaxPayer = relationship("TaxPayer", back_populates="gov_salary_income_records")
