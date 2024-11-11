@@ -1,9 +1,12 @@
 from fastapi import FastAPI, HTTPException, Query
 from pydantic import BaseModel
-from typing import Dict, Annotated
+from typing import Dict
 from db import get_db
 import logging
 from fastapi.middleware.cors import CORSMiddleware
+import models
+from sqlalchemy.orm import Session
+from schemas import TaxPayers, PrivateSalary_IncomeRecord, GovSalary_IncomeRecord
 
 app = FastAPI()
 
@@ -20,54 +23,75 @@ app = FastAPI()
 # )
 
 
+
 class TableName(BaseModel):
     table_name: str
 
 
 # Define the input data structure
-class IncomeInput(BaseModel):
-    table_name: str
-    id: Annotated[int, "Enter your id: "]
-    is_government: Annotated[str, "Are you a government employee? ('Y' or 'N')"]
-    basic_salary: Annotated[int, "Basic salary amount"]
-    house_rent_allowance: Annotated[int, "House rent allowance amount"]
-    medical_allowance: Annotated[int, "Medical allowance amount"]
-    festival_bonus: Annotated[int, "Festival bonus amount"]
-    rent_free_accommodation: Annotated[int, "Value of rent-free accommodation"] = 0
-    accommodation_at_concessional_rate: Annotated[int, "Value of accommodation at concessional rate"] = 0
-    vehicle_facility_months: Annotated[int, "Number of months with vehicle facility"] = 0
-    is_higher_cc: Annotated[str, "Is the vehicle higher than 2500cc? ('Y' or 'N')"] = 'N'
-    other_non_cash_benefits: Annotated[Dict[str, int], "Other non-cash benefits"] = {}
-    government_benefits: Annotated[Dict[str, int], "Government benefits"] = {}
-    num_autistic_children: Annotated[int, "Number of autistic children"] = 0
-    category: Annotated[int, "Category for exemption limit (1-4)"]
+class IncomeInput(TaxPayers, PrivateSalary_IncomeRecord, GovSalary_IncomeRecord):
+    pass
 
 class IncomeCalculator:
-    def __init__(self, is_government, income_data: IncomeInput):
-        self.is_government = is_government
+    def __init__(self, employment_type, income_data: IncomeInput):
+        self.employment_type = employment_type
         self.income_data = income_data
         self.income_from_job = 0
 
     def calc_income(self):
-        if self.is_government.upper() == "N":
+        if self.employment_type.upper() == "PRIVATE":
             vehicle_facility_provided = self._get_vehicle_facility()
-            other_non_cash = self._get_other_benefits()
+            #other_non_cash = self._get_other_benefits()
             self.income_from_job = (
                 self.income_data.basic_salary +
                 self.income_data.house_rent_allowance +
                 self.income_data.medical_allowance +
+                self.income_data.conveyance_allowance +
                 self.income_data.festival_bonus +
                 self.income_data.rent_free_accommodation +
-                self.income_data.accommodation_at_concessional_rate +
-                vehicle_facility_provided +
-                other_non_cash
+                self.income_data.accommodation_at_concessional_rate -
+                self.income_data.rent_paid_by_taxpayer +
+                self.income_data.arrear_salary  +
+                self.income_data.education_allowance  +
+                self.income_data.entertainment_allowance  +
+                self.income_data.employer_contribution_RPF  +
+                self.income_data.leave_allowance  +
+                self.income_data.other_bonus  +
+                self.income_data.overtime  +
+                self.income_data.pension  +
+                self.income_data.tada  +
+                self.income_data.income_from_employee_share_scheme  +
+                self.income_data.others  +
+                self.income_data.commission  +
+                self.income_data.fee  +
+                self.income_data.mohargha_allowance +
+                vehicle_facility_provided 
             )
+            
+            self.income_data.allowances = (
+                self.income_data.leave_allowance  +
+                self.income_data.other_bonus  +
+                self.income_data.overtime  +
+                self.income_data.fee  +
+                self.income_data.commission    
+            )
+            
+            
+            self.income_data.perquisites = (
+                self.income_data.medical_allowance +
+                self.income_data.entertainment_allowance  +
+                self.income_data.house_rent_allowance +
+                self.income_data.accommodation_at_concessional_rate +
+                self.income_data.conveyance_allowance +
+                self.income_data.mohargha_allowance 
+            )
+            
         else:
             self.income_from_job = (
                 self.income_data.basic_salary +
                 self.income_data.festival_bonus
             )
-            self.income_from_job += sum(self.income_data.government_benefits.values())
+            #self.income_from_job += sum(self.income_data.government_benefits.values())
 
         return self.income_from_job
 
@@ -130,10 +154,7 @@ async def calculate_income(income_input: IncomeInput = Query(...)):
     income_calculator = IncomeCalculator(income_input.is_government, income_input)
     total_income = income_calculator.calc_income()
 
-    if income_input.is_government.upper() == "N":
-        taxable_income = total_income - (total_income / 3 if (total_income / 3) < 450000 else 450000)
-    else:
-        taxable_income = total_income - (total_income / 3 if (total_income / 3) < 450000 else 450000)
+    taxable_income = total_income - (total_income / 3 if (total_income / 3) < 450000 else 450000)
 
     tax_calculator = TaxLiabilityCalculator(taxable_income)
     tax_calculator.set_exemption_limit(income_input.category, income_input.num_autistic_children)

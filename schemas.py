@@ -45,6 +45,7 @@ class SalaryIncomeRecord(BaseModel):
     basic_salary: int
     house_rent_allowance: int
     medical_allowance: int
+    conveyance_allowance: int 
     festival_bonus: int
 
     class Config:
@@ -56,7 +57,7 @@ class PrivateSalary_IncomeRecord(SalaryIncomeRecord):
     accommodation_at_concessional_rate: int = 0
     rent_paid_by_taxpayer: int = 0
     vehicle_facility_months: int = 0
-    is_higher_cc: str = 'N'  # 'Y' or 'N'
+    is_higher_cc: str = 'No'  # 'Yes' or 'No'
     other_non_cash_benefits: int = 0  # Store as JSON (stringified dict)
     num_autistic_children: int = 0
     arrear_salary: int = 0
@@ -72,16 +73,17 @@ class PrivateSalary_IncomeRecord(SalaryIncomeRecord):
     tada: int = 0
     income_from_employee_share_scheme: int = 0
     others: int = 0
+    fee: int = 0
+    mohargha_allowance : int =0
+    commission : int = 0
     allowances: int = 0
     perquisites: int = 0
-    etin: int
     
     
     
 class GovSalary_IncomeRecord(BaseModel):
     arrear_pay: int = 0
     special_allowance: int = 0
-    conveyance_allowance: int = 0
     support_staff_allowance: int = 0
     leave_allowance: int = 0
     reward: int = 0

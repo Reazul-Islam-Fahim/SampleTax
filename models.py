@@ -114,6 +114,9 @@ class PrivateSalaryIncomeRecord(Base):
     tada = Column(Integer, default=0)
     income_from_employee_share_scheme = Column(Integer, default=0)
     others = Column(Integer, default=0)
+    fee = Column(Integer, default=0)
+    commission = Column(Integer, default=0)
+    mohargha_allowance = Column(Integer, default=0)
     allowances = Column(Integer, default=0)
     perquisites = Column(Integer, default=0)
     
