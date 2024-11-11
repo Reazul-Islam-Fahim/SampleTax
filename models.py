@@ -1,7 +1,7 @@
-from sqlalchemy import Column, Integer, String, Enum as senum, Date
+from sqlalchemy import Column, Integer, String, Enum as senum, Date, JSON, ForeignKey
+from sqlalchemy.orm import relationship
 from db import Base
 from enum import Enum
-from datetime import date
 
 
 class Gender(str, Enum):
@@ -51,8 +51,8 @@ class  AgeAbove65(str, Enum):
 class Taxpayer(Base):
     __tablename__ = "TaxPayer"
 
-    id = Column(Integer, primary_key= True, nullable= False, unique= True, index= True)
-    etin = Column (String(12), unique= True, index= True, nullable= False)
+    # id = Column(Integer, primary_key= True, nullable= False, unique= True, index= True)
+    etin = Column (String(12), primary_key= True, unique= True, index= True, nullable= False)
     nid = Column (Integer, unique= True, index= True, nullable= False)
     name = Column(String(100), index = True, nullable= False)
     gender = Column(senum(Gender), index=True, nullable= False)
@@ -78,5 +78,82 @@ class Taxpayer(Base):
     bin_no = Column (String(20), unique= True, index= True, nullable= False)
     name_tin_partners = Column (String(1000), index= True)
     
+    
+    private_salary_income_records = relationship("PrivateSalaryIncomeRecord", back_populates="TaxPayer")
+    gov_salary_income_records = relationship("GovSalaryIncomeRecord", back_populates="TaxPayer")
+    
+    
+    
+    
+    
+    
+class PrivateSalaryIncomeRecord(Base):
+    __tablename__ = "private_salary_income_records"  # Use the correct table name
+
+    id = Column(Integer, primary_key=True, index=True, unique= True)
+    basic_salary = Column(Integer, nullable=False)
+    house_rent_allowance = Column(Integer, nullable=False)
+    medical_allowance = Column(Integer, nullable=False)
+    festival_bonus = Column(Integer, nullable=False)
+    rent_free_accommodation = Column(Integer, default=0)
+    accommodation_at_concessional_rate = Column(Integer, default=0)
+    rent_paid_by_taxpayer = Column(Integer, default=0)
+    vehicle_facility_months = Column(Integer, default=0)
+    is_higher_cc = Column(String, default='N')  # 'Y' or 'N'
+    other_non_cash_benefits = Column(str, default=0)  # Store as JSON (dictionary)
+    num_autistic_children = Column(Integer, default=0)
+    arrear_salary = Column(Integer, default=0)
+    education_allowance = Column(Integer, default=0)
+    entertainment_allowance = Column(Integer, default=0)
+    employer_contribution_RPF = Column(Integer, default=0)
+    gratuity = Column(Integer, default=0)
+    interest_accrued_RPF = Column(Integer, default=0)
+    leave_allowance = Column(Integer, default=0)
+    other_bonus = Column(Integer, default=0)
+    overtime = Column(Integer, default=0)
+    pension = Column(Integer, default=0)
+    tada = Column(Integer, default=0)
+    income_from_employee_share_scheme = Column(Integer, default=0)
+    others = Column(Integer, default=0)
+    allowances = Column(Integer, default=0)
+    perquisites = Column(Integer, default=0)
+    
+    etin = Column(Integer, ForeignKey('TaxPayer.etin'), nullable=False)
+
+    # Define a relationship to the Taxpayer table
+    TaxPayer = relationship("TaxPayer", back_populates="private_salary_income_records")
+    
+    
+    
+    
+    
+    
+    
+    
+class GovSalaryIncomeRecord(Base):
+    __tablename__ = "gov_salary_income_records"  # Use the correct table name
+
+    id = Column(Integer, primary_key=True, index=True, unique= True)
+    basic_salary = Column(Integer, nullable=False)
+    house_rent_allowance = Column(Integer, nullable=False)
+    medical_allowance = Column(Integer, nullable=False)
+    festival_allowance = Column(Integer, nullable=False)
+    arrear_pay = Column(Integer, default=0)
+    special_allowance = Column(Integer, default=0)
+    conveyance_allowance = Column(Integer, default=0)
+    support_staff_allowance = Column(Integer, default=0)
+    leave_allowance = Column(Integer, default=0)
+    reward = Column(Integer, default=0)
+    overtime = Column(Integer, default=0)
+    bangla_noboborsho = Column(Integer, default=0)
+    interest_accrued_from_PF = Column(Integer, default=0)
+    lump_grant = Column(Integer, default=0)
+    gratuity = Column(Integer, default=0)
+    others = Column(Integer, default=0)
+    
+    etin = Column(Integer, ForeignKey('TaxPayer.etin'), nullable=False)
+
+    # Define a relationship to the Taxpayer table
+    TaxPayer = relationship("TaxPayer", back_populates="gov_salary_income_records")
     
     

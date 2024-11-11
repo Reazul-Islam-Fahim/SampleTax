@@ -13,8 +13,8 @@ def create_tax_payer(taxpayer: schemas.TaxPayerCreate = Query(...), db: Session 
     return crud.create_tax_payer(db=db, tax_payer=taxpayer)
 
 @app.get("/tax_payer/{tax_payer_id}", response_model=schemas.TaxPayer)
-def read_tax_payer(tax_payer_id: int, db: Session = Depends(get_db)):
-    db_item = crud.get_tax_payer(db, tax_payer_id = tax_payer_id)
+def read_tax_payer(tax_payer_etin: int, db: Session = Depends(get_db)):
+    db_item = crud.get_tax_payer(db, tax_payer_etin = tax_payer_etin)
     if db_item is None:
         raise HTTPException(status_code=404, detail="Item not found")
     return db_item
