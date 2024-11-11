@@ -68,7 +68,7 @@ class PrivateSalary_IncomeRecord(SalaryIncomeRecord):
     interest_accrued_RPF: int = 0
     leave_allowance: int = 0
     other_bonus: int = 0
-    overtime: int = 0
+    overtime_bonus: int = 0
     pension: int = 0
     tada: int = 0
     income_from_employee_share_scheme: int = 0

@@ -57,7 +57,7 @@ class IncomeCalculator:
                 self.income_data.employer_contribution_RPF  +
                 self.income_data.leave_allowance  +
                 self.income_data.other_bonus  +
-                self.income_data.overtime  +
+                self.income_data.overtime_bonus  +
                 self.income_data.pension  +
                 self.income_data.tada  +
                 self.income_data.income_from_employee_share_scheme  +
@@ -71,7 +71,7 @@ class IncomeCalculator:
             self.income_data.allowances = (
                 self.income_data.leave_allowance  +
                 self.income_data.other_bonus  +
-                self.income_data.overtime  +
+                self.income_data.overtime_bonus  +
                 self.income_data.fee  +
                 self.income_data.commission    
             )
@@ -86,14 +86,30 @@ class IncomeCalculator:
                 self.income_data.mohargha_allowance 
             )
             
+            
+            return self.income_from_job
+            
         else:
             self.income_from_job = (
                 self.income_data.basic_salary +
-                self.income_data.festival_bonus
+                self.income_data.house_rent_allowance +
+                self.income_data.medical_allowance +
+                self.income_data.conveyance_allowance +
+                self.income_data.festival_bonus +
+                self.income_data.arrear_pay +
+                self.income_data.special_allowance +
+                self.income_data.support_staff_allowance +
+                self.income_data.leave_allowance +
+                self.income_data.reward +
+                self.income_data.overtime + 
+                self.income_data.bangla_noboborsho +
+                self.income_data.interest_accrued_from_PF +
+                self.income_data.lump_grant +
+                self.income_data.gratuity +
+                self.income_data.others
             )
-            #self.income_from_job += sum(self.income_data.government_benefits.values())
-
-        return self.income_from_job
+            
+            return self.income_data.basic_salary + self.income_data.festival_bonus
 
     def _get_vehicle_facility(self):
         vehicle_facility_provided = 0
