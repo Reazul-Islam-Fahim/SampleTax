@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException, Query, Body
 from pydantic import BaseModel
 from typing import Dict
 from db import get_db
@@ -164,7 +164,7 @@ class TaxLiabilityCalculator:
 
 
 @app.post("/calculate_income/")
-async def calculate_income(income_input: IncomeInput = Query(...)):
+async def calculate_income(income_input: IncomeInput = Body(...)):
     
 
     income_calculator = IncomeCalculator(income_input.is_government, income_input)
