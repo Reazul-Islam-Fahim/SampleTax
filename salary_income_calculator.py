@@ -164,6 +164,8 @@ async def calculate_private_income(
 ):
     user = crud.get_tax_payer(db, etin = etin)
     
+    crud.create_private_salary_income_record(db, income_input)
+    
     # Calculate age and determine category
     age = calculate_age(user.date_of_birth)
     category = 1  # Default category
@@ -212,6 +214,8 @@ async def calculate_gov_income(
     db: Session = Depends(get_db)
 ):
     user = crud.get_tax_payer(db, etin = etin)
+    
+    crud.create_gov_salary_income_record(db, income_input)
     
     # Calculate age and determine category
     age = calculate_age(user.date_of_birth)
