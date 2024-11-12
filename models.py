@@ -82,7 +82,7 @@ class Taxpayer(Base):
     
     private_salary_income_records = relationship("PrivateSalaryIncomeRecord", back_populates="taxpayer")
     gov_salary_income_records = relationship("GovSalaryIncomeRecord", back_populates="taxpayer")
-    salary_income_summery = relationship("SalaryIncomeSummary", back_populates="taxpayer")
+    salary_income_summary = relationship("SalaryIncomeSummary", back_populates="taxpayer")
     
     
     
