@@ -131,24 +131,24 @@ def create_gov_salary_income_record(db: Session, gov_salary: schemas.GovSalary_I
 
 
 
-def get_salary_income_summery(db: Session, etin: int):
-    return db.query(models.SalaryIncomeSummery).filter(models.SalaryIncomeSummery.etin == etin).first()
+def get_salary_income_summary(db: Session, etin: int):
+    return db.query(models.SalaryIncomeSummary).filter(models.SalaryIncomeSummary.etin == etin).first()
 
-def get_salary_income_summerys(db: Session, skip: int , limit: int):
-    return db.query(models.SalaryIncomeSummery).offset(skip).limit(limit).all()
+def get_salary_income_summarys(db: Session, skip: int , limit: int):
+    return db.query(models.SalaryIncomeSummary).offset(skip).limit(limit).all()
 
 
-def create_salary_income_summery(db: Session, salary_summery: schemas.SalaryIncome_Summery):
-    salary_income_summery = models.SalaryIncomeSummery(
-        etin = salary_summery.etin,
-        total_income=salary_summery.total_income,
-        exempted_income=salary_summery.exempted_income,
-        taxable_income=salary_summery.taxable_income,
-        tax_liability=salary_summery.tax_liability,
+def create_salary_income_summary(db: Session, salary_summary: schemas.SalaryIncome_Summary):
+    salary_income_summary = models.SalaryIncomeSummary(
+        etin = salary_summary.etin,
+        total_income=salary_summary.total_income,
+        exempted_income=salary_summary.exempted_income,
+        taxable_income=salary_summary.taxable_income,
+        tax_liability=salary_summary.tax_liability,
         
     )
     
-    db.add(salary_income_summery)
+    db.add(salary_income_summary)
     db.commit()
-    db.refresh(salary_income_summery)
-    return salary_income_summery
+    db.refresh(salary_income_summary)
+    return salary_income_summary

@@ -234,7 +234,7 @@ async def calculate_income(income_input: IncomeInput = Body(...), tax_payer_etin
         exempted_income = total_income[0] - taxable_income
 
     
-    salary_income_summery = schemas.SalaryIncome_Summery(
+    salary_income_summary = schemas.SalaryIncome_Summary(
         etin = user.etin,
         total_income=total_income[0],
         exempted_income=exempted_income,
@@ -243,15 +243,15 @@ async def calculate_income(income_input: IncomeInput = Body(...), tax_payer_etin
     )
 
     # Call the create function from CRUD to save the new entry to the database
-    db_salary_income_summery = crud.create_salary_income_summery(db, salary_income_summery)
+    db_salary_income_summary = crud.create_salary_income_summary(db, salary_income_summary)
 
     # Optionally return the created SalaryIncomeSummery object (or some other response)
-    return db_salary_income_summery
+    return db_salary_income_summary
     
     
 @app.get("/get_salary_income_record/{etin}")
 async def get_income_records(etin : str = Query(...),  db: Session = Depends(get_db)):
-    db_item = crud.get_salary_income_summerys(db, etin = etin)
+    db_item = crud.get_salary_income_summarys(db, etin = etin)
     if db_item is None:
         raise HTTPException(status_code=404, detail="Item not found")
     return db_item
@@ -260,7 +260,7 @@ async def get_income_records(etin : str = Query(...),  db: Session = Depends(get
 
 @app.get("/get_salary_income_records/")
 async def get_income_records(skip : int = Query(...), limit : int = Query(...),  db: Session = Depends(get_db)):
-    return crud.get_salary_income_summerys(db, skip=skip, limit=limit)
+    return crud.get_salary_income_summarys(db, skip=skip, limit=limit)
 
 
 @app.get("/")

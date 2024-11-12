@@ -97,7 +97,7 @@ class GovSalary_IncomeRecord(BaseModel):
     
     
     
-class SalaryIncome_Summery(BaseModel):
+class SalaryIncome_Summary(BaseModel):
     total_income : int
     exempted_income : int
     taxable_income : int

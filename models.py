@@ -82,7 +82,7 @@ class Taxpayer(Base):
     
     private_salary_income_records = relationship("PrivateSalaryIncomeRecord", back_populates="taxpayer")
     gov_salary_income_records = relationship("GovSalaryIncomeRecord", back_populates="taxpayer")
-    salary_income_summery = relationship("SalaryIncomeSummery", back_populates="taxpayer")
+    salary_income_summery = relationship("SalaryIncomeSummary", back_populates="taxpayer")
     
     
     
@@ -160,8 +160,8 @@ class GovSalaryIncomeRecord(Base):
     
     
 
-class SalaryIncomeSummery(Base):
-    __tablename__ = "salary_income_summery"
+class SalaryIncomeSummary(Base):
+    __tablename__ = "salary_income_summary"
 
 
     id = Column(Integer, primary_key=True, index=True, unique= True)
@@ -172,4 +172,4 @@ class SalaryIncomeSummery(Base):
     
     etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
     
-    taxpayer = relationship("Taxpayer", back_populates="salary_income_summery")
+    taxpayer = relationship("Taxpayer", back_populates="salary_income_summary")
