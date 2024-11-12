@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Enum as senum, Date, JSON, ForeignKey
+from sqlalchemy import Column, Integer, String, Enum as senum, ForeignKey
 from sqlalchemy.orm import relationship
 from db import Base
 from enum import Enum
@@ -53,7 +53,7 @@ class Taxpayer(Base):
 
     # id = Column(Integer, primary_key= True, nullable= False, unique= True, index= True)
     etin = Column (String(12), primary_key= True, unique= True, index= True, nullable= False)
-    nid = Column (Integer, unique= True, index= True, nullable= False)
+    nid = Column (String(12), unique= True, index= True, nullable= False)
     name = Column(String(100), index = True, nullable= False)
     gender = Column(senum(Gender), index=True, nullable= False)
     circle = Column (String(50), index= True, nullable= False)
@@ -65,10 +65,11 @@ class Taxpayer(Base):
     freedom_fighter = Column(senum(FreedomFighter), index= True, nullable= False)
     disable = Column(senum(Disable), index= True, nullable= False)
     parent_of_disable = Column(senum(ParentOfDiasable), index= True, nullable= False)
+    num_autistic_children = Column(Integer, default=0)
     age_above_65 = Column(senum(AgeAbove65), index= True, nullable= False)
-    date_of_birth = Column(Date, index= True, nullable= False)
+    date_of_birth = Column(String, index= True, nullable= False)
     Spouse_name = Column (String(100), index= True, nullable= False)
-    spouse_tin = Column(Integer, unique= True, index= True)
+    spouse_tin = Column(String(12), unique= True, index= True)
     address = Column (String(500), index= True, nullable= False)
     telephone = Column (String(15), unique= True, index= True)
     mobile = Column (String(20), unique= True, index= True, nullable= False)
@@ -81,6 +82,7 @@ class Taxpayer(Base):
     
     private_salary_income_records = relationship("PrivateSalaryIncomeRecord", back_populates="TaxPayer")
     gov_salary_income_records = relationship("GovSalaryIncomeRecord", back_populates="TaxPayer")
+    salary_income_summery = relationship("SalaryIncomeSummery", back_populates="TaxPayer")
     
     
     
@@ -100,7 +102,6 @@ class PrivateSalaryIncomeRecord(Base):
     vehicle_facility_months = Column(Integer, default=0)
     is_higher_cc = Column(String, default='N')  # 'Y' or 'N'
     other_non_cash_benefits = Column(Integer, default=0)  # Store as JSON (dictionary)
-    num_autistic_children = Column(Integer, default=0)
     arrear_salary = Column(Integer, default=0)
     education_allowance = Column(Integer, default=0)
     entertainment_allowance = Column(Integer, default=0)
@@ -156,3 +157,19 @@ class GovSalaryIncomeRecord(Base):
     TaxPayer = relationship("TaxPayer", back_populates="gov_salary_income_records")
     
     
+    
+    
+
+class SalaryIncomeSummery(Base):
+    __tablename__ = "salary_income_summery"
+
+
+    id = Column(Integer, primary_key=True, index=True, unique= True)
+    total_income = Column(Integer, index= True, default= 0)
+    exempted_income = Column(Integer, index= True, default= 0)
+    taxable_income = Column(Integer, index= True, default= 0)
+    tax_liability = Column(Integer, index= True, default= 0)
+    
+    etin = Column(String(12), ForeignKey('TaxPayer.etin'), nullable=False)
+    
+    TaxPayer = relationship("TaxPayer", back_populates="salary_income_summery")

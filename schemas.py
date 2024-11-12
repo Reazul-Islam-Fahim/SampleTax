@@ -1,12 +1,11 @@
 from pydantic import BaseModel
 from models import *
-from datetime import date
 
 
 class TaxPayers(BaseModel):
     name: str
-    nid : int
-    etin : int
+    nid : str
+    etin : str
     circle : str
     zone : str
     assesment_year : str
@@ -17,10 +16,11 @@ class TaxPayers(BaseModel):
     freedom_fighter : FreedomFighter
     disable : Disable
     parent_of_disable : ParentOfDiasable
+    num_autistic_children : int
     age_above_65 : AgeAbove65
-    date_of_birth : date
+    date_of_birth : str
     Spouse_name : str
-    spouse_tin : int | None = None
+    spouse_tin : str | None = None
     address : str
     telephone : str | None = None
     mobile : str
@@ -93,3 +93,14 @@ class GovSalary_IncomeRecord(BaseModel):
     lump_grant: int = 0
     gratuity: int = 0
     others: int = 0
+    
+    
+    
+class SalaryIncome_Summery(BaseModel):
+    total_income : int
+    exempted_income : int
+    taxable_income : int
+    tax_liability : int
+    
+    class Config:
+        orm_mode = True

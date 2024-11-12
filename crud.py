@@ -125,3 +125,28 @@ def create_gov_salary_income_record(db: Session, gov_salary: schemas.GovSalary_I
     db.commit()
     db.refresh(gov_salary_income_records)
     return gov_salary_income_records
+
+
+
+
+
+def get_salary_income_summery(db: Session, etin: int):
+    return db.query(models.SalaryIncomeSummery).filter(models.SalaryIncomeSummery.etin == etin).first()
+
+def get_salary_income_summerys(db: Session, skip: int , limit: int):
+    return db.query(models.SalaryIncomeSummery).offset(skip).limit(limit).all()
+
+
+def create_salary_income_summery(db: Session, salary_summery: schemas.SalaryIncome_Summery):
+    salary_income_summery = models.SalaryIncomeSummery(
+        total_income=salary_summery.total_income,
+        exempted_income=salary_summery.exempted_income,
+        taxable_income=salary_summery.taxable_income,
+        tax_liability=salary_summery.tax_liability,
+        
+    )
+    
+    db.add(salary_income_summery)
+    db.commit()
+    db.refresh(salary_income_summery)
+    return salary_income_summery

@@ -1,12 +1,14 @@
-from fastapi import FastAPI, HTTPException, Query, Body
+from fastapi import FastAPI, HTTPException, Query, Body, Depends
 from pydantic import BaseModel
 from typing import Dict
 from db import get_db
 import logging
 from fastapi.middleware.cors import CORSMiddleware
-import models
+import schemas
 from sqlalchemy.orm import Session
 from schemas import TaxPayers, PrivateSalary_IncomeRecord, GovSalary_IncomeRecord
+import crud
+from age import calculate_age
 
 app = FastAPI()
 
@@ -87,7 +89,9 @@ class IncomeCalculator:
             )
             
             
-            return self.income_from_job
+            private_list_of_income_des = [self.income_from_job, self.income_data.allowances ,self.income_data.perquisites]
+            
+            return private_list_of_income_des
             
         else:
             self.income_from_job = (
@@ -109,7 +113,12 @@ class IncomeCalculator:
                 self.income_data.others
             )
             
-            return self.income_data.basic_salary + self.income_data.festival_bonus
+            tax_approved_income = self.income_data.basic_salary + self.income_data.festival_bonus
+            
+            gov_list_of_income_des = [self.income_from_job, tax_approved_income]
+            
+            return gov_list_of_income_des
+            
 
     def _get_vehicle_facility(self):
         vehicle_facility_provided = 0
@@ -117,12 +126,12 @@ class IncomeCalculator:
             vehicle_facility_provided = self.income_data.vehicle_facility_months * (25000 if self.income_data.is_higher_cc == "Y" else 10000)
         return vehicle_facility_provided
 
-    def _get_other_benefits(self):
-        other_non_cash = 0
-        if self.income_data.other_non_cash_benefits:
-            for value in self.income_data.other_non_cash_benefits.values():
-                other_non_cash += value
-        return other_non_cash
+    # def _get_other_benefits(self):
+    #     other_non_cash = 0
+    #     if self.income_data.other_non_cash_benefits:
+    #         for value in self.income_data.other_non_cash_benefits.values():
+    #             other_non_cash += value
+    #     return other_non_cash
 
 class TaxLiabilityCalculator:
     def __init__(self, taxable_income):
@@ -161,64 +170,95 @@ class TaxLiabilityCalculator:
             taxable_income -= taxable_amount
 
         return tax_liability
-
-
-@app.post("/calculate_income/")
-async def calculate_income(income_input: IncomeInput = Body(...)):
     
-
-    income_calculator = IncomeCalculator(income_input.is_government, income_input)
-    total_income = income_calculator.calc_income()
-
-    taxable_income = total_income - (total_income / 3 if (total_income / 3) < 450000 else 450000)
-
-    tax_calculator = TaxLiabilityCalculator(taxable_income)
-    tax_calculator.set_exemption_limit(income_input.category, income_input.num_autistic_children)
-    tax_liability = tax_calculator.calculate_tax()
-
-    connection = get_db()
-    try:
-        with connection.cursor() as cursor:
-            cursor.execute(
-                f"INSERT INTO {income_input.table_name} (ID, TOTAL_INCOME, TAXABLE_INCOME, TAX_LIABILITY) VALUES (%s %s %s %s)",
-                (income_input.id, total_income, taxable_income, tax_liability)
-            )
-            connection.commit()
-    except Exception as e:
-        connection.rollback()
-        raise HTTPException(status_code=400, detail=str(e))
-    connection.close()
-
-    return {
-        "id": income_input.id,
-        "total_income": total_income,
-        "taxable_income": taxable_income,
-        "tax_liability": tax_liability
-    }
-
-@app.get("/get_income_records/")
-async def get_income_records(tablename : TableName = Query(...)):
-    connection = get_db()
-    try:
-        cursor = connection.cursor()
-        cursor.execute(f"SELECT * FROM {tablename.table_name}")
-        column_names = [desc[0] for desc in cursor.description]
-            
-        # Fetch all rows
-        rows = cursor.fetchall()
-
-        # Format rows with column names
-        data = [dict(zip(column_names, row)) for row in rows]
+    
+    
+    
+    
+@app.post("/calculate_salary_income/")
+async def calculate_income(income_input: IncomeInput = Body(...), tax_payer_etin: int = Body(...), db: Session = Depends(get_db)):
+    
+    user = crud.get_tax_payer(db, tax_payer_etin = tax_payer_etin) 
+    
+    if user.employment_type.upper() == "PRIVATE":
+        age = calculate_age(user.date_of_birth)
         
-        return {"data": data}
+        if user.gender.upper() == "MALE":
+            category = 1
+        elif  user.gender.upper() == "FEMALE" or age >= 65:
+            category = 2
+        elif user.gender.upper() == "OTHER" or user.disable.upper == "YES":
+            category = 3
+        elif user.freedom_fighter.upper() == "YES":
+            category = 4
+        elif user.parent_of_disable.upper() == "YES":
+            category = 5
+        
+        
+        income_calculator = IncomeCalculator(user.employment_type, income_input)
+        total_income = income_calculator.calc_income()
 
-    except Exception as e:
-        logging.error(f"Error fetching income records: {str(e)}")
-        raise HTTPException(status_code=500, detail="Internal Server Error")
+        taxable_income = total_income[0] - (total_income[0] / 3 if (total_income[0] / 3) < 450000 else 450000)
+
+        tax_calculator = TaxLiabilityCalculator(taxable_income)
+        tax_calculator.set_exemption_limit(category, user.num_autistic_children)
+        tax_liability = tax_calculator.calculate_tax()
+        
+        exempted_income = total_income[0] - taxable_income
+        
+    else:
+        age = calculate_age(user.date_of_birth)
+        
+        if user.gender.upper() == "MALE":
+            category = 1
+        elif  user.gender.upper() == "FEMALE" or age >= 65:
+            category = 2
+        elif user.gender.upper() == "OTHER" or user.disable.upper == "YES":
+            category = 3
+        elif user.freedom_fighter.upper() == "YES":
+            category = 4
+        elif user.parent_of_disable.upper() == "YES":
+            category = 5
+        
+        
+        income_calculator = IncomeCalculator(user.employment_type, income_input)
+        total_income = income_calculator.calc_income()
+
+        taxable_income = total_income[1] - (total_income[1] / 3 if (total_income[1] / 3) < 450000 else 450000)
+
+        tax_calculator = TaxLiabilityCalculator(taxable_income)
+        tax_calculator.set_exemption_limit(category, user.num_autistic_children)
+        tax_liability = tax_calculator.calculate_tax()
+        
+        exempted_income = total_income[0] - taxable_income
+
     
-    finally:
-        cursor.close()
-        connection.close()
+    salary_income_summery = schemas.SalaryIncome_Summery(
+        total_income=total_income[0],
+        exempted_income=exempted_income,
+        taxable_income=taxable_income,
+        tax_liability=tax_liability
+    )
+
+    # Call the create function from CRUD to save the new entry to the database
+    db_salary_income_summery = crud.create_salary_income_summery(db, salary_income_summery)
+
+    # Optionally return the created SalaryIncomeSummery object (or some other response)
+    return db_salary_income_summery
+    
+    
+@app.get("/get_salary_income_record/{etin}")
+async def get_income_records(etin : str = Query(...),  db: Session = Depends(get_db)):
+    db_item = crud.get_salary_income_summerys(db, etin = etin)
+    if db_item is None:
+        raise HTTPException(status_code=404, detail="Item not found")
+    return db_item
+
+    
+
+@app.get("/get_salary_income_records/")
+async def get_income_records(skip : int = Query(...), limit : int = Query(...),  db: Session = Depends(get_db)):
+    return crud.get_salary_income_summerys(db, skip=skip, limit=limit)
 
 
 @app.get("/")
