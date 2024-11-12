@@ -41,13 +41,13 @@ class TaxPayerCreate(TaxPayers):
 
 
 class SalaryIncomeRecord(BaseModel):
-    id: int
+    etin : str
     basic_salary: int
     house_rent_allowance: int
     medical_allowance: int
     conveyance_allowance: int 
     festival_bonus: int
-    etin : str
+    
 
     class Config:
         orm_mode = True
@@ -75,14 +75,14 @@ class PrivateSalary_IncomeRecord(SalaryIncomeRecord):
     income_from_employee_share_scheme: int = 0
     others: int = 0
     fee: int = 0
-    mohargha_allowance : int =0
+    mohargha_allowance : int = 0
     commission : int = 0
     allowances: int = 0
     perquisites: int = 0
     
     
     
-class GovSalary_IncomeRecord(BaseModel):
+class GovSalary_IncomeRecord(SalaryIncomeRecord):
     arrear_pay: int = 0
     special_allowance: int = 0
     support_staff_allowance: int = 0
@@ -98,6 +98,7 @@ class GovSalary_IncomeRecord(BaseModel):
     
     
 class SalaryIncome_Summary(BaseModel):
+    etin : str
     total_income : int
     exempted_income : int
     taxable_income : int
