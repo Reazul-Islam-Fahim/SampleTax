@@ -69,15 +69,15 @@ class Taxpayer(Base):
     age_above_65 = Column(senum(AgeAbove65), index= True, nullable= False)
     date_of_birth = Column(String, index= True, nullable= False)
     spouse_name = Column (String(100), index= True, nullable= False)
-    spouse_tin = Column(String(12), index= True)
+    spouse_tin = Column(String(12), index= True, nullable= True)
     address = Column (String(500), index= True, nullable= False)
-    telephone = Column (String(15), index= True)
+    telephone = Column (String(15), index= True, nullable= True)
     mobile = Column (String(20), unique= True, index= True, nullable= False)
     email = Column (String(120), unique= True, index= True, nullable= False)
     employer_name = Column (String(120), index= True, nullable= False)
     name_of_organization = Column (String(150), index= True, nullable= False)
     bin_no = Column (String(20), unique= True, index= True, nullable= False)
-    name_tin_partners = Column (String(1000), index= True)
+    name_tin_partners = Column (String(1000), index= True, nullable= True)
     
     
     private_salary_income_records = relationship("PrivateSalaryIncomeRecord", back_populates="taxpayer")
