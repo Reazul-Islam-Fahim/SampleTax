@@ -24,6 +24,7 @@ def create_tax_payer(db: Session, tax_payer: schemas.TaxPayerCreate):
         freedom_fighter=tax_payer.freedom_fighter,
         disable=tax_payer.disable,
         parent_of_disable=tax_payer.parent_of_disable,
+        num_autistic_children=tax_payer.num_autistic_children,
         age_above_65=tax_payer.age_above_65,
         date_of_birth=tax_payer.date_of_birth,
         spouse_name=tax_payer.spouse_name,
@@ -55,7 +56,7 @@ def get_private_salary_income_records(db: Session, skip: int , limit: int):
 
 def create_private_salary_income_record(db: Session, private_salary: schemas.PrivateSalary_IncomeRecord):
     private_salary_income_records = models.PrivateSalaryIncomeRecord(
-        id=private_salary.id,
+        # id=private_salary.id,
         basic_salary=private_salary.basic_salary,
         house_rent_allowance=private_salary.house_rent_allowance,
         medical_allowance=private_salary.medical_allowance,
@@ -66,7 +67,6 @@ def create_private_salary_income_record(db: Session, private_salary: schemas.Pri
         vehicle_facility_months=private_salary.vehicle_facility_months,
         is_higher_cc=private_salary.is_higher_cc,
         other_non_cash_benefits=private_salary.other_non_cash_benefits,
-        num_autistic_children=private_salary.num_autistic_children,
         arrear_salary=private_salary.arrear_salary,
         education_allowance=private_salary.education_allowance,
         entertainment_allowance=private_salary.entertainment_allowance,
@@ -102,11 +102,11 @@ def get_gov_salary_income_records(db: Session, skip: int , limit: int):
 
 def create_gov_salary_income_record(db: Session, gov_salary: schemas.GovSalary_IncomeRecord):
     gov_salary_income_records = models.GovSalaryIncomeRecord(
-        id=gov_salary.id,
+        # id=gov_salary.id,
         basic_salary=gov_salary.basic_salary,
         house_rent_allowance=gov_salary.house_rent_allowance,
         medical_allowance=gov_salary.medical_allowance,
-        festival_bonus=gov_salary.festival_bonus,
+        festival_allowance=gov_salary.festival_allowance,
         arrear_pay=gov_salary.arrear_pay,
         special_allowance=gov_salary.special_allowance,
         conveyance_allowance=gov_salary.conveyance_allowance,

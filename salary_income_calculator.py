@@ -91,7 +91,7 @@ class IncomeCalculator:
             self.income_data.house_rent_allowance +
             self.income_data.medical_allowance +
             self.income_data.conveyance_allowance +
-            self.income_data.festival_bonus +
+            self.income_data.festival_allowance +
             self.income_data.arrear_pay +
             self.income_data.special_allowance +
             self.income_data.support_staff_allowance +
@@ -105,7 +105,7 @@ class IncomeCalculator:
             self.income_data.others
         )
         
-        tax_approved_income = self.income_data.basic_salary + self.income_data.festival_bonus
+        tax_approved_income = self.income_data.basic_salary + self.income_data.festival_allowance
         return [self.income_from_job, tax_approved_income]
 
     def _get_vehicle_facility(self):
