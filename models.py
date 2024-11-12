@@ -35,7 +35,7 @@ class Disable(str, Enum):
     yes = "Yes"
     no = "No"
 
-class  ParentOfDiasable(str, Enum):
+class  ParentOfDisable(str, Enum):
     yes = "Yes"
     no = "No"
 
@@ -49,7 +49,7 @@ class  AgeAbove65(str, Enum):
 
 
 class Taxpayer(Base):
-    __tablename__ = "TaxPayer"
+    __tablename__ = "taxpayer"
 
     # id = Column(Integer, primary_key= True, nullable= False, unique= True, index= True)
     etin = Column (String(12), primary_key= True, unique= True, index= True, nullable= False)
@@ -64,11 +64,11 @@ class Taxpayer(Base):
     residential_status = Column(senum(ResidentialStatus), index= True, nullable= False)
     freedom_fighter = Column(senum(FreedomFighter), index= True, nullable= False)
     disable = Column(senum(Disable), index= True, nullable= False)
-    parent_of_disable = Column(senum(ParentOfDiasable), index= True, nullable= False)
+    parent_of_disable = Column(senum(ParentOfDisable), index= True, nullable= False)
     num_autistic_children = Column(Integer, default=0)
     age_above_65 = Column(senum(AgeAbove65), index= True, nullable= False)
     date_of_birth = Column(String, index= True, nullable= False)
-    Spouse_name = Column (String(100), index= True, nullable= False)
+    spouse_name = Column (String(100), index= True, nullable= False)
     spouse_tin = Column(String(12), unique= True, index= True)
     address = Column (String(500), index= True, nullable= False)
     telephone = Column (String(15), unique= True, index= True)
@@ -80,9 +80,9 @@ class Taxpayer(Base):
     name_tin_partners = Column (String(1000), index= True)
     
     
-    private_salary_income_records = relationship("PrivateSalaryIncomeRecord", back_populates="TaxPayer")
-    gov_salary_income_records = relationship("GovSalaryIncomeRecord", back_populates="TaxPayer")
-    salary_income_summery = relationship("SalaryIncomeSummery", back_populates="TaxPayer")
+    private_salary_income_records = relationship("PrivateSalaryIncomeRecord", back_populates="taxpayer")
+    gov_salary_income_records = relationship("GovSalaryIncomeRecord", back_populates="taxpayer")
+    salary_income_summery = relationship("SalaryIncomeSummery", back_populates="taxpayer")
     
     
     
@@ -121,10 +121,10 @@ class PrivateSalaryIncomeRecord(Base):
     allowances = Column(Integer, default=0)
     perquisites = Column(Integer, default=0)
     
-    etin = Column(String(12), ForeignKey('TaxPayer.etin'), nullable=False)
+    etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
 
     # Define a relationship to the Taxpayer table
-    TaxPayer = relationship("TaxPayer", back_populates="private_salary_income_records")
+    taxpayer = relationship("Taxpayer", back_populates="private_salary_income_records")
     
     
     
@@ -151,10 +151,10 @@ class GovSalaryIncomeRecord(Base):
     gratuity = Column(Integer, default=0)
     others = Column(Integer, default=0)
     
-    etin = Column(String(12), ForeignKey('TaxPayer.etin'), nullable=False)
+    etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
 
     # Define a relationship to the Taxpayer table
-    TaxPayer = relationship("TaxPayer", back_populates="gov_salary_income_records")
+    taxpayer = relationship("Taxpayer", back_populates="gov_salary_income_records")
     
     
     
@@ -170,6 +170,6 @@ class SalaryIncomeSummery(Base):
     taxable_income = Column(Integer, index= True, default= 0)
     tax_liability = Column(Integer, index= True, default= 0)
     
-    etin = Column(String(12), ForeignKey('TaxPayer.etin'), nullable=False)
+    etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
     
-    TaxPayer = relationship("TaxPayer", back_populates="salary_income_summery")
+    taxpayer = relationship("Taxpayer", back_populates="salary_income_summery")

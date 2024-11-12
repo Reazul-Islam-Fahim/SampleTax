@@ -15,11 +15,11 @@ class TaxPayers(BaseModel):
     company_name : str
     freedom_fighter : FreedomFighter
     disable : Disable
-    parent_of_disable : ParentOfDiasable
+    parent_of_disable : ParentOfDisable
     num_autistic_children : int
     age_above_65 : AgeAbove65
     date_of_birth : str
-    Spouse_name : str
+    spouse_name : str
     spouse_tin : str | None = None
     address : str
     telephone : str | None = None
@@ -47,6 +47,7 @@ class SalaryIncomeRecord(BaseModel):
     medical_allowance: int
     conveyance_allowance: int 
     festival_bonus: int
+    etin : str
 
     class Config:
         orm_mode = True

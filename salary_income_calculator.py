@@ -14,6 +14,7 @@ app = FastAPI()
 
 # origins = [
 #     "https://localhost:8000",
+#     "https://yourfrontenddomain.com",
 # ]
 
 # app.add_middleware(
@@ -187,7 +188,7 @@ async def calculate_income(income_input: IncomeInput = Body(...), tax_payer_etin
             category = 1
         elif  user.gender.upper() == "FEMALE" or age >= 65:
             category = 2
-        elif user.gender.upper() == "OTHER" or user.disable.upper == "YES":
+        elif user.gender.upper() == "OTHER" or user.disable.upper() == "YES":
             category = 3
         elif user.freedom_fighter.upper() == "YES":
             category = 4
@@ -213,7 +214,7 @@ async def calculate_income(income_input: IncomeInput = Body(...), tax_payer_etin
             category = 1
         elif  user.gender.upper() == "FEMALE" or age >= 65:
             category = 2
-        elif user.gender.upper() == "OTHER" or user.disable.upper == "YES":
+        elif user.gender.upper() == "OTHER" or user.disable.upper() == "YES":
             category = 3
         elif user.freedom_fighter.upper() == "YES":
             category = 4
@@ -234,6 +235,7 @@ async def calculate_income(income_input: IncomeInput = Body(...), tax_payer_etin
 
     
     salary_income_summery = schemas.SalaryIncome_Summery(
+        etin = user.etin,
         total_income=total_income[0],
         exempted_income=exempted_income,
         taxable_income=taxable_income,

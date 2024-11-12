@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 import models, schemas
 
-def get_tax_payer(db: Session, etin: int):
+def get_tax_payer(db: Session, etin: str):
     return db.query(models.Taxpayer).filter(models.Taxpayer.etin == etin).first()
 
 def get_tax_payers(db: Session, skip: int , limit: int):
@@ -26,7 +26,7 @@ def create_tax_payer(db: Session, tax_payer: schemas.TaxPayerCreate):
         parent_of_disable=tax_payer.parent_of_disable,
         age_above_65=tax_payer.age_above_65,
         date_of_birth=tax_payer.date_of_birth,
-        Spouse_name=tax_payer.Spouse_name,
+        spouse_name=tax_payer.spouse_name,
         spouse_tin=tax_payer.spouse_tin,
         address=tax_payer.address,
         telephone=tax_payer.telephone,
@@ -75,7 +75,7 @@ def create_private_salary_income_record(db: Session, private_salary: schemas.Pri
         interest_accrued_RPF=private_salary.interest_accrued_RPF,
         leave_allowance=private_salary.leave_allowance,
         other_bonus=private_salary.other_bonus,
-        overtime=private_salary.overtime,
+        overtime=private_salary.overtime_bonus,
         pension=private_salary.pension,
         tada=private_salary.tada,
         income_from_employee_share_scheme=private_salary.income_from_employee_share_scheme,
@@ -118,7 +118,8 @@ def create_gov_salary_income_record(db: Session, gov_salary: schemas.GovSalary_I
         interest_accrued_from_PF=gov_salary.interest_accrued_from_PF,
         lump_grant=gov_salary.lump_grant,
         gratuity=gov_salary.gratuity,
-        others=gov_salary.others
+        others=gov_salary.others,
+        etin=gov_salary.etin
     )
     
     db.add(gov_salary_income_records)
@@ -139,6 +140,7 @@ def get_salary_income_summerys(db: Session, skip: int , limit: int):
 
 def create_salary_income_summery(db: Session, salary_summery: schemas.SalaryIncome_Summery):
     salary_income_summery = models.SalaryIncomeSummery(
+        etin = salary_summery.etin,
         total_income=salary_summery.total_income,
         exempted_income=salary_summery.exempted_income,
         taxable_income=salary_summery.taxable_income,
