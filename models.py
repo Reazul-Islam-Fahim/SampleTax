@@ -81,6 +81,7 @@ class Taxpayer(Base):
     name_tin_partners = Column (String(1000), index= True, nullable= True)
     
     
+    employeer_info = relationship("EmployeerInfo", back_populates="taxpayer")
     salary_income_records = relationship("SalaryIncomeRecord", back_populates="taxpayer")
     allowance_details = relationship("AllowanceDetails", back_populates="taxpayer")
     perquisite_details = relationship("PerquisiteDetails", back_populates="taxpayer")
@@ -91,6 +92,18 @@ class Taxpayer(Base):
     
     
     
+    
+class EmployeerInfo(Base):
+    __tablename__ = "employeer_info"
+    
+    id = Column(Integer, primary_key=True, index=True, unique=True)
+    name = Column(String(100), nullable= False)
+    start_date = Column(String(10), nullable= False)
+    end_date = Column(String(10), nullable= False)
+    
+    etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
+    
+    salary_income_records = relationship("SalaryIncomeRecord", back_populates="employeer_info")
     
     
 class SalaryIncomeRecord(Base):
@@ -157,6 +170,7 @@ class SalaryIncomeRecord(Base):
     # Define a relationship to the Taxpayer table
     taxpayer = relationship("Taxpayer", back_populates="salary_income_records")    
     
+    employeer_info = relationship("EmployeerInfo", back_populates="salary_income_records")
     allowance_details = relationship("AllowanceDetails", back_populates="salary_income_records")
     perquisite_details = relationship("PerquisiteDetails", back_populates="salary_income_records")
     vehicle_facility_details = relationship("VehicleFacilityDetails", back_populates="salary_income_records")

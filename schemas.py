@@ -41,6 +41,15 @@ class TaxPayerCreate(TaxPayers):
 
 
 
+class Employeer_info(BaseModel):
+    etin:str
+    name : str
+    start_date : str
+    end_date : str
+
+    class config:
+        orm_mode = True
+
 
 
 class SalaryIncome_Record(BaseModel):
