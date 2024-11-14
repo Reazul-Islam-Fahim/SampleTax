@@ -47,7 +47,7 @@ def create_tax_payer(db: Session, tax_payer: schemas.TaxPayerCreate):
 
 
 
-def get_private_salary_income_record(db: Session, etin: int):
+def get_private_salary_income_record(db: Session, etin: str):
     return db.query(models.PrivateSalaryIncomeRecord).filter(models.PrivateSalaryIncomeRecord.etin == etin).first()
 
 def get_private_salary_income_records(db: Session, skip: int , limit: int):
@@ -56,7 +56,6 @@ def get_private_salary_income_records(db: Session, skip: int , limit: int):
 
 def create_private_salary_income_record(db: Session, private_salary: schemas.PrivateSalary_IncomeRecord):
     private_salary_income_records = models.PrivateSalaryIncomeRecord(
-        # id=private_salary.id,
         basic_salary=private_salary.basic_salary,
         house_rent_allowance=private_salary.house_rent_allowance,
         medical_allowance=private_salary.medical_allowance,
@@ -82,7 +81,7 @@ def create_private_salary_income_record(db: Session, private_salary: schemas.Pri
         others=private_salary.others,
         allowances=private_salary.allowances,
         perquisites=private_salary.perquisites,
-        etin=private_salary.etin
+        etin=private_salary.etin,
     )
     
     db.add(private_salary_income_records)
@@ -93,7 +92,7 @@ def create_private_salary_income_record(db: Session, private_salary: schemas.Pri
 
 
 
-def get_gov_salary_income_record(db: Session, etin: int):
+def get_gov_salary_income_record(db: Session, etin: str):
     return db.query(models.GovSalaryIncomeRecord).filter(models.GovSalaryIncomeRecord.etin == etin).first()
 
 def get_gov_salary_income_records(db: Session, skip: int , limit: int):
@@ -102,7 +101,6 @@ def get_gov_salary_income_records(db: Session, skip: int , limit: int):
 
 def create_gov_salary_income_record(db: Session, gov_salary: schemas.GovSalary_IncomeRecord):
     gov_salary_income_records = models.GovSalaryIncomeRecord(
-        # id=gov_salary.id,
         basic_salary=gov_salary.basic_salary,
         house_rent_allowance=gov_salary.house_rent_allowance,
         medical_allowance=gov_salary.medical_allowance,
@@ -131,7 +129,7 @@ def create_gov_salary_income_record(db: Session, gov_salary: schemas.GovSalary_I
 
 
 
-def get_salary_income_summary(db: Session, etin: int):
+def get_salary_income_summary(db: Session, etin: str):
     return db.query(models.SalaryIncomeSummary).filter(models.SalaryIncomeSummary.etin == etin).first()
 
 def get_salary_income_summarys(db: Session, skip: int , limit: int):
@@ -144,7 +142,7 @@ def create_salary_income_summary(db: Session, salary_summary: schemas.SalaryInco
         total_income=salary_summary.total_income,
         exempted_income=salary_summary.exempted_income,
         taxable_income=salary_summary.taxable_income,
-        tax_liability=salary_summary.tax_liability,
+        tax_liability=salary_summary.tax_liability
         
     )
     
@@ -152,3 +150,65 @@ def create_salary_income_summary(db: Session, salary_summary: schemas.SalaryInco
     db.commit()
     db.refresh(salary_income_summary)
     return salary_income_summary
+
+
+
+
+def get_investment_record(db: Session, etin: str):
+    return db.query(models.InvestmentRecord).filter(models.InvestmentRecord.etin == etin).first()
+
+def get_investment_records(db: Session, skip: int , limit: int):
+    return db.query(models.InvestmentRecord).offset(skip).limit(limit).all()
+
+
+def create_investment_record(db: Session, investment_record: schemas.Investment_Record):
+    investment_record = models.InvestmentRecord(
+        etin = investment_record.etin,
+        gov_securities=investment_record.gov_securities,
+        eft=investment_record.eft,
+        life_insurance_policy_value=investment_record.life_insurance_policy_value,
+        life_insurance_given_premium=investment_record.life_insurance_given_premium,
+        other=investment_record.other
+    )
+    
+    db.add(investment_record)
+    db.commit()
+    db.refresh(investment_record)
+    return investment_record
+
+
+
+
+def get_rebate_record(db: Session, etin: str):
+    return db.query(models.RebateRecord).filter(models.RebateRecord.etin == etin).first()
+
+def get_rebate_records(db: Session, skip: int , limit: int):
+    return db.query(models.RebateRecord).offset(skip).limit(limit).all()
+
+
+def create_rebate_record(db: Session, rebate_record: schemas.Rebate_Record):
+    rebate_record = models.InvestmentRecord(
+        etin = rebate_record.etin,
+        actual_investment=rebate_record.actual_investment,
+        allowable_investment=rebate_record.allowable_investment,
+        rebate=rebate_record.rebate
+    )
+    
+    db.add(rebate_record)
+    db.commit()
+    db.refresh(rebate_record)
+    return rebate_record
+
+
+
+
+def create_test(db: Session, test: schemas.TEST):
+    test = models.Test(
+        test1 = test.test1,
+        test3=test.test3
+    )
+    
+    db.add(test)
+    db.commit()
+    db.refresh(test)
+    return test

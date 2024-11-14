@@ -6,7 +6,7 @@ import logging
 from fastapi.middleware.cors import CORSMiddleware
 import schemas
 from sqlalchemy.orm import Session
-from schemas import TaxPayers, PrivateSalary_IncomeRecord, GovSalary_IncomeRecord
+from schemas import PrivateSalary_IncomeRecord, GovSalary_IncomeRecord
 import crud
 from age import calculate_age
 

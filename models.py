@@ -51,6 +51,7 @@ class  AgeAbove65(str, Enum):
 class Taxpayer(Base):
     __tablename__ = "taxpayer"
 
+
     # id = Column(Integer, primary_key= True, nullable= False, unique= True, index= True)
     etin = Column (String(12), primary_key= True, unique= True, index= True, nullable= False)
     nid = Column (String(12), unique= True, index= True, nullable= False)
@@ -75,87 +76,170 @@ class Taxpayer(Base):
     mobile = Column (String(20), unique= True, index= True, nullable= False)
     email = Column (String(120), unique= True, index= True, nullable= False)
     employer_name = Column (String(120), index= True, nullable= False)
-    name_of_organization = Column (String(150), index= True, nullable= False)
-    bin_no = Column (String(20), unique= True, index= True, nullable= False)
+    name_of_organization = Column (String(150), index= True, nullable= True)
+    bin_no = Column (String(20), unique= True, index= True, nullable= True)
     name_tin_partners = Column (String(1000), index= True, nullable= True)
     
     
-    private_salary_income_records = relationship("PrivateSalaryIncomeRecord", back_populates="taxpayer")
-    gov_salary_income_records = relationship("GovSalaryIncomeRecord", back_populates="taxpayer")
+    salary_income_records = relationship("SalaryIncomeRecord", back_populates="taxpayer")
+    allowance_details = relationship("AllowanceDetails", back_populates="taxpayer")
+    perquisite_details = relationship("PerquisiteDetails", back_populates="taxpayer")
+    vehicle_facility_details = relationship("VehicleFacilityDetails", back_populates="taxpayer")
     salary_income_summary = relationship("SalaryIncomeSummary", back_populates="taxpayer")
+    investment_record = relationship("InvestmentRecord", back_populates="taxpayer")
+    rebate_record = relationship("RebateRecord", back_populates="taxpayer")
     
     
     
     
     
-class PrivateSalaryIncomeRecord(Base):
-    __tablename__ = "private_salary_income_records"  # Use the correct table name
+class SalaryIncomeRecord(Base):
+    __tablename__ = "salary_income_records"  # Combined table for both private and government records
 
-    id = Column(Integer, primary_key=True, index=True, unique= True)
-    basic_salary = Column(Integer, nullable=False)
-    house_rent_allowance = Column(Integer, nullable=False)
-    medical_allowance = Column(Integer, nullable=False)
-    festival_bonus = Column(Integer, nullable=False)
-    rent_free_accommodation = Column(Integer, default=0)
-    accommodation_at_concessional_rate = Column(Integer, default=0)
-    rent_paid_by_taxpayer = Column(Integer, default=0)
-    vehicle_facility_months = Column(Integer, default=0)
-    is_higher_cc = Column(String, default='N')  # 'Y' or 'N'
-    other_non_cash_benefits = Column(Integer, default=0)  # Store as JSON (dictionary)
-    arrear_salary = Column(Integer, default=0)
-    education_allowance = Column(Integer, default=0)
-    entertainment_allowance = Column(Integer, default=0)
-    employer_contribution_RPF = Column(Integer, default=0)
-    gratuity = Column(Integer, default=0)
-    interest_accrued_RPF = Column(Integer, default=0)
-    leave_allowance = Column(Integer, default=0)
-    other_bonus = Column(Integer, default=0)
-    overtime = Column(Integer, default=0)
-    pension = Column(Integer, default=0)
-    tada = Column(Integer, default=0)
-    income_from_employee_share_scheme = Column(Integer, default=0)
-    others = Column(Integer, default=0)
-    fee = Column(Integer, default=0)
-    commission = Column(Integer, default=0)
-    mohargha_allowance = Column(Integer, default=0)
-    allowances = Column(Integer, default=0)
-    perquisites = Column(Integer, default=0)
+    id = Column(Integer, primary_key=True, index=True, unique=True)
+    
+    # Common fields
+    basic_salary = Column(Integer, default=0)
+    basic_salary_remarks = Column(String, nullable=True)
+
+    # Private salary fields with 'private_' prefix
+    private_allowances = Column(Integer, default=0)
+    private_allowances_remarks = Column(String, nullable=True)
+    private_arrear_salary = Column(Integer, default=0)
+    private_arrear_salary_remarks = Column(String, nullable=True)
+    private_gratuity = Column(Integer, default=0)
+    private_gratuity_remarks = Column(String, nullable=True)
+    private_perquisites = Column(Integer, default=0)
+    private_perquisites_remarks = Column(String, nullable=True)
+    private_receipts_or_additional_receipts_in_lieu_of_salary_or_wages = Column(Integer, default=0)
+    private_receipts_or_additional_receipts_in_lieu_of_salary_or_wages_remarks = Column(String, nullable=True)
+    private_income_from_employee_share_scheme = Column(Integer, default=0)
+    private_income_from_employee_share_scheme_remarks = Column(String, nullable=True)
+    private_housing_facility = Column(Integer, default=0)
+    private_housing_facility_remarks = Column(String, nullable=True)
+    private_vehicle_facility = Column(Integer, default=0)
+    private_vehicle_facility_remarks = Column(String, nullable=True)
+    private_any_other_benefit_provided_by_the_employer = Column(Integer, default=0)
+    private_any_other_benefit_provided_by_the_employer_remarks = Column(String, nullable=True)
+    private_contribution_paid_by_employer_to_recognized_provident_fund = Column(Integer, default=0)
+    private_contribution_paid_by_employer_to_recognized_provident_fund_remarks = Column(String, nullable=True)
+    private_others = Column(Integer, default=0)
+    private_others_remarks = Column(String, nullable=True)
+
+    # Government salary fields with 'gov_' prefix
+    gov_arrear_pay = Column(Integer, default=0)
+    gov_arrear_pay_remarks = Column(String, nullable=True)
+    gov_festival_allowance = Column(Integer, default=0)
+    gov_festival_allowance_remarks = Column(String, nullable=True)
+    gov_special_allowance = Column(Integer, default=0)
+    gov_special_allowance_remarks = Column(String, nullable=True)
+    gov_support_staff_allowance = Column(Integer, default=0)
+    gov_support_staff_allowance_remarks = Column(String, nullable=True)
+    gov_leave_allowance = Column(Integer, default=0)
+    gov_leave_allowance_remarks = Column(String, nullable=True)
+    gov_reward = Column(Integer, default=0)
+    gov_reward_remarks = Column(String, nullable=True)
+    gov_overtime = Column(Integer, default=0)
+    gov_overtime_remarks = Column(String, nullable=True)
+    gov_bangla_noboborsho = Column(Integer, default=0)
+    gov_bangla_noboborsho_remarks = Column(String, nullable=True)
+    gov_interest_accrued_from_PF = Column(Integer, default=0)
+    gov_interest_accrued_from_PF_remarks = Column(String, nullable=True)
+    gov_lump_grant = Column(Integer, default=0)
+    gov_lump_grant_remarks = Column(String, nullable=True)
+    gov_gratuity = Column(Integer, default=0)
+    gov_gratuity_remarks = Column(String, nullable=True)
+    gov_others = Column(Integer, default=0)
+    gov_others_remarks = Column(String, nullable=True)                        # Government (renamed to avoid conflict)
     
     etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
 
     # Define a relationship to the Taxpayer table
-    taxpayer = relationship("Taxpayer", back_populates="private_salary_income_records")
+    taxpayer = relationship("Taxpayer", back_populates="salary_income_records")    
     
+    allowance_details = relationship("AllowanceDetails", back_populates="salary_income_records")
+    perquisite_details = relationship("PerquisiteDetails", back_populates="salary_income_records")
+    vehicle_facility_details = relationship("VehicleFacilityDetails", back_populates="salary_income_records")
     
-    
-    
-    
-class GovSalaryIncomeRecord(Base):
-    __tablename__ = "gov_salary_income_records"  # Use the correct table name
 
+    
+class AllowanceDetails(Base):
+    __tablename__ = "allowance_details"
+    
+    
     id = Column(Integer, primary_key=True, index=True, unique= True)
-    basic_salary = Column(Integer, nullable=False)
-    house_rent_allowance = Column(Integer, nullable=False)
-    medical_allowance = Column(Integer, nullable=False)
-    festival_allowance = Column(Integer, nullable=False)
-    arrear_pay = Column(Integer, default=0)
-    special_allowance = Column(Integer, default=0)
-    conveyance_allowance = Column(Integer, default=0)
-    support_staff_allowance = Column(Integer, default=0)
+    any_allowance = Column(Integer, default=0)
+    any_allowance_remarks = Column(String, nullable=True)
     leave_allowance = Column(Integer, default=0)
-    reward = Column(Integer, default=0)
-    overtime = Column(Integer, default=0)
-    bangla_noboborsho = Column(Integer, default=0)
-    interest_accrued_from_PF = Column(Integer, default=0)
+    leave_allowance_remarks = Column(String, nullable=True)
     lump_grant = Column(Integer, default=0)
-    gratuity = Column(Integer, default=0)
-    others = Column(Integer, default=0)
+    lump_grant_remarks = Column(String, nullable=True)
+    bonus = Column(Integer, default=0)
+    bonus_remarks = Column(String, nullable=True)
+    fee = Column(Integer, default=0)
+    fee_remarks = Column(String, nullable=True)
+    commission = Column(Integer, default=0)
+    commission_remarks = Column(String, nullable=True)
+    overtime = Column(Integer, default=0)
+    overtime_remarks = Column(String, nullable=True)
+    other = Column(Integer, default=0)
+    other_details = Column(String, nullable=True)
     
     etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
-
-    # Define a relationship to the Taxpayer table
-    taxpayer = relationship("Taxpayer", back_populates="gov_salary_income_records")
     
+    taxpayer = relationship("Taxpayer", back_populates="allowance_details")
+    salary_income_records = relationship("SalaryIncomeRecord", back_populates="allowance_details")
+    
+    
+    
+    
+class PerquisiteDetails(Base):
+    __tablename__ = 'perquisite_details'
+    
+    id = Column(Integer, primary_key=True, unique=True, index=True)
+    mohargha_allowance = Column(Integer, default=0)
+    mohargha_allowance_remarks = Column(String, nullable=True)
+    insurance_premium_borne_by_the_employer = Column(Integer, default=0)
+    insurance_premium_borne_by_the_employer_remarks = Column(String, nullable=True)
+    housing_allowance = Column(Integer, default=0)
+    housing_allowance_remarks = Column(String, nullable=True)
+    house_rent_allowance = Column(Integer, default=0)
+    house_rent_allowance_remarks = Column(String, nullable=True)
+    entertainment_allowance = Column(Integer, default=0)
+    entertainment_allowance_remarks = Column(String, nullable=True)
+    passage_leave = Column(Integer, default=0)
+    passage_leave_remarks = Column(String, nullable=True)
+    medical_allowance = Column(Integer, default=0)
+    medical_allowance_remarks = Column(String, nullable=True)
+    any_other_obligations_of_the_employee = Column(Integer, default=0)
+    any_other_obligations_of_the_employee_remarks = Column(String, nullable=True)
+    other = Column(Integer, default=0)
+    other_remarks = Column(String, nullable=True)
+    total = Column(Integer, default=0)
+    
+    etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
+    
+    taxpayer = relationship("Taxpayer", back_populates="perquisite_details")
+    salary_income_records = relationship("SalaryIncomeRecord", back_populates="perquisite_details")
+    
+    
+    
+class VehicleFacilityDetails(Base):
+    __tablename__ = "vehicle_facility_details"  # Table name in the database
+
+    
+    id = Column(Integer, primary_key=True, index=True, unique=True)
+    upto_2500CC = Column(String, nullable=False)  # Assuming this is a string (Y/N or description)
+    cost_for_upto_2500 = Column(Integer, default=10000)  # Default value as provided
+    greater_than_2500cc = Column(String, nullable=False)  # Assuming this is a string (Y/N or description)
+    cost_for_more_than_2500 = Column(Integer, default=25000)  # Default value as provided
+    no_of_months = Column(Integer, default=0)  # Default value as 0
+    total = Column(Integer, default=0)  # Default value as 0
+    
+    etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
+    
+    taxpayer = relationship("Taxpayer", back_populates="vehicle_facility_details")
+    salary_income_records = relationship("SalaryIncomeRecord", back_populates="vehicle_facility_details")
     
     
     
@@ -173,3 +257,41 @@ class SalaryIncomeSummary(Base):
     etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
     
     taxpayer = relationship("Taxpayer", back_populates="salary_income_summary")
+    
+    
+    
+    
+class InvestmentRecord(Base):
+    __tablename__ = "investment_record"
+    
+    
+    id = Column(Integer, primary_key=True, index=True, unique= True)
+    gov_securities = Column(Integer, index= True, default= 0)
+    eft = Column(Integer, index= True, default= 0)
+    life_insurance_policy_value = Column(Integer, index= True, default= 0)
+    life_insurance_given_premium = Column(Integer, index= True, default= 0)
+    other = Column(Integer, index= True, default= 0)
+    
+    etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
+    
+    taxpayer = relationship("Taxpayer", back_populates="investment_record")
+    
+    
+    
+    
+    
+class RebateRecord(Base):
+    __tablename__ = "rebate_record"
+    
+    
+    id = Column(Integer, primary_key=True, index=True, unique= True)
+    actual_investment = Column(Integer, index= True, default= 0)
+    allowable_investment = Column(Integer, index= True, default= 0)
+    rebate = Column(Integer, index= True, default= 0)
+    
+    etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
+    
+    taxpayer = relationship("Taxpayer", back_populates="rebate_record")
+    
+    
+    
