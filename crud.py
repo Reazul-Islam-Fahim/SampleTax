@@ -97,8 +97,8 @@ def create_salary_income_record(db: Session, salary: schemas.SalaryIncome_Record
         private_gratuity_remarks=salary.private_gratuity_remarks,
         private_perquisites=salary.private_perquisites,
         private_perquisites_remarks=salary.private_perquisites_remarks,
-        private_receipts_or_additional_receipts_in_lieu_of_salary_or_wages=salary.private_receipts_or_additional_receipts_in_lieu_of_salary_or_wages,
-        private_receipts_or_additional_receipts_in_lieu_of_salary_or_wages_remarks=salary.private_receipts_or_additional_receipts_in_lieu_of_salary_or_wages_remarks,
+        private_receipts_or_additional_receipts_in_lieu_of_salary=salary.private_receipts_or_additional_receipts_in_lieu_of_salary,
+        private_receipts_or_additional_receipts_in_lieu_of_salary_remarks=salary.private_receipts_or_additional_receipts_in_lieu_of_salary_remarks,
         private_income_from_employee_share_scheme=salary.private_income_from_employee_share_scheme,
         private_income_from_employee_share_scheme_remarks=salary.private_income_from_employee_share_scheme_remarks,
         private_housing_facility=salary.private_housing_facility,
@@ -107,8 +107,8 @@ def create_salary_income_record(db: Session, salary: schemas.SalaryIncome_Record
         private_vehicle_facility_remarks=salary.private_vehicle_facility_remarks,
         private_any_other_benefit_provided_by_the_employer=salary.private_any_other_benefit_provided_by_the_employer,
         private_any_other_benefit_provided_by_the_employer_remarks=salary.private_any_other_benefit_provided_by_the_employer_remarks,
-        private_contribution_paid_by_employer_to_recognized_provident_fund=salary.private_contribution_paid_by_employer_to_recognized_provident_fund,
-        private_contribution_paid_by_employer_to_recognized_provident_fund_remarks=salary.private_contribution_paid_by_employer_to_recognized_provident_fund_remarks,
+        private_contribution_paid_by_employer_to_recognized_pf=salary.private_contribution_paid_by_employer_to_recognized_pf,
+        private_contribution_paid_by_employer_to_recognized_pf_remarks=salary.private_contribution_paid_by_employer_to_recognized_pf_remarks,
         private_others=salary.private_others,
         private_others_remarks=salary.private_others_remarks,
         
@@ -223,14 +223,3 @@ def create_rebate_record(db: Session, rebate_record: schemas.Rebate_Record):
 
 
 
-
-def create_test(db: Session, test: schemas.TEST):
-    test = models.Test(
-        test1 = test.test1,
-        test3=test.test3
-    )
-    
-    db.add(test)
-    db.commit()
-    db.refresh(test)
-    return test

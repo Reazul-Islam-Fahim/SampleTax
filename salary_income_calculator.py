@@ -6,7 +6,7 @@ import logging
 from fastapi.middleware.cors import CORSMiddleware
 import schemas
 from sqlalchemy.orm import Session
-from schemas import PrivateSalary_IncomeRecord, GovSalary_IncomeRecord
+import schemas 
 import crud
 from age import calculate_age
 
@@ -60,12 +60,12 @@ class IncomeCalculator:
             self.salary_data.private_arrear_salary +
             self.salary_data.private_gratuity +
             self.salary_data.private_perquisites +
-            self.salary_data.private_receipts_or_additional_receipts_in_lieu_of_salary_or_wages +
+            self.salary_data.private_receipts_or_additional_receipts_in_lieu_of_salary +
             self.salary_data.private_income_from_employee_share_scheme +
             self.salary_data.private_housing_facility +
             self.salary_data.private_vehicle_facility +
             self.salary_data.private_any_other_benefit_provided_by_the_employer +
-            self.salary_data.private_contribution_paid_by_employer_to_recognized_provident_fund +
+            self.salary_data.private_contribution_paid_by_employer_to_recognized_pf+
             self.salary_data.private_others
         )
 

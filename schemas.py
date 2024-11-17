@@ -76,8 +76,8 @@ class SalaryIncome_Record(BaseModel):
     private_gratuity_remarks: Optional[str] = None
     private_perquisites: int = 0
     private_perquisites_remarks: Optional[str] = None
-    private_receipts_or_additional_receipts_in_lieu_of_salary_or_wages: int = 0
-    private_receipts_or_additional_receipts_in_lieu_of_salary_or_wages_remarks: Optional[str] = None
+    private_receipts_or_additional_receipts_in_lieu_of_salary: int = 0
+    private_receipts_or_additional_receipts_in_lieu_of_salary_remarks: Optional[str] = None
     private_income_from_employee_share_scheme: int = 0
     private_income_from_employee_share_scheme_remarks: Optional[str] = None
     private_housing_facility: int = 0
@@ -86,8 +86,8 @@ class SalaryIncome_Record(BaseModel):
     private_vehicle_facility_remarks: Optional[str] = None
     private_any_other_benefit_provided_by_the_employer: int = 0
     private_any_other_benefit_provided_by_the_employer_remarks: Optional[str] = None
-    private_contribution_paid_by_employer_to_recognized_provident_fund: int = 0
-    private_contribution_paid_by_employer_to_recognized_provident_fund_remarks: Optional[str] = None
+    private_contribution_paid_by_employer_to_recognized_pf: int = 0
+    private_contribution_paid_by_employer_to_recognized_pf_remarks: Optional[str] = None
     private_others: int = 0
     private_others_remarks: Optional[str] = None
 
