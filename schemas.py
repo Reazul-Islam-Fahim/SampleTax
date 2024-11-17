@@ -12,7 +12,8 @@ class User_Auth(BaseModel):
         orm_mode = True
 
 
-class TaxPayers(BaseModel):
+class TaxPayers(BaseModel): 
+    user_id : int
     name: str
     nid : str
     etin : str
@@ -38,7 +39,7 @@ class TaxPayers(BaseModel):
     employer_name : str
     name_of_organization : str
     bin_no : str
-    name_tin_partners : str |None = None 
+    name_tin_partners : str |None = None
     
     class Config:
         orm_mode = True
@@ -50,7 +51,7 @@ class TaxPayerCreate(TaxPayers):
 
 
 
-class Employeer_info(BaseModel):
+class Employer_info(BaseModel):
     etin:str
     name : str
     start_date : str

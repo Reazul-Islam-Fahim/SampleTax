@@ -100,7 +100,7 @@ class Taxpayer(Base):
     
     
     
-    employeer_info = relationship("EmployeerInfo", back_populates="taxpayer")
+    employer_info = relationship("EmployerInfo", back_populates="taxpayer")
     salary_income_records = relationship("SalaryIncomeRecord", back_populates="taxpayer")
     allowance_details = relationship("AllowanceDetails", back_populates="taxpayer")
     perquisite_details = relationship("PerquisiteDetails", back_populates="taxpayer")
@@ -112,8 +112,8 @@ class Taxpayer(Base):
     
     
     
-class EmployeerInfo(Base):
-    __tablename__ = "employeer_info"
+class EmployerInfo(Base):
+    __tablename__ = "employer_info"
     
     id = Column(Integer, primary_key=True, index=True, unique=True)
     name = Column(String(100), nullable= False)
@@ -122,7 +122,8 @@ class EmployeerInfo(Base):
     
     etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
     
-    salary_income_records = relationship("SalaryIncomeRecord", back_populates="employeer_info")
+    taxpayer = relationship("Taxpayer", back_populates="employer_info")
+    salary_income_records = relationship("SalaryIncomeRecord", back_populates="employer_info")
     
     
 class SalaryIncomeRecord(Base):
@@ -185,11 +186,12 @@ class SalaryIncomeRecord(Base):
     gov_others_remarks = Column(String(100), nullable=True)                        # Government (renamed to avoid conflict)
     
     etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
-
+    employer_info_id = Column(Integer, ForeignKey('employer_info.id'), nullable=False)
+    
     # Define a relationship to the Taxpayer table
     taxpayer = relationship("Taxpayer", back_populates="salary_income_records")    
     
-    employeer_info = relationship("EmployeerInfo", back_populates="salary_income_records")
+    employer_info = relationship("EmployerInfo", back_populates="salary_income_records")
     allowance_details = relationship("AllowanceDetails", back_populates="salary_income_records")
     perquisite_details = relationship("PerquisiteDetails", back_populates="salary_income_records")
     vehicle_facility_details = relationship("VehicleFacilityDetails", back_populates="salary_income_records")
@@ -219,6 +221,8 @@ class AllowanceDetails(Base):
     other_details = Column(String(100), nullable=True)
     
     etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
+    salary_income_record_id = Column(Integer, ForeignKey('salary_income_records.id'), nullable=False)
+    
     
     taxpayer = relationship("Taxpayer", back_populates="allowance_details")
     salary_income_records = relationship("SalaryIncomeRecord", back_populates="allowance_details")
@@ -251,6 +255,7 @@ class PerquisiteDetails(Base):
     total = Column(Integer, default=0)
     
     etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
+    salary_income_record_id = Column(Integer, ForeignKey('salary_income_records.id'), nullable=False)
     
     taxpayer = relationship("Taxpayer", back_populates="perquisite_details")
     salary_income_records = relationship("SalaryIncomeRecord", back_populates="perquisite_details")
@@ -270,6 +275,7 @@ class VehicleFacilityDetails(Base):
     total = Column(Integer, default=0)  # Default value as 0
     
     etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
+    salary_income_record_id = Column(Integer, ForeignKey('salary_income_records.id'), nullable=False)
     
     taxpayer = relationship("Taxpayer", back_populates="vehicle_facility_details")
     salary_income_records = relationship("SalaryIncomeRecord", back_populates="vehicle_facility_details")

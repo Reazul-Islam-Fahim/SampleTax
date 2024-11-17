@@ -35,6 +35,7 @@ def get_tax_payers(db: Session, skip: int , limit: int):
     
 def create_tax_payer(db: Session, tax_payer: schemas.TaxPayerCreate):
     db_tax_payer = models.Taxpayer(
+        user_id=tax_payer.user_id,
         etin=tax_payer.etin,
         nid=tax_payer.nid,
         name=tax_payer.name,
@@ -67,6 +68,33 @@ def create_tax_payer(db: Session, tax_payer: schemas.TaxPayerCreate):
     db.commit()
     db.refresh(db_tax_payer)
     return db_tax_payer
+
+
+
+
+
+
+def get_employer_info(db: Session, id: int):
+    return db.query(models.EmployerInfo).filter(models.EmployerInfo.id == id).first()
+
+def get_employer_infos(db: Session, skip: int , limit: int):
+    return db.query(models.EmployerInfo).offset(skip).limit(limit).all()
+
+
+    
+def create_employer_info(db: Session, employer_info: schemas.Employer_info):
+    db_employer_info = models.EmployerInfo(
+        etin=employer_info.etin,
+        name=employer_info.name,
+        start_date=employer_info.start_date,
+        end_date=employer_info.end_date,
+    )
+    
+    db.add(db_employer_info)
+    db.commit()
+    db.refresh(db_employer_info)
+    return db_employer_info
+
 
 
 
