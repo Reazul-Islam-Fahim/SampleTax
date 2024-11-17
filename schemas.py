@@ -3,6 +3,15 @@ from models import *
 from typing import Optional
 
 
+class User_Auth(BaseModel):
+    username : str
+    email : str
+    password : str
+    
+    class config:
+        orm_mode = True
+
+
 class TaxPayers(BaseModel):
     name: str
     nid : str

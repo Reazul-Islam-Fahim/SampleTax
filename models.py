@@ -47,6 +47,19 @@ class  AgeAbove65(str, Enum):
 
 
 
+class UserAuth(Base):
+    __tablename__ = "user_auth"
+    
+    
+    id = Column(Integer, primary_key= True, nullable= False, unique= True, index= True)
+    username = Column(String(50), unique= True, nullable= False)
+    email = Column(String(50), unique= True, nullable= False)
+    password = Column(String(50), unique= True, nullable= False)
+
+
+    taxpayer = relationship("Taxpayer", back_populates="user_auth")
+
+
 
 class Taxpayer(Base):
     __tablename__ = "taxpayer"
@@ -79,6 +92,12 @@ class Taxpayer(Base):
     name_of_organization = Column (String(150), index= True, nullable= True)
     bin_no = Column (String(20), unique= True, index= True, nullable= True)
     name_tin_partners = Column (String(1000), index= True, nullable= True)
+    
+    
+    user_id = Column(Integer, ForeignKey('user_auth.id'), nullable=False)
+    user_auth = relationship("UserAuth", back_populates="taxpayer")
+
+    
     
     
     employeer_info = relationship("EmployeerInfo", back_populates="taxpayer")
