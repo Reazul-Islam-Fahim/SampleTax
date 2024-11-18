@@ -283,15 +283,14 @@ class Investment_Record(BaseModel):
     contribution_paid_to_super_annuity_fund_remarks: Optional[str] = None
     other: int = 0
     other_remarks: Optional[str] = None
-    total : int =0
+    total_investment : int =0
     allowable_investment : int = 0
-
+    
     @property
-    def total(self):
+    def total_investment(self):
         return (
             self.gov_securities +
             self.eft +
-            self.life_insurance_policy_value +
             self.life_insurance_given_premium +
             self.premium_or_contractual_deferred_annuity_of_life_insurance_policy_paid_in_Bangladesh +
             self.contribution_paid_to_deposit_pension_or_monthly_savings_scheme +
@@ -315,8 +314,75 @@ class Investment_Record(BaseModel):
             self.other
         )
 
+    # @property
+    # def allowable_investment(self):
+    #     return (
+    #         min(self.gov_securities, 500000) +
+    #         min(self.eft, 500000) +
+    #         min(self.life_insurance_policy_value * 0.1, self.life_insurance_given_premium) +
+    #         self.premium_or_contractual_deferred_annuity_of_life_insurance_policy_paid_in_Bangladesh +
+    #         min(self.contribution_paid_to_deposit_pension_or_monthly_savings_scheme, 120000) +
+    #         self.investment_in_any_securities_listed_with_an_authorized_stock_exchange +
+    #         self.provisions_of_pf_Act_1925_apply_to_the_contribution_of_the_taxpayer_to_any_such_fund +
+    #         self.contributions_made_by_the_taxpayer_and_his_employer_to_an_approved_provident_fund +
+    #         self.contributions_paid_to_approved_superannuation_funds +
+    #         self.contribution_paid_to_welfare_fund_group_insurance_fund +
+    #         self.contribution_paid_to_zakat_fund +
+    #         self.donation_to_any_national_level_institution_dedicated_to_the_preservation_of_the_memory_of_the_liberation_war +
+    #         self.donations_to_national_institutions_to_preserve_the_memory_of_the_father_of_the_nation +
+    #         self.donation_to_organizations_established_for_the_welfare_of_the_disabled +
+    #         self.donations_made_to_the_liberation_war_museum +
+    #         self.donation_to_ahsania_cancer_hospital +
+    #         self.donations_made_to_icddrb +
+    #         self.donation_given_at_crp_savar +
+    #         self.donations_to_charitable_or_educational_institutions_approved_by_the_government +
+    #         self.donation_to_asiatic_society_bangladesh +
+    #         self.donation_to_dhaka_ahsania_mission_cancer_hospital +
+    #         self.contribution_paid_to_super_annuity_fund +
+    #         self.other
+    #     )
+
     class Config:
         orm_mode = True
+        
+        
+        
+        
+class Given_Premium(BaseModel):
+    policy_no : Optional[str] = None
+    company : Optional[str] = None
+    policy_value : int = 0
+    given_premium : int = 0
+    allowable : int = 0
+    remarks : Optional[str] = None
+    
+    class Config:
+        orm_mode = True
+        
+        
+        
+        
+class Gov_Securities(BaseModel):
+    description : Optional[str] = None
+    actual : int = 0
+    allowable : int =0
+    
+    class Config:
+        orm_mode = True   
+        
+        
+        
+        
+class E_FT(BaseModel):
+    description : Optional[str] = None
+    actual : int = 0
+    allowable : int =0
+    
+    class Config:
+        orm_mode = True
+        
+        
+        
         
         
 class Rebate_Record(BaseModel):

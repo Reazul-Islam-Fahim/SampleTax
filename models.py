@@ -353,7 +353,7 @@ class InvestmentRecord(Base):
     contribution_paid_to_super_annuity_fund_remarks = Column(String(100), nullable=True)
     other = Column(Integer, default=0)
     other_remarks = Column(String(100), nullable=True)
-    total = Column(Integer, default=0)
+    total_investment = Column(Integer, default=0)
     allowable_investment = Column(Integer, default=0)
     
     etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
@@ -361,6 +361,52 @@ class InvestmentRecord(Base):
     taxpayer = relationship("Taxpayer", back_populates="investment_record")
     
     
+    
+class GivenPremium(Base):
+    __tablname__ = "given_premium"
+    
+    
+    
+    id = Column(Integer, primary_key=True, index=True, unique= True)
+    policy_no = Column(String(100), index= True, nullable= True)
+    company = Column(String(100), index= True, nullable= True)
+    policy_value = Column(Integer, index= True, default= 0)
+    given_premium = Column(Integer, index= True, default= 0)
+    allowable = Column(Integer, index= True, default= 0)
+    remarks = Column(String(100), index= True, nullable= True)
+    
+    invetment_id = Column(Integer, ForeignKey('investment_record.id'), nullable=False)
+
+    investment_record = relationship("InvestmentRecord", back_populates="given_premium")
+    
+    
+class GovSecurities(Base):
+    __tablename__ = "gov_securities"
+    
+    
+    id = Column(Integer, primary_key=True, index=True, unique= True)
+    description = Column(String(100), index= True, nullable= True)
+    actual = Column(Integer, index= True, default= 0)
+    allowable = Column(Integer, index= True, default= 0)
+    
+    invetment_id = Column(Integer, ForeignKey('investment_record.id'), nullable=False)
+
+    investment_record = relationship("InvestmentRecord", back_populates="gov_securities")    
+    
+    
+    
+class EFT(Base):
+    __tablename__ = "eft"
+    
+    
+    id = Column(Integer, primary_key=True, index=True, unique= True)
+    description = Column(String(100), index= True, nullable= True)
+    actual = Column(Integer, index= True, default= 0)
+    allowable = Column(Integer, index= True, default= 0)
+    
+    invetment_id = Column(Integer, ForeignKey('investment_record.id'), nullable=False)
+
+    investment_record = relationship("InvestmentRecord", back_populates="eft")    
     
     
     
