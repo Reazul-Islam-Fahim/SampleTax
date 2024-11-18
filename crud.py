@@ -166,7 +166,8 @@ def create_salary_income_record(db: Session, salary: schemas.SalaryIncome_Record
         gov_gratuity_remarks=salary.gov_gratuity_remarks,
         gov_others=salary.gov_others,
         gov_others_remarks=salary.gov_others_remarks,
-        etin=salary.etin
+        etin=salary.etin,
+        employer_info_id=salary.employer_info_id
     )
 
     db.add(salary_income_record)

@@ -64,6 +64,7 @@ class Employer_info(BaseModel):
 
 class SalaryIncome_Record(BaseModel):
     etin: str
+    employer_info_id : int
     basic_salary: int
     basic_salary_remarks : Optional[str] = None
       
