@@ -24,6 +24,6 @@ def read_investment_records(skip: int = Query(...), limit: int = Query(...), db:
     items = crud.get_investment_records(db, skip=skip, limit=limit)
     return items
 
-@app.get("/calculate_allowable_investment/{investment_record_id}", response_model=schemas.Investment_Record)
-def calc_allowable_investment(etin : str, db : Session = Depends(get_db)):
-    pass
+# @app.get("/calculate_allowable_investment/{investment_record_id}", response_model=schemas.Investment_Record)
+# def calc_allowable_investment(etin : str, db : Session = Depends(get_db)):
+#     pass

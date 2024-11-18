@@ -214,56 +214,100 @@ def get_investment_records(db: Session, skip: int , limit: int):
 def create_investment_record(db: Session, investment_record: schemas.Investment_Record):
     investment_record = models.InvestmentRecord(
         etin=investment_record.etin,
-        gov_securities=investment_record.gov_securities,
+        gov_securities_actual=investment_record.gov_securities_actual,
+        gov_securities_allowable=investment_record.gov_securities_allowable,
         gov_securities_remarks=investment_record.gov_securities_remarks,
-        eft=investment_record.eft,
+        
+        eft_actual=investment_record.eft_actual,
+        eft_allowable=investment_record.eft_allowable,
         eft_remarks=investment_record.eft_remarks,
-        life_insurance_policy_value=investment_record.life_insurance_policy_value,
-        life_insurance_policy_value_remarks=investment_record.life_insurance_policy_value_remarks,
-        life_insurance_given_premium=investment_record.life_insurance_given_premium,
+        
+        life_insurance_given_premium_actual=investment_record.life_insurance_given_premium_actual,
+        life_insurance_given_premium_allowable=investment_record.life_insurance_given_premium_allowable,
         life_insurance_given_premium_remarks=investment_record.life_insurance_given_premium_remarks,
-        premium_or_contractual_deferred_annuity_of_life_insurance_policy_paid_in_Bangladesh=investment_record.premium_or_contractual_deferred_annuity_of_life_insurance_policy_paid_in_Bangladesh,
-        premium_or_contractual_deferred_annuity_of_life_insurance_policy_paid_in_Bangladesh_remarks=investment_record.premium_or_contractual_deferred_annuity_of_life_insurance_policy_paid_in_Bangladesh_remarks,
-        contribution_paid_to_deposit_pension_or_monthly_savings_scheme=investment_record.contribution_paid_to_deposit_pension_or_monthly_savings_scheme,
-        contribution_paid_to_deposit_pension_or_monthly_savings_scheme_remarks=investment_record.contribution_paid_to_deposit_pension_or_monthly_savings_scheme_remarks,
-        investment_in_any_securities_listed_with_an_authorized_stock_exchange=investment_record.investment_in_any_securities_listed_with_an_authorized_stock_exchange,
-        investment_in_any_securities_listed_with_an_authorized_stock_exchange_remarks=investment_record.investment_in_any_securities_listed_with_an_authorized_stock_exchange_remarks,
-        provisions_of_pf_Act_1925_apply_to_the_contribution_of_the_taxpayer_to_any_such_fund=investment_record.provisions_of_pf_Act_1925_apply_to_the_contribution_of_the_taxpayer_to_any_such_fund,
-        provisions_of_pf_Act_1925_apply_to_the_contribution_of_the_taxpayer_to_any_such_fund_remarks=investment_record.provisions_of_pf_Act_1925_apply_to_the_contribution_of_the_taxpayer_to_any_such_fund_remarks,
-        contributions_made_by_the_taxpayer_and_his_employer_to_an_approved_provident_fund=investment_record.contributions_made_by_the_taxpayer_and_his_employer_to_an_approved_provident_fund,
-        contributions_made_by_the_taxpayer_and_his_employer_to_an_approved_provident_fund_remarks=investment_record.contributions_made_by_the_taxpayer_and_his_employer_to_an_approved_provident_fund_remarks,
-        contributions_paid_to_approved_superannuation_funds=investment_record.contributions_paid_to_approved_superannuation_funds,
-        contributions_paid_to_approved_superannuation_funds_remarks=investment_record.contributions_paid_to_approved_superannuation_funds_remarks,
-        contribution_paid_to_welfare_fund_group_insurance_fund=investment_record.contribution_paid_to_welfare_fund_group_insurance_fund,
-        contribution_paid_to_welfare_fund_group_insurance_fund_remarks=investment_record.contribution_paid_to_welfare_fund_group_insurance_fund_remarks,
-        contribution_paid_to_zakat_fund=investment_record.contribution_paid_to_zakat_fund,
-        contribution_paid_to_zakat_fund_remarks=investment_record.contribution_paid_to_zakat_fund_remarks,
-        donation_to_any_national_level_institution_dedicated_to_the_preservation_of_the_memory_of_the_liberation_war=investment_record.donation_to_any_national_level_institution_dedicated_to_the_preservation_of_the_memory_of_the_liberation_war,
-        donation_to_any_national_level_institution_dedicated_to_the_preservation_of_the_memory_of_the_liberation_war_remarks=investment_record.donation_to_any_national_level_institution_dedicated_to_the_preservation_of_the_memory_of_the_liberation_war_remarks,
-        donations_to_national_institutions_to_preserve_the_memory_of_the_father_of_the_nation=investment_record.donations_to_national_institutions_to_preserve_the_memory_of_the_father_of_the_nation,
-        donations_to_national_institutions_to_preserve_the_memory_of_the_father_of_the_nation_remarks=investment_record.donations_to_national_institutions_to_preserve_the_memory_of_the_father_of_the_nation_remarks,
-        donation_to_organizations_established_for_the_welfare_of_the_disabled=investment_record.donation_to_organizations_established_for_the_welfare_of_the_disabled,
-        donation_to_organizations_established_for_the_welfare_of_the_disabled_remarks=investment_record.donation_to_organizations_established_for_the_welfare_of_the_disabled_remarks,
-        donations_made_to_the_liberation_war_museum=investment_record.donations_made_to_the_liberation_war_museum,
-        donations_made_to_the_liberation_war_museum_remarks=investment_record.donations_made_to_the_liberation_war_museum_remarks,
-        donation_to_ahsania_cancer_hospital=investment_record.donation_to_ahsania_cancer_hospital,
+        
+        premium_or_contractual_deferred_annuity_actual=investment_record.premium_or_contractual_deferred_annuity_actual,
+        premium_or_contractual_deferred_annuity_allowable=investment_record.premium_or_contractual_deferred_annuity_allowable,
+        premium_or_contractual_deferred_annuity_remarks=investment_record.premium_or_contractual_deferred_annuity_remarks,
+        
+        contribution_paid_to_deposit_pension_actual=investment_record.contribution_paid_to_deposit_pension_actual,
+        contribution_paid_to_deposit_pension_allowable=investment_record.contribution_paid_to_deposit_pension_allowable,
+        contribution_paid_to_deposit_pension_remarks=investment_record.contribution_paid_to_deposit_pension_remarks,
+        
+        investment_in_any_securities_actual=investment_record.investment_in_any_securities_actual,
+        investment_in_any_securities_allowable=investment_record.investment_in_any_securities_actual,
+        investment_in_any_securities_remarks=investment_record.investment_in_any_securities_remarks,
+        
+        provisions_of_pf_act_1925_actual=investment_record.provisions_of_pf_act_1925_actual,
+        provisions_of_pf_act_1925_allowable=investment_record.provisions_of_pf_act_1925_actual,
+        provisions_of_pf_act_1925_remarks=investment_record.provisions_of_pf_act_1925_remarks,
+        
+        contributions_to_approved_provident_fund_actual=investment_record.contributions_to_approved_provident_fund_actual,
+        contributions_to_approved_provident_fund_allowable=investment_record.contributions_to_approved_provident_fund_actual,
+        contributions_to_approved_provident_fund_remarks=investment_record.contributions_to_approved_provident_fund_remarks,
+        
+        contributions_to_superannuation_funds_actual=investment_record.contributions_to_superannuation_funds_actual,
+        contributions_to_superannuation_funds_allowable=investment_record.contributions_to_superannuation_funds_actual,
+        contributions_to_superannuation_funds_remarks=investment_record.contributions_to_superannuation_funds_remarks,
+        
+        contribution_to_welfare_fund_actual=investment_record.contribution_to_welfare_fund_actual,
+        contribution_to_welfare_fund_allowable=investment_record.contribution_to_welfare_fund_actual,
+        contribution_to_welfare_fund_remarks=investment_record.contribution_to_welfare_fund_remarks,
+        
+        contribution_to_zakat_fund_actual=investment_record.contribution_to_zakat_fund_actual,
+        contribution_to_zakat_fund_allowable=investment_record.contribution_to_zakat_fund_actual,
+        contribution_to_zakat_fund_remarks=investment_record.contribution_to_zakat_fund_remarks,
+        
+        donation_to_liberation_war_memory_actual=investment_record.donation_to_liberation_war_memory_actual,
+        donation_to_liberation_war_memory_allowable=investment_record.donation_to_liberation_war_memory_actual,
+        donation_to_liberation_war_memory_remarks=investment_record.donation_to_liberation_war_memory_remarks,
+        
+        donations_to_father_of_nation_memory_actual=investment_record.donations_to_father_of_nation_memory_actual,
+        donations_to_father_of_nation_memory_allowable=investment_record.donations_to_father_of_nation_memory_actual,
+        donations_to_father_of_nation_memory_remarks=investment_record.donations_to_father_of_nation_memory_remarks,
+        
+        donation_to_disabled_organizations_actual=investment_record.donation_to_disabled_organizations_actual,
+        donation_to_disabled_organizations_allowable=investment_record.donation_to_disabled_organizations_actual,
+        donation_to_disabled_organizations_remarks=investment_record.donation_to_disabled_organizations_remarks,
+        
+        donations_to_liberation_war_museum_actual=investment_record.donations_to_liberation_war_museum_actual,
+        donations_to_liberation_war_museum_allowable=investment_record.donations_to_liberation_war_museum_actual,
+        donations_to_liberation_war_museum_remarks=investment_record.donations_to_liberation_war_museum_remarks,
+        
+        donation_to_ahsania_cancer_hospital_actual=investment_record.donation_to_ahsania_cancer_hospital_actual,
+        donation_to_ahsania_cancer_hospital_allowable=investment_record.donation_to_ahsania_cancer_hospital_actual,
         donation_to_ahsania_cancer_hospital_remarks=investment_record.donation_to_ahsania_cancer_hospital_remarks,
-        donations_made_to_icddrb=investment_record.donations_made_to_icddrb,
-        donations_made_to_icddrb_remarks=investment_record.donations_made_to_icddrb_remarks,
-        donation_given_at_crp_savar=investment_record.donation_given_at_crp_savar,
-        donation_given_at_crp_savar_remarks=investment_record.donation_given_at_crp_savar_remarks,
-        donations_to_charitable_or_educational_institutions_approved_by_the_government=investment_record.donations_to_charitable_or_educational_institutions_approved_by_the_government,
-        donations_to_charitable_or_educational_institutions_approved_by_the_government_remarks=investment_record.donations_to_charitable_or_educational_institutions_approved_by_the_government_remarks,
-        donation_to_asiatic_society_bangladesh=investment_record.donation_to_asiatic_society_bangladesh,
-        donation_to_asiatic_society_bangladesh_remarks=investment_record.donation_to_asiatic_society_bangladesh_remarks,
-        donation_to_dhaka_ahsania_mission_cancer_hospital=investment_record.donation_to_dhaka_ahsania_mission_cancer_hospital,
-        donation_to_dhaka_ahsania_mission_cancer_hospital_remarks=investment_record.donation_to_dhaka_ahsania_mission_cancer_hospital_remarks,
-        contribution_paid_to_super_annuity_fund=investment_record.contribution_paid_to_super_annuity_fund,
-        contribution_paid_to_super_annuity_fund_remarks=investment_record.contribution_paid_to_super_annuity_fund_remarks,
-        other=investment_record.other,
+        
+        donations_to_icddrb_actual=investment_record.donations_to_icddrb_actual,
+        donations_to_icddrb_allowable=investment_record.donations_to_icddrb_actual,
+        donations_to_icddrb_remarks=investment_record.donations_to_icddrb_remarks,
+        
+        donation_to_crp_savar_actual=investment_record.donation_to_crp_savar_actual,
+        donation_to_crp_savar_allowable=investment_record.donation_to_crp_savar_actual,
+        donation_to_crp_savar_remarks=investment_record.donation_to_crp_savar_remarks,
+        
+        donations_to_charitable_educational_institutions_actual=investment_record.donations_to_charitable_educational_institutions_actual,
+        donations_to_charitable_educational_institutions_allowable=investment_record.donations_to_charitable_educational_institutions_actual,
+        donations_to_charitable_educational_institutions_remarks=investment_record.donations_to_charitable_educational_institutions_remarks,
+        
+        donation_to_asiatic_society_actual=investment_record.donation_to_asiatic_society_actual,
+        donation_to_asiatic_society_allowable=investment_record.donation_to_asiatic_society_actual,
+        donation_to_asiatic_society_remarks=investment_record.donation_to_asiatic_society_remarks,
+        
+        donation_to_dhaka_ahsania_mission_actual=investment_record.donation_to_dhaka_ahsania_mission_actual,
+        donation_to_dhaka_ahsania_mission_allowable=investment_record.donation_to_dhaka_ahsania_mission_actual,
+        donation_to_dhaka_ahsania_mission_remarks=investment_record.donation_to_dhaka_ahsania_mission_remarks,
+        
+        contribution_to_super_annuity_fund_actual=investment_record.contribution_to_super_annuity_fund_actual,
+        contribution_to_super_annuity_fund_allowable=investment_record.contribution_to_super_annuity_fund_actual,
+        contribution_to_super_annuity_fund_remarks=investment_record.contribution_to_super_annuity_fund_remarks,
+        
+        other_actual=investment_record.other_actual,
+        other_allowable=investment_record.other_actual,
         other_remarks=investment_record.other_remarks,
         
-        total = investment_record.total
+        total_investment=investment_record.total_investment,
+        allowable_investment=investment_record.allowable_investment
     )
     
     db.add(investment_record)

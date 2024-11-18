@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Enum as senum, ForeignKey
+from sqlalchemy import Column, Integer, String, Enum as senum, ForeignKey, Computed
 from sqlalchemy.orm import relationship
 from db import Base
 from enum import Enum
@@ -305,65 +305,141 @@ class InvestmentRecord(Base):
     
     
     id = Column(Integer, primary_key=True, index=True, unique= True)
-    gov_securities = Column(Integer, default=0)
-    gov_securities_remarks = Column(String(100), nullable=True)
-    eft = Column(Integer, default=0)
-    eft_remarks = Column(String(100), nullable=True)
-    life_insurance_policy_value = Column(Integer, default=0)
-    life_insurance_policy_value_remarks = Column(String(100), nullable=True)
-    life_insurance_given_premium = Column(Integer, default=0)
-    life_insurance_given_premium_remarks = Column(String(100), nullable=True)
-    premium_or_contractual_deferred_annuity_of_life_insurance_policy_paid_in_Bangladesh = Column(Integer, default=0)
-    premium_or_contractual_deferred_annuity_of_life_insurance_policy_paid_in_Bangladesh_remarks = Column(String(100), nullable=True)
-    contribution_paid_to_deposit_pension_or_monthly_savings_scheme = Column(Integer, default=0)
-    contribution_paid_to_deposit_pension_or_monthly_savings_scheme_remarks = Column(String(100), nullable=True)
-    investment_in_any_securities_listed_with_an_authorized_stock_exchange = Column(Integer, default=0)
-    investment_in_any_securities_listed_with_an_authorized_stock_exchange_remarks = Column(String(100), nullable=True)
-    provisions_of_pf_Act_1925_apply_to_the_contribution_of_the_taxpayer_to_any_such_fund = Column(Integer, default=0)
-    provisions_of_pf_Act_1925_apply_to_the_contribution_of_the_taxpayer_to_any_such_fund_remarks = Column(String(100), nullable=True)
-    contributions_made_by_the_taxpayer_and_his_employer_to_an_approved_provident_fund = Column(Integer, default=0)
-    contributions_made_by_the_taxpayer_and_his_employer_to_an_approved_provident_fund_remarks = Column(String(100), nullable=True)
-    contributions_paid_to_approved_superannuation_funds = Column(Integer, default=0)
-    contributions_paid_to_approved_superannuation_funds_remarks = Column(String(100), nullable=True)
-    contribution_paid_to_welfare_fund_group_insurance_fund = Column(Integer, default=0)
-    contribution_paid_to_welfare_fund_group_insurance_fund_remarks = Column(String(100), nullable=True)
-    contribution_paid_to_zakat_fund = Column(Integer, default=0)
-    contribution_paid_to_zakat_fund_remarks = Column(String(100), nullable=True)
-    donation_to_any_national_level_institution_dedicated_to_the_preservation_of_the_memory_of_the_liberation_war = Column(Integer, default=0)
-    donation_to_any_national_level_institution_dedicated_to_the_preservation_of_the_memory_of_the_liberation_war_remarks = Column(String(100), nullable=True)
-    donations_to_national_institutions_to_preserve_the_memory_of_the_father_of_the_nation = Column(Integer, default=0)
-    donations_to_national_institutions_to_preserve_the_memory_of_the_father_of_the_nation_remarks = Column(String(100), nullable=True)
-    donation_to_organizations_established_for_the_welfare_of_the_disabled = Column(Integer, default=0)
-    donation_to_organizations_established_for_the_welfare_of_the_disabled_remarks = Column(String(100), nullable=True)
-    donations_made_to_the_liberation_war_museum = Column(Integer, default=0)
-    donations_made_to_the_liberation_war_museum_remarks = Column(String(100), nullable=True)
-    donation_to_ahsania_cancer_hospital = Column(Integer, default=0)
-    donation_to_ahsania_cancer_hospital_remarks = Column(String(100), nullable=True)
-    donations_made_to_icddrb = Column(Integer, default=0)
-    donations_made_to_icddrb_remarks = Column(String(100), nullable=True)
-    donation_given_at_crp_savar = Column(Integer, default=0)
-    donation_given_at_crp_savar_remarks = Column(String(100), nullable=True)
-    donations_to_charitable_or_educational_institutions_approved_by_the_government = Column(Integer, default=0)
-    donations_to_charitable_or_educational_institutions_approved_by_the_government_remarks = Column(String(100), nullable=True)
-    donation_to_asiatic_society_bangladesh = Column(Integer, default=0)
-    donation_to_asiatic_society_bangladesh_remarks = Column(String(100), nullable=True)
-    donation_to_dhaka_ahsania_mission_cancer_hospital = Column(Integer, default=0)
-    donation_to_dhaka_ahsania_mission_cancer_hospital_remarks = Column(String(100), nullable=True)
-    contribution_paid_to_super_annuity_fund = Column(Integer, default=0)
-    contribution_paid_to_super_annuity_fund_remarks = Column(String(100), nullable=True)
-    other = Column(Integer, default=0)
-    other_remarks = Column(String(100), nullable=True)
+    gov_securities_actual = Column(Integer, default=0)
+    gov_securities_allowable = Column(Integer, default=0)
+    gov_securities_remarks = Column(String, nullable=True)
+
+    eft_actual = Column(Integer, default=0)
+    eft_allowable = Column(Integer, default=0)
+    eft_remarks = Column(String, nullable=True)
+    
+    life_insurance_given_premium_actual = Column(Integer, default=0)
+    life_insurance_given_premium_allowable = Column(Integer, default=0)
+    life_insurance_given_premium_remarks = Column(String, nullable=True)
+
+    premium_or_contractual_deferred_annuity_actual = Column(Integer, default=0)
+    premium_or_contractual_deferred_annuity_allowable = Column(Integer, default=0)
+    premium_or_contractual_deferred_annuity_remarks = Column(String, nullable=True)
+
+    contribution_paid_to_deposit_pension_actual = Column(Integer, default=0)
+    contribution_paid_to_deposit_pension_allowable = Column(Integer, default=0)
+    contribution_paid_to_deposit_pension_remarks = Column(String, nullable=True)
+
+    investment_in_any_securities_actual = Column(Integer, default=0)
+    investment_in_any_securities_allowable = Column(Integer, default=0)
+    investment_in_any_securities_remarks = Column(String, nullable=True)
+
+    provisions_of_pf_act_1925_actual = Column(Integer, default=0)
+    provisions_of_pf_act_1925_allowable = Column(Integer, default=0)
+    provisions_of_pf_act_1925_remarks = Column(String, nullable=True)
+
+    contributions_to_approved_provident_fund_actual = Column(Integer, default=0)
+    contributions_to_approved_provident_fund_allowable = Column(Integer, default=0)
+    contributions_to_approved_provident_fund_remarks = Column(String, nullable=True)
+
+    contributions_to_superannuation_funds_actual = Column(Integer, default=0)
+    contributions_to_superannuation_funds_allowable = Column(Integer, default=0)
+    contributions_to_superannuation_funds_remarks = Column(String, nullable=True)
+
+    contribution_to_welfare_fund_actual = Column(Integer, default=0)
+    contribution_to_welfare_fund_allowable = Column(Integer, default=0)
+    contribution_to_welfare_fund_remarks = Column(String, nullable=True)
+
+    contribution_to_zakat_fund_actual = Column(Integer, default=0)
+    contribution_to_zakat_fund_allowable = Column(Integer, default=0)
+    contribution_to_zakat_fund_remarks = Column(String, nullable=True)
+
+    donation_to_liberation_war_memory_actual = Column(Integer, default=0)
+    donation_to_liberation_war_memory_allowable = Column(Integer, default=0)
+    donation_to_liberation_war_memory_remarks = Column(String, nullable=True)
+
+    donations_to_father_of_nation_memory_actual = Column(Integer, default=0)
+    donations_to_father_of_nation_memory_allowable = Column(Integer, default=0)
+    donations_to_father_of_nation_memory_remarks = Column(String, nullable=True)
+
+    donation_to_disabled_organizations_actual = Column(Integer, default=0)
+    donation_to_disabled_organizations_allowable = Column(Integer, default=0)
+    donation_to_disabled_organizations_remarks = Column(String, nullable=True)
+
+    donations_to_liberation_war_museum_actual = Column(Integer, default=0)
+    donations_to_liberation_war_museum_allowable = Column(Integer, default=0)
+    donations_to_liberation_war_museum_remarks = Column(String, nullable=True)
+
+    donation_to_ahsania_cancer_hospital_actual = Column(Integer, default=0)
+    donation_to_ahsania_cancer_hospital_allowable = Column(Integer, default=0)
+    donation_to_ahsania_cancer_hospital_remarks = Column(String, nullable=True)
+
+    donations_to_icddrb_actual = Column(Integer, default=0)
+    donations_to_icddrb_allowable = Column(Integer, default=0)
+    donations_to_icddrb_remarks = Column(String, nullable=True)
+
+    donation_to_crp_savar_actual = Column(Integer, default=0)
+    donation_to_crp_savar_allowable = Column(Integer, default=0)
+    donation_to_crp_savar_remarks = Column(String, nullable=True)
+
+    donations_to_charitable_educational_institutions_actual = Column(Integer, default=0)
+    donations_to_charitable_educational_institutions_allowable = Column(Integer, default=0)
+    donations_to_charitable_educational_institutions_remarks = Column(String, nullable=True)
+
+    donation_to_asiatic_society_actual = Column(Integer, default=0)
+    donation_to_asiatic_society_allowable = Column(Integer, default=0)
+    donation_to_asiatic_society_remarks = Column(String, nullable=True)
+
+    donation_to_dhaka_ahsania_mission_actual = Column(Integer, default=0)
+    donation_to_dhaka_ahsania_mission_allowable = Column(Integer, default=0)
+    donation_to_dhaka_ahsania_mission_remarks = Column(String, nullable=True)
+
+    contribution_to_super_annuity_fund_actual = Column(Integer, default=0)
+    contribution_to_super_annuity_fund_allowable = Column(Integer, default=0)
+    contribution_to_super_annuity_fund_remarks = Column(String, nullable=True)
+
+    other_actual = Column(Integer, default=0)
+    other_allowable = Column(Integer, default=0)
+    other_remarks = Column(String, nullable=True)
+    
     total_investment = Column(Integer, default=0)
     allowable_investment = Column(Integer, default=0)
+    
+    total_investment = Column(Integer, Computed(
+        "gov_securities_actual + eft_actual + life_insurance_given_premium_actual + "
+        "premium_or_contractual_deferred_annuity_actual + contribution_paid_to_deposit_pension_actual + "
+        "investment_in_any_securities_actual + provisions_of_pf_act_1925_actual + "
+        "contributions_to_approved_provident_fund_actual + contributions_to_superannuation_funds_actual + "
+        "contribution_to_welfare_fund_actual + contribution_to_zakat_fund_actual + "
+        "donation_to_liberation_war_memory_actual + donations_to_father_of_nation_memory_actual + "
+        "donation_to_disabled_organizations_actual + donations_to_liberation_war_museum_actual + "
+        "donation_to_ahsania_cancer_hospital_actual + donations_to_icddrb_actual + "
+        "donation_to_crp_savar_actual + donations_to_charitable_educational_institutions_actual + "
+        "donation_to_asiatic_society_actual + donation_to_dhaka_ahsania_mission_actual + "
+        "contribution_to_super_annuity_fund_actual + other_actual"
+    ), nullable=True)
+
+    allowable_investment = Column(Integer, Computed(
+        "gov_securities_allowable + eft_allowable + life_insurance_given_premium_allowable + "
+        "premium_or_contractual_deferred_annuity_allowable + contribution_paid_to_deposit_pension_allowable + "
+        "investment_in_any_securities_allowable + provisions_of_pf_act_1925_allowable + "
+        "contributions_to_approved_provident_fund_allowable + contributions_to_superannuation_funds_allowable + "
+        "contribution_to_welfare_fund_allowable + contribution_to_zakat_fund_allowable + "
+        "donation_to_liberation_war_memory_allowable + donations_to_father_of_nation_memory_allowable + "
+        "donation_to_disabled_organizations_allowable + donations_to_liberation_war_museum_allowable + "
+        "donation_to_ahsania_cancer_hospital_allowable + donations_to_icddrb_allowable + "
+        "donation_to_crp_savar_allowable + donations_to_charitable_educational_institutions_allowable + "
+        "donation_to_asiatic_society_allowable + donation_to_dhaka_ahsania_mission_allowable + "
+        "contribution_to_super_annuity_fund_allowable + other_allowable"
+    ), nullable=True)
     
     etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
     
     taxpayer = relationship("Taxpayer", back_populates="investment_record")
+    given_premium = relationship("GivenPremium", back_populates="investment_record")
+    gov_securities = relationship("GovSecurities", back_populates="investment_record")
+    eft = relationship("EFT", back_populates="eft")
+    dps = relationship("DPS", back_populates="dps")
     
     
     
 class GivenPremium(Base):
-    __tablname__ = "given_premium"
+    __tablename__ = "given_premium"
     
     
     
@@ -372,7 +448,7 @@ class GivenPremium(Base):
     company = Column(String(100), index= True, nullable= True)
     policy_value = Column(Integer, index= True, default= 0)
     given_premium = Column(Integer, index= True, default= 0)
-    allowable = Column(Integer, index= True, default= 0)
+    allowable = Column(Integer, Computed("given_premium * 0.1"), index= True, default= 0)
     remarks = Column(String(100), index= True, nullable= True)
     
     invetment_id = Column(Integer, ForeignKey('investment_record.id'), nullable=False)
@@ -387,7 +463,7 @@ class GovSecurities(Base):
     id = Column(Integer, primary_key=True, index=True, unique= True)
     description = Column(String(100), index= True, nullable= True)
     actual = Column(Integer, index= True, default= 0)
-    allowable = Column(Integer, index= True, default= 0)
+    allowable = Column(Integer, Computed("min(actual, 500000)"), index= True, default= 0)
     
     invetment_id = Column(Integer, ForeignKey('investment_record.id'), nullable=False)
 
@@ -402,11 +478,28 @@ class EFT(Base):
     id = Column(Integer, primary_key=True, index=True, unique= True)
     description = Column(String(100), index= True, nullable= True)
     actual = Column(Integer, index= True, default= 0)
-    allowable = Column(Integer, index= True, default= 0)
+    allowable = Column(Integer, Computed("min(actual, 500000)"), index= True, default= 0)
     
     invetment_id = Column(Integer, ForeignKey('investment_record.id'), nullable=False)
 
     investment_record = relationship("InvestmentRecord", back_populates="eft")    
+    
+    
+    
+    
+class DPS(Base):
+    __tablename__ = "dps"
+    
+    
+    id = Column(Integer, primary_key=True, index=True, unique= True)
+    description = Column(String(100), index= True, nullable= True)
+    actual = Column(Integer, index= True, default= 0)
+    allowable = Column(Integer, Computed("min(actual, 500000)"), index= True, default= 0)
+    
+    invetment_id = Column(Integer, ForeignKey('investment_record.id'), nullable=False)
+
+    investment_record = relationship("InvestmentRecord", back_populates="dps")    
+    
     
     
     

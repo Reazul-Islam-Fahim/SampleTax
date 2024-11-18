@@ -235,111 +235,155 @@ class SalaryIncome_Summary(BaseModel):
         
 class Investment_Record(BaseModel):
     etin: str
-    gov_securities: int = 0
+    gov_securities_actual: int = 0
+    gov_securities_allowable: int = 0
     gov_securities_remarks: Optional[str] = None
-    eft: int = 0
+
+    eft_actual: int = 0
+    eft_allowable: int = 0
     eft_remarks: Optional[str] = None
-    life_insurance_policy_value: int = 0
-    life_insurance_policy_value_remarks: Optional[str] = None
-    life_insurance_given_premium: int = 0
+    
+    life_insurance_given_premium_actual: int = 0
+    life_insurance_given_premium_allowable: int = 0
     life_insurance_given_premium_remarks: Optional[str] = None
-    premium_or_contractual_deferred_annuity_of_life_insurance_policy_paid_in_Bangladesh: int = 0
-    premium_or_contractual_deferred_annuity_of_life_insurance_policy_paid_in_Bangladesh_remarks: Optional[str] = None
-    contribution_paid_to_deposit_pension_or_monthly_savings_scheme: int = 0
-    contribution_paid_to_deposit_pension_or_monthly_savings_scheme_remarks: Optional[str] = None
-    investment_in_any_securities_listed_with_an_authorized_stock_exchange: int = 0
-    investment_in_any_securities_listed_with_an_authorized_stock_exchange_remarks: Optional[str] = None
-    provisions_of_pf_Act_1925_apply_to_the_contribution_of_the_taxpayer_to_any_such_fund: int = 0
-    provisions_of_pf_Act_1925_apply_to_the_contribution_of_the_taxpayer_to_any_such_fund_remarks: Optional[str] = None
-    contributions_made_by_the_taxpayer_and_his_employer_to_an_approved_provident_fund: int = 0
-    contributions_made_by_the_taxpayer_and_his_employer_to_an_approved_provident_fund_remarks: Optional[str] = None
-    contributions_paid_to_approved_superannuation_funds: int = 0
-    contributions_paid_to_approved_superannuation_funds_remarks: Optional[str] = None
-    contribution_paid_to_welfare_fund_group_insurance_fund: int = 0
-    contribution_paid_to_welfare_fund_group_insurance_fund_remarks: Optional[str] = None
-    contribution_paid_to_zakat_fund: int = 0
-    contribution_paid_to_zakat_fund_remarks: Optional[str] = None
-    donation_to_any_national_level_institution_dedicated_to_the_preservation_of_the_memory_of_the_liberation_war: int = 0
-    donation_to_any_national_level_institution_dedicated_to_the_preservation_of_the_memory_of_the_liberation_war_remarks: Optional[str] = None
-    donations_to_national_institutions_to_preserve_the_memory_of_the_father_of_the_nation: int = 0
-    donations_to_national_institutions_to_preserve_the_memory_of_the_father_of_the_nation_remarks: Optional[str] = None
-    donation_to_organizations_established_for_the_welfare_of_the_disabled: int = 0
-    donation_to_organizations_established_for_the_welfare_of_the_disabled_remarks: Optional[str] = None
-    donations_made_to_the_liberation_war_museum: int = 0
-    donations_made_to_the_liberation_war_museum_remarks: Optional[str] = None
-    donation_to_ahsania_cancer_hospital: int = 0
+
+    premium_or_contractual_deferred_annuity_actual: int = 0
+    premium_or_contractual_deferred_annuity_allowable: int = 0
+    premium_or_contractual_deferred_annuity_remarks: Optional[str] = None
+
+    contribution_paid_to_deposit_pension_actual: int = 0
+    contribution_paid_to_deposit_pension_allowable: int = 0
+    contribution_paid_to_deposit_pension_remarks: Optional[str] = None
+
+    investment_in_any_securities_actual: int = 0
+    investment_in_any_securities_allowable: int = 0
+    investment_in_any_securities_remarks: Optional[str] = None
+
+    provisions_of_pf_act_1925_actual: int = 0
+    provisions_of_pf_act_1925_allowable: int = 0
+    provisions_of_pf_act_1925_remarks: Optional[str] = None
+
+    contributions_to_approved_provident_fund_actual: int = 0
+    contributions_to_approved_provident_fund_allowable: int = 0
+    contributions_to_approved_provident_fund_remarks: Optional[str] = None
+
+    contributions_to_superannuation_funds_actual: int = 0
+    contributions_to_superannuation_funds_allowable: int = 0
+    contributions_to_superannuation_funds_remarks: Optional[str] = None
+
+    contribution_to_welfare_fund_actual: int = 0
+    contribution_to_welfare_fund_allowable: int = 0
+    contribution_to_welfare_fund_remarks: Optional[str] = None
+
+    contribution_to_zakat_fund_actual: int = 0
+    contribution_to_zakat_fund_allowable: int = 0
+    contribution_to_zakat_fund_remarks: Optional[str] = None
+
+    donation_to_liberation_war_memory_actual: int = 0
+    donation_to_liberation_war_memory_allowable: int = 0
+    donation_to_liberation_war_memory_remarks: Optional[str] = None
+
+    donations_to_father_of_nation_memory_actual: int = 0
+    donations_to_father_of_nation_memory_allowable: int = 0
+    donations_to_father_of_nation_memory_remarks: Optional[str] = None
+
+    donation_to_disabled_organizations_actual: int = 0
+    donation_to_disabled_organizations_allowable: int = 0
+    donation_to_disabled_organizations_remarks: Optional[str] = None
+
+    donations_to_liberation_war_museum_actual: int = 0
+    donations_to_liberation_war_museum_allowable: int = 0
+    donations_to_liberation_war_museum_remarks: Optional[str] = None
+
+    donation_to_ahsania_cancer_hospital_actual: int = 0
+    donation_to_ahsania_cancer_hospital_allowable: int = 0
     donation_to_ahsania_cancer_hospital_remarks: Optional[str] = None
-    donations_made_to_icddrb: int = 0
-    donations_made_to_icddrb_remarks: Optional[str] = None
-    donation_given_at_crp_savar: int = 0
-    donation_given_at_crp_savar_remarks: Optional[str] = None
-    donations_to_charitable_or_educational_institutions_approved_by_the_government: int = 0
-    donations_to_charitable_or_educational_institutions_approved_by_the_government_remarks: Optional[str] = None
-    donation_to_asiatic_society_bangladesh: int = 0
-    donation_to_asiatic_society_bangladesh_remarks: Optional[str] = None
-    donation_to_dhaka_ahsania_mission_cancer_hospital: int = 0
-    donation_to_dhaka_ahsania_mission_cancer_hospital_remarks: Optional[str] = None
-    contribution_paid_to_super_annuity_fund: int = 0
-    contribution_paid_to_super_annuity_fund_remarks: Optional[str] = None
-    other: int = 0
+
+    donations_to_icddrb_actual: int = 0
+    donations_to_icddrb_allowable: int = 0
+    donations_to_icddrb_remarks: Optional[str] = None
+
+    donation_to_crp_savar_actual: int = 0
+    donation_to_crp_savar_allowable: int = 0
+    donation_to_crp_savar_remarks: Optional[str] = None
+
+    donations_to_charitable_educational_institutions_actual: int = 0
+    donations_to_charitable_educational_institutions_allowable: int = 0
+    donations_to_charitable_educational_institutions_remarks: Optional[str] = None
+
+    donation_to_asiatic_society_actual: int = 0
+    donation_to_asiatic_society_allowable: int = 0
+    donation_to_asiatic_society_remarks: Optional[str] = None
+
+    donation_to_dhaka_ahsania_mission_actual: int = 0
+    donation_to_dhaka_ahsania_mission_allowable: int = 0
+    donation_to_dhaka_ahsania_mission_remarks: Optional[str] = None
+
+    contribution_to_super_annuity_fund_actual: int = 0
+    contribution_to_super_annuity_fund_allowable: int = 0
+    contribution_to_super_annuity_fund_remarks: Optional[str] = None
+
+    other_actual: int = 0
+    other_allowable: int = 0
     other_remarks: Optional[str] = None
+    
     total_investment : int =0
     allowable_investment : int = 0
     
-    @property
-    def total_investment(self):
-        return (
-            self.gov_securities +
-            self.eft +
-            self.life_insurance_given_premium +
-            self.premium_or_contractual_deferred_annuity_of_life_insurance_policy_paid_in_Bangladesh +
-            self.contribution_paid_to_deposit_pension_or_monthly_savings_scheme +
-            self.investment_in_any_securities_listed_with_an_authorized_stock_exchange +
-            self.provisions_of_pf_Act_1925_apply_to_the_contribution_of_the_taxpayer_to_any_such_fund +
-            self.contributions_made_by_the_taxpayer_and_his_employer_to_an_approved_provident_fund +
-            self.contributions_paid_to_approved_superannuation_funds +
-            self.contribution_paid_to_welfare_fund_group_insurance_fund +
-            self.contribution_paid_to_zakat_fund +
-            self.donation_to_any_national_level_institution_dedicated_to_the_preservation_of_the_memory_of_the_liberation_war +
-            self.donations_to_national_institutions_to_preserve_the_memory_of_the_father_of_the_nation +
-            self.donation_to_organizations_established_for_the_welfare_of_the_disabled +
-            self.donations_made_to_the_liberation_war_museum +
-            self.donation_to_ahsania_cancer_hospital +
-            self.donations_made_to_icddrb +
-            self.donation_given_at_crp_savar +
-            self.donations_to_charitable_or_educational_institutions_approved_by_the_government +
-            self.donation_to_asiatic_society_bangladesh +
-            self.donation_to_dhaka_ahsania_mission_cancer_hospital +
-            self.contribution_paid_to_super_annuity_fund +
-            self.other
-        )
+    # @property
+    # def total_investment(self):
+    #     return (
+    #         self.gov_securities_actual +
+    #         self.eft_actual +
+    #         self.life_insurance_given_premium_actual +
+    #         self.premium_or_contractual_deferred_annuity_actual +
+    #         self.contribution_paid_to_deposit_pension_actual +
+    #         self.investment_in_any_securities_actual +
+    #         self.provisions_of_pf_act_1925_actual +
+    #         self.contributions_to_approved_provident_fund_actual +
+    #         self.contributions_to_superannuation_funds_actual +
+    #         self.contribution_to_welfare_fund_actual +
+    #         self.contribution_to_zakat_fund_actual +
+    #         self.donation_to_liberation_war_memory_actual +
+    #         self.donations_to_father_of_nation_memory_actual +
+    #         self.donation_to_disabled_organizations_actual +
+    #         self.donations_to_liberation_war_museum_actual +
+    #         self.donation_to_ahsania_cancer_hospital_actual +
+    #         self.donations_to_icddrb_actual +
+    #         self.donation_to_crp_savar_actual +
+    #         self.donations_to_charitable_educational_institutions_actual +
+    #         self.donation_to_asiatic_society_actual +
+    #         self.donation_to_dhaka_ahsania_mission_actual +
+    #         self.contribution_to_super_annuity_fund_actual +
+    #         self.other_actual
+    #     )
 
     # @property
     # def allowable_investment(self):
     #     return (
-    #         min(self.gov_securities, 500000) +
-    #         min(self.eft, 500000) +
-    #         min(self.life_insurance_policy_value * 0.1, self.life_insurance_given_premium) +
-    #         self.premium_or_contractual_deferred_annuity_of_life_insurance_policy_paid_in_Bangladesh +
-    #         min(self.contribution_paid_to_deposit_pension_or_monthly_savings_scheme, 120000) +
-    #         self.investment_in_any_securities_listed_with_an_authorized_stock_exchange +
-    #         self.provisions_of_pf_Act_1925_apply_to_the_contribution_of_the_taxpayer_to_any_such_fund +
-    #         self.contributions_made_by_the_taxpayer_and_his_employer_to_an_approved_provident_fund +
-    #         self.contributions_paid_to_approved_superannuation_funds +
-    #         self.contribution_paid_to_welfare_fund_group_insurance_fund +
-    #         self.contribution_paid_to_zakat_fund +
-    #         self.donation_to_any_national_level_institution_dedicated_to_the_preservation_of_the_memory_of_the_liberation_war +
-    #         self.donations_to_national_institutions_to_preserve_the_memory_of_the_father_of_the_nation +
-    #         self.donation_to_organizations_established_for_the_welfare_of_the_disabled +
-    #         self.donations_made_to_the_liberation_war_museum +
-    #         self.donation_to_ahsania_cancer_hospital +
-    #         self.donations_made_to_icddrb +
-    #         self.donation_given_at_crp_savar +
-    #         self.donations_to_charitable_or_educational_institutions_approved_by_the_government +
-    #         self.donation_to_asiatic_society_bangladesh +
-    #         self.donation_to_dhaka_ahsania_mission_cancer_hospital +
-    #         self.contribution_paid_to_super_annuity_fund +
-    #         self.other
+    #         self.gov_securities_allowable +
+    #         self.eft_allowable +
+    #         self.life_insurance_given_premium_allowable +
+    #         self.premium_or_contractual_deferred_annuity_allowable +
+    #         self.contribution_paid_to_deposit_pension_allowable +
+    #         self.investment_in_any_securities_allowable +
+    #         self.provisions_of_pf_act_1925_allowable +
+    #         self.contributions_to_approved_provident_fund_allowable +
+    #         self.contributions_to_superannuation_funds_allowable +
+    #         self.contribution_to_welfare_fund_allowable +
+    #         self.contribution_to_zakat_fund_allowable +
+    #         self.donation_to_liberation_war_memory_allowable +
+    #         self.donations_to_father_of_nation_memory_allowable +
+    #         self.donation_to_disabled_organizations_allowable +
+    #         self.donations_to_liberation_war_museum_allowable +
+    #         self.donation_to_ahsania_cancer_hospital_allowable +
+    #         self.donations_to_icddrb_allowable +
+    #         self.donation_to_crp_savar_allowable +
+    #         self.donations_to_charitable_educational_institutions_allowable +
+    #         self.donation_to_asiatic_society_allowable +
+    #         self.donation_to_dhaka_ahsania_mission_allowable +
+    #         self.contribution_to_super_annuity_fund_allowable +
+    #         self.other_allowable
     #     )
 
     class Config:
@@ -382,7 +426,13 @@ class E_FT(BaseModel):
         orm_mode = True
         
         
-        
+class D_PS(BaseModel):
+    description : Optional[str] = None
+    actual : int = 0
+    allowable : int =0
+    
+    class Config:
+        orm_mode = True 
         
         
 class Rebate_Record(BaseModel):
