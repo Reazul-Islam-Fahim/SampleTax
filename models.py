@@ -433,8 +433,8 @@ class InvestmentRecord(Base):
     taxpayer = relationship("Taxpayer", back_populates="investment_record")
     given_premium = relationship("GivenPremium", back_populates="investment_record")
     gov_securities = relationship("GovSecurities", back_populates="investment_record")
-    eft = relationship("EFT", back_populates="eft")
-    dps = relationship("DPS", back_populates="dps")
+    eft = relationship("EFT", back_populates="investment_record")
+    dps = relationship("DPS", back_populates="investment_record")
     
     
     
@@ -463,7 +463,7 @@ class GovSecurities(Base):
     id = Column(Integer, primary_key=True, index=True, unique= True)
     description = Column(String(100), index= True, nullable= True)
     actual = Column(Integer, index= True, default= 0)
-    allowable = Column(Integer, Computed("min(actual, 500000)"), index= True, default= 0)
+    allowable = Column(Integer, Computed("CASE WHEN actual > 500000 THEN 500000 ELSE actual END"), index= True, default= 0)
     
     invetment_id = Column(Integer, ForeignKey('investment_record.id'), nullable=False)
 
@@ -478,7 +478,7 @@ class EFT(Base):
     id = Column(Integer, primary_key=True, index=True, unique= True)
     description = Column(String(100), index= True, nullable= True)
     actual = Column(Integer, index= True, default= 0)
-    allowable = Column(Integer, Computed("min(actual, 500000)"), index= True, default= 0)
+    allowable = Column(Integer, Computed("CASE WHEN actual > 500000 THEN 500000 ELSE actual END"), index= True, default= 0)
     
     invetment_id = Column(Integer, ForeignKey('investment_record.id'), nullable=False)
 
@@ -494,7 +494,7 @@ class DPS(Base):
     id = Column(Integer, primary_key=True, index=True, unique= True)
     description = Column(String(100), index= True, nullable= True)
     actual = Column(Integer, index= True, default= 0)
-    allowable = Column(Integer, Computed("min(actual, 500000)"), index= True, default= 0)
+    allowable = Column(Integer, Computed("CASE WHEN actual > 120000 THEN 120000 ELSE actual END"), index= True, default= 0)
     
     invetment_id = Column(Integer, ForeignKey('investment_record.id'), nullable=False)
 

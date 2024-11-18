@@ -176,6 +176,107 @@ def create_salary_income_record(db: Session, salary: schemas.SalaryIncome_Record
 
 
 
+def get_allowance(db: Session, etin: str):
+    return db.query(models.AllowanceDetails).filter(models.AllowanceDetails.etin == etin).first()
+
+def get_allowances(db: Session, skip: int , limit: int):
+    return db.query(models.AllowanceDetails).offset(skip).limit(limit).all()
+
+
+def create_allowance(db: Session, allowances: schemas.Allowance_Details):
+    allowances = models.AllowanceDetails(
+        etin = allowances.etin,
+        any_allowance = allowances.any_allowance,
+        any_allowance_remarks = allowances.any_allowance_remarks,
+        leave_allowance = allowances.leave_allowance,
+        leave_allowance_remarks = allowances.leave_allowance_remarks,
+        lump_grant = allowances.lump_grant,
+        lump_grant_remarks = allowances.lump_grant_remarks,
+        bonus = allowances.bonus,
+        bonus_remarks = allowances.bonus_remarks,
+        fee = allowances.fee,
+        fee_remarks = allowances.fee_remarks,
+        commission = allowances.commission,
+        commission_remarks = allowances.commission_remarks,
+        overtime = allowances.overtime,
+        overtime_remarks = allowances.overtime_remarks,
+        other = allowances.other,
+        other_details = allowances.other_details,
+        total = allowances.total
+    )
+    
+    db.add(allowances)
+    db.commit()
+    db.refresh(allowances)
+    return allowances
+
+
+
+
+def get_perquisite(db: Session, etin: str):
+    return db.query(models.PerquisiteDetails).filter(models.PerquisiteDetails.etin == etin).first()
+
+def get_perquisites(db: Session, skip: int , limit: int):
+    return db.query(models.PerquisiteDetails).offset(skip).limit(limit).all()
+
+
+def create_perquisite(db: Session, perquisite: schemas.Perquisite_Details):
+    perquisite = models.PerquisiteDetails(
+        etin = perquisite.etin,
+        mohargha_allowance = perquisite.mohargha_allowance,
+        mohargha_allowance_remarks = perquisite.mohargha_allowance_remarks,
+        insurance_premium_borne_by_the_employer = perquisite.insurance_premium_borne_by_the_employer,
+        insurance_premium_borne_by_the_employer_remarks = perquisite.insurance_premium_borne_by_the_employer_remarks,
+        housing_allowance = perquisite.housing_allowance,
+        housing_allowance_remarks = perquisite.housing_allowance_remarks,
+        house_rent_allowance = perquisite.house_rent_allowance,
+        house_rent_allowance_remarks = perquisite.house_rent_allowance_remarks,
+        entertainment_allowance = perquisite.entertainment_allowance,
+        entertainment_allowance_remarks = perquisite.entertainment_allowance_remarks,
+        passage_leave = perquisite.passage_leave,
+        passage_leave_remarks = perquisite.passage_leave_remarks,
+        medical_allowance = perquisite.medical_allowance,
+        medical_allowance_remarks = perquisite.medical_allowance_remarks,
+        any_other_obligations_of_the_employee = perquisite.any_other_obligations_of_the_employee,
+        any_other_obligations_of_the_employee_remarks = perquisite.any_other_obligations_of_the_employee_remarks,
+        other = perquisite.other,
+        other_remarks = perquisite.other_remarks,
+        total = perquisite.total
+
+    )
+    
+    db.add(perquisite)
+    db.commit()
+    db.refresh(perquisite)
+    return perquisite
+
+
+
+def get_vehicle_falitiy(db: Session, etin: str):
+    return db.query(models.VehicleFacilityDetails).filter(models.VehicleFacilityDetails.etin == etin).first()
+
+def get_vehicle_falities(db: Session, skip: int , limit: int):
+    return db.query(models.VehicleFacilityDetails).offset(skip).limit(limit).all()
+
+
+def create_vehicle_falitiy(db: Session, vehicle_facility: schemas.Vehicale_facility_Details):
+    vehicle_facility = models.VehicleFacilityDetails(
+        etin = vehicle_facility.etin,
+        upto_2500CC = vehicle_facility.upto_2500CC,
+        cost_for_upto_2500 = vehicle_facility.cost_for_upto_2500,
+        greater_than_2500cc = vehicle_facility.greater_than_2500cc,
+        cost_for_more_than_2500 = vehicle_facility.cost_for_more_than_2500,
+        no_of_months = vehicle_facility.no_of_months,
+        total = vehicle_facility.total
+    )
+    
+    db.add(vehicle_facility)
+    db.commit()
+    db.refresh(vehicle_facility)
+    return vehicle_facility
+
+
+
 
 
 
