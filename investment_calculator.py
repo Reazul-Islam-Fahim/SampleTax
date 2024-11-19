@@ -11,36 +11,34 @@ app = FastAPI()
 @app.post("/investment_record/", response_model=schemas.Investment_Record)
 def create_investment_record(
     investment_record: schemas.Investment_Record = Body(...),
-    given_premium : schemas.Given_Premium = Body(...),
-    gov_securities : schemas.Gov_Securities = Body(...),
-    eft : schemas.E_FT = Body(...),
-    dps : schemas.D_PS = Body(...),
+    given_premium: schemas.Given_Premium = Body(...),
+    gov_securities: schemas.Gov_Securities = Body(...),
+    eft: schemas.E_FT = Body(...),
+    dps: schemas.D_PS = Body(...),
     db: Session = Depends(get_db)
 ):
-    given_p = crud.get_given_premium(db, investment_id= given_premium.investment_id)
+    # Get the related data
+    given_p = crud.get_given_premium(db, investment_id=given_premium.investment_id)
     if not given_p:
         raise HTTPException(status_code=404, detail="GivenPremium not found")
     
-    gov_sec = crud.get_gov_securities(db, investment_id= gov_securities.investment_id)
+    gov_sec = crud.get_gov_securities(db, investment_id=gov_securities.investment_id)
     if not gov_sec:
         raise HTTPException(status_code=404, detail="GovSecurities not found")
     
-    e_ft = crud.get_eft(db, investment_id= eft.investment_id)
+    e_ft = crud.get_eft(db, investment_id=eft.investment_id)
     if not e_ft:
         raise HTTPException(status_code=404, detail="EFT not found")
     
-    d_ps = crud.get_dps(db, investment_id= dps.investment_id)
+    d_ps = crud.get_dps(db, investment_id=dps.investment_id)
     if not d_ps:
         raise HTTPException(status_code=404, detail="DPS not found")
     
-    
-    
-    
+    # Insert the investment record without specifying the `total_investment`
     crud.create_investment_record(db=db, investment_record=investment_record)
-    
+
     inv_record = db.query(models.InvestmentRecord).filter(models.InvestmentRecord.etin == investment_record.etin).first()
-    
-    
+
     if inv_record:
         inv_record.gov_securities_actual = gov_sec.actual
         inv_record.gov_securities_allowable = gov_sec.allowable
@@ -56,11 +54,11 @@ def create_investment_record(
         
         db.commit()
         db.refresh(inv_record)
-        
     else:
         raise HTTPException(status_code=404, detail="InvestmentRecord not found")
     
-    return inv_record
+    return investment_record
+
     
     
 
