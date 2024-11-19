@@ -187,6 +187,7 @@ def get_allowances(db: Session, skip: int , limit: int):
 def create_allowance(db: Session, allowances: schemas.Allowance_Details):
     allowances = models.AllowanceDetails(
         etin = allowances.etin,
+        salary_income_record_id = allowances.salary_income_record_id,
         any_allowance = allowances.any_allowance,
         any_allowance_remarks = allowances.any_allowance_remarks,
         leave_allowance = allowances.leave_allowance,
@@ -224,6 +225,7 @@ def get_perquisites(db: Session, skip: int , limit: int):
 def create_perquisite(db: Session, perquisite: schemas.Perquisite_Details):
     perquisite = models.PerquisiteDetails(
         etin = perquisite.etin,
+        salary_income_record_id = perquisite.salary_income_record_id,
         mohargha_allowance = perquisite.mohargha_allowance,
         mohargha_allowance_remarks = perquisite.mohargha_allowance_remarks,
         insurance_premium_borne_by_the_employer = perquisite.insurance_premium_borne_by_the_employer,
@@ -263,6 +265,7 @@ def get_vehicle_falities(db: Session, skip: int , limit: int):
 def create_vehicle_falitiy(db: Session, vehicle_facility: schemas.Vehicale_facility_Details):
     vehicle_facility = models.VehicleFacilityDetails(
         etin = vehicle_facility.etin,
+        salary_income_record_id = vehicle_facility.salary_income_record_id,
         upto_2500CC = vehicle_facility.upto_2500CC,
         cost_for_upto_2500 = vehicle_facility.cost_for_upto_2500,
         greater_than_2500cc = vehicle_facility.greater_than_2500cc,
@@ -416,6 +419,97 @@ def create_investment_record(db: Session, investment_record: schemas.Investment_
     db.commit()
     db.refresh(investment_record)
     return investment_record
+
+
+
+def get_given_premium(db: Session, investment_id: int):
+    return db.query(models.GivenPremium).filter(models.GivenPremium.investment_id == investment_id).first()
+
+def get_given_premiums(db: Session, skip: int , limit: int):
+    return db.query(models.GivenPremium).offset(skip).limit(limit).all()
+
+
+def create_given_premium(db: Session, given_premium: schemas.Given_Premium):
+    given_premium = models.GivenPremium(
+        investment_id = given_premium.investment_id,
+        policy_no=given_premium.policy_no,
+        company=given_premium.company,
+        policy_value=given_premium.policy_value,
+        given_premium=given_premium.given_premium,
+        allowable=given_premium.allowable,
+        remarks=given_premium.remarks
+    )
+    
+    db.add(given_premium)
+    db.commit()
+    db.refresh(given_premium)
+    return given_premium
+
+
+
+def get_gov_securities(db: Session, investment_id: int):
+    return db.query(models.GovSecurities).filter(models.GovSecurities.investment_id == investment_id).first()
+
+def get_gov_securities(db: Session, skip: int , limit: int):
+    return db.query(models.GovSecurities).offset(skip).limit(limit).all()
+
+
+def create_gov_securities(db: Session, gov_securities: schemas.Gov_Securities):
+    gov_securities = models.GovSecurities(
+        investment_id = gov_securities.investment_id,
+        description=gov_securities.description,
+        actual=gov_securities.actual,
+        allowable=gov_securities.allowable
+    )
+    
+    db.add(gov_securities)
+    db.commit()
+    db.refresh(gov_securities)
+    return gov_securities
+
+
+
+def get_eft(db: Session, investment_id: int):
+    return db.query(models.EFT).filter(models.EFT.investment_id == investment_id).first()
+
+def get_efts(db: Session, skip: int , limit: int):
+    return db.query(models.EFT).offset(skip).limit(limit).all()
+
+
+def create_eft(db: Session, eft: schemas.E_FT):
+    eft = models.EFT(
+        investment_id = eft.investment_id,
+        description=eft.description,
+        actual=eft.actual,
+        allowable=eft.allowable
+    )
+    
+    db.add(eft)
+    db.commit()
+    db.refresh(eft)
+    return eft
+
+
+
+def get_dps(db: Session, investment_id: int):
+    return db.query(models.DPS).filter(models.DPS.investment_id == investment_id).first()
+
+def get_dpss(db: Session, skip: int , limit: int):
+    return db.query(models.DPS).offset(skip).limit(limit).all()
+
+
+def create_dps(db: Session, dps: schemas.D_PS):
+    dps = models.DPS(
+        investment_id = dps.investment_id,
+        description=dps.description,
+        actual=dps.actual,
+        allowable=dps.allowable
+    )
+    
+    db.add(dps)
+    db.commit()
+    db.refresh(dps)
+    return dps
 
 
 

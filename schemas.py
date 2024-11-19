@@ -127,6 +127,7 @@ class SalaryIncome_Record(BaseModel):
 
 class Allowance_Details(BaseModel):
     etin : str
+    salary_income_record_id : int = 0
     any_allowance: int = 0
     any_allowance_remarks: Optional[str] = None
     leave_allowance: int = 0
@@ -145,10 +146,9 @@ class Allowance_Details(BaseModel):
     other_details: Optional[str] = None
     total : int = 0
     
-    @property
-    def total(self):
-        # Calculate the total dynamically
-        return (
+    def __init__(self, **data):
+        super().__init__(**data)
+        self.total = (
             self.any_allowance +
             self.leave_allowance +
             self.lump_grant +
@@ -158,7 +158,7 @@ class Allowance_Details(BaseModel):
             self.overtime +
             self.other
         )
-
+        
     class config:
             orm_mode = True
 
@@ -167,6 +167,7 @@ class Allowance_Details(BaseModel):
 
 class Perquisite_Details(BaseModel):
     etin : str
+    salary_income_record_id : int = 0
     mohargha_allowance: int = 0
     mohargha_allowance_remarks: Optional[str] = None
     insurance_premium_borne_by_the_employer: int = 0
@@ -187,9 +188,9 @@ class Perquisite_Details(BaseModel):
     other_remarks: Optional[str] = None
     total : int = 0
     
-    @property
-    def total(self):
-        return (
+    def __init__(self, **data):
+        super().__init__(**data)
+        self.total = (
             self.mohargha_allowance +
             self.insurance_premium_borne_by_the_employer +
             self.housing_allowance +
@@ -208,12 +209,20 @@ class Perquisite_Details(BaseModel):
 
 class Vehicale_facility_Details(BaseModel):
     etin : str
+    salary_income_record_id : int = 0
     upto_2500CC : str
     cost_for_upto_2500 : int = 10000
     greater_than_2500cc : str
     cost_for_more_than_2500 : int = 25000
     no_of_months : int = 0
     total : int = 0  
+    
+    def __init__(self, **data):
+        super().__init__(**data)
+        self.total = (
+            (self.cost_for_upto_2500 if self.upto_2500CC.upper() == "YES" else 0) +
+            (self.cost_for_more_than_2500 if self.greater_than_2500cc.upper() == "YES" else 0)
+        ) * self.no_of_months
     
     class config:
         orm_mode = True
@@ -331,61 +340,62 @@ class Investment_Record(BaseModel):
     total_investment : int =0
     allowable_investment : int = 0
     
-    # @property
-    # def total_investment(self):
-    #     return (
-    #         self.gov_securities_actual +
-    #         self.eft_actual +
-    #         self.life_insurance_given_premium_actual +
-    #         self.premium_or_contractual_deferred_annuity_actual +
-    #         self.contribution_paid_to_deposit_pension_actual +
-    #         self.investment_in_any_securities_actual +
-    #         self.provisions_of_pf_act_1925_actual +
-    #         self.contributions_to_approved_provident_fund_actual +
-    #         self.contributions_to_superannuation_funds_actual +
-    #         self.contribution_to_welfare_fund_actual +
-    #         self.contribution_to_zakat_fund_actual +
-    #         self.donation_to_liberation_war_memory_actual +
-    #         self.donations_to_father_of_nation_memory_actual +
-    #         self.donation_to_disabled_organizations_actual +
-    #         self.donations_to_liberation_war_museum_actual +
-    #         self.donation_to_ahsania_cancer_hospital_actual +
-    #         self.donations_to_icddrb_actual +
-    #         self.donation_to_crp_savar_actual +
-    #         self.donations_to_charitable_educational_institutions_actual +
-    #         self.donation_to_asiatic_society_actual +
-    #         self.donation_to_dhaka_ahsania_mission_actual +
-    #         self.contribution_to_super_annuity_fund_actual +
-    #         self.other_actual
-    #     )
+    def __init__(self, **data):
+        super().__init__(**data)
 
-    # @property
-    # def allowable_investment(self):
-    #     return (
-    #         self.gov_securities_allowable +
-    #         self.eft_allowable +
-    #         self.life_insurance_given_premium_allowable +
-    #         self.premium_or_contractual_deferred_annuity_allowable +
-    #         self.contribution_paid_to_deposit_pension_allowable +
-    #         self.investment_in_any_securities_allowable +
-    #         self.provisions_of_pf_act_1925_allowable +
-    #         self.contributions_to_approved_provident_fund_allowable +
-    #         self.contributions_to_superannuation_funds_allowable +
-    #         self.contribution_to_welfare_fund_allowable +
-    #         self.contribution_to_zakat_fund_allowable +
-    #         self.donation_to_liberation_war_memory_allowable +
-    #         self.donations_to_father_of_nation_memory_allowable +
-    #         self.donation_to_disabled_organizations_allowable +
-    #         self.donations_to_liberation_war_museum_allowable +
-    #         self.donation_to_ahsania_cancer_hospital_allowable +
-    #         self.donations_to_icddrb_allowable +
-    #         self.donation_to_crp_savar_allowable +
-    #         self.donations_to_charitable_educational_institutions_allowable +
-    #         self.donation_to_asiatic_society_allowable +
-    #         self.donation_to_dhaka_ahsania_mission_allowable +
-    #         self.contribution_to_super_annuity_fund_allowable +
-    #         self.other_allowable
-    #     )
+        # Calculate total_investment
+        self.total_investment = (
+            self.gov_securities_actual +
+            self.eft_actual +
+            self.life_insurance_given_premium_actual +
+            self.premium_or_contractual_deferred_annuity_actual +
+            self.contribution_paid_to_deposit_pension_actual +
+            self.investment_in_any_securities_actual +
+            self.provisions_of_pf_act_1925_actual +
+            self.contributions_to_approved_provident_fund_actual +
+            self.contributions_to_superannuation_funds_actual +
+            self.contribution_to_welfare_fund_actual +
+            self.contribution_to_zakat_fund_actual +
+            self.donation_to_liberation_war_memory_actual +
+            self.donations_to_father_of_nation_memory_actual +
+            self.donation_to_disabled_organizations_actual +
+            self.donations_to_liberation_war_museum_actual +
+            self.donation_to_ahsania_cancer_hospital_actual +
+            self.donations_to_icddrb_actual +
+            self.donation_to_crp_savar_actual +
+            self.donations_to_charitable_educational_institutions_actual +
+            self.donation_to_asiatic_society_actual +
+            self.donation_to_dhaka_ahsania_mission_actual +
+            self.contribution_to_super_annuity_fund_actual +
+            self.other_actual
+        )
+
+        # Calculate allowable_investment
+        self.allowable_investment = (
+            self.gov_securities_allowable +
+            self.eft_allowable +
+            self.life_insurance_given_premium_allowable +
+            self.premium_or_contractual_deferred_annuity_allowable +
+            self.contribution_paid_to_deposit_pension_allowable +
+            self.investment_in_any_securities_allowable +
+            self.provisions_of_pf_act_1925_allowable +
+            self.contributions_to_approved_provident_fund_allowable +
+            self.contributions_to_superannuation_funds_allowable +
+            self.contribution_to_welfare_fund_allowable +
+            self.contribution_to_zakat_fund_allowable +
+            self.donation_to_liberation_war_memory_allowable +
+            self.donations_to_father_of_nation_memory_allowable +
+            self.donation_to_disabled_organizations_allowable +
+            self.donations_to_liberation_war_museum_allowable +
+            self.donation_to_ahsania_cancer_hospital_allowable +
+            self.donations_to_icddrb_allowable +
+            self.donation_to_crp_savar_allowable +
+            self.donations_to_charitable_educational_institutions_allowable +
+            self.donation_to_asiatic_society_allowable +
+            self.donation_to_dhaka_ahsania_mission_allowable +
+            self.contribution_to_super_annuity_fund_allowable +
+            self.other_allowable
+        )
 
     class Config:
         orm_mode = True
@@ -394,12 +404,18 @@ class Investment_Record(BaseModel):
         
         
 class Given_Premium(BaseModel):
+    investment_id : int = 0
     policy_no : Optional[str] = None
     company : Optional[str] = None
     policy_value : int = 0
     given_premium : int = 0
     allowable : int = 0
     remarks : Optional[str] = None
+    
+    def __init__(self, **data):
+        super().__init__(**data)
+        # Calculate allowable as the minimum of actual and 120000
+        self.allowable = min(self.given_premium * 0.1, self.policy_value)
     
     class Config:
         orm_mode = True
@@ -408,9 +424,15 @@ class Given_Premium(BaseModel):
         
         
 class Gov_Securities(BaseModel):
+    investment_id : int = 0
     description : Optional[str] = None
     actual : int = 0
     allowable : int =0
+    
+    def __init__(self, **data):
+        super().__init__(**data)
+        # Calculate allowable as the minimum of actual and 120000
+        self.allowable = min(self.actual, 500000)
     
     class Config:
         orm_mode = True   
@@ -419,18 +441,31 @@ class Gov_Securities(BaseModel):
         
         
 class E_FT(BaseModel):
+    investment_id : int = 0
     description : Optional[str] = None
     actual : int = 0
     allowable : int =0
+    
+    def __init__(self, **data):
+        super().__init__(**data)
+        # Calculate allowable as the minimum of actual and 120000
+        self.allowable = min(self.actual, 500000)
+    
     
     class Config:
         orm_mode = True
         
         
 class D_PS(BaseModel):
+    investment_id : int = 0
     description : Optional[str] = None
     actual : int = 0
     allowable : int =0
+    
+    def __init__(self, **data):
+        super().__init__(**data)
+        # Calculate allowable as the minimum of actual and 120000
+        self.allowable = min(self.actual, 120000)
     
     class Config:
         orm_mode = True 

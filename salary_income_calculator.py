@@ -47,11 +47,7 @@ class IncomeCalculator:
         # Include allowances, perquisites, and vehicle facility
         self.total_income += allowances.total
         self.total_income += perquisites.total
-        self.total_income += vehicle_facility.no_of_months * (
-            vehicle_facility.cost_for_upto_2500
-            if vehicle_facility.upto_2500CC.upper() == "YES"
-            else vehicle_facility.cost_for_more_than_2500
-        )
+        self.total_income += vehicle_facility.total
         return self.total_income
 
     def _calculate_private_income(self):

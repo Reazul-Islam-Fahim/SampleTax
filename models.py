@@ -219,6 +219,7 @@ class AllowanceDetails(Base):
     overtime_remarks = Column(String(100), nullable=True)
     other = Column(Integer, default=0)
     other_details = Column(String(100), nullable=True)
+    total = Column(Integer, default=0 )
     
     etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
     salary_income_record_id = Column(Integer, ForeignKey('salary_income_records.id'), nullable=False)
@@ -400,33 +401,9 @@ class InvestmentRecord(Base):
     total_investment = Column(Integer, default=0)
     allowable_investment = Column(Integer, default=0)
     
-    total_investment = Column(Integer, Computed(
-        "gov_securities_actual + eft_actual + life_insurance_given_premium_actual + "
-        "premium_or_contractual_deferred_annuity_actual + contribution_paid_to_deposit_pension_actual + "
-        "investment_in_any_securities_actual + provisions_of_pf_act_1925_actual + "
-        "contributions_to_approved_provident_fund_actual + contributions_to_superannuation_funds_actual + "
-        "contribution_to_welfare_fund_actual + contribution_to_zakat_fund_actual + "
-        "donation_to_liberation_war_memory_actual + donations_to_father_of_nation_memory_actual + "
-        "donation_to_disabled_organizations_actual + donations_to_liberation_war_museum_actual + "
-        "donation_to_ahsania_cancer_hospital_actual + donations_to_icddrb_actual + "
-        "donation_to_crp_savar_actual + donations_to_charitable_educational_institutions_actual + "
-        "donation_to_asiatic_society_actual + donation_to_dhaka_ahsania_mission_actual + "
-        "contribution_to_super_annuity_fund_actual + other_actual"
-    ), nullable=True)
+    total_investment = Column(Integer, default=0)
 
-    allowable_investment = Column(Integer, Computed(
-        "gov_securities_allowable + eft_allowable + life_insurance_given_premium_allowable + "
-        "premium_or_contractual_deferred_annuity_allowable + contribution_paid_to_deposit_pension_allowable + "
-        "investment_in_any_securities_allowable + provisions_of_pf_act_1925_allowable + "
-        "contributions_to_approved_provident_fund_allowable + contributions_to_superannuation_funds_allowable + "
-        "contribution_to_welfare_fund_allowable + contribution_to_zakat_fund_allowable + "
-        "donation_to_liberation_war_memory_allowable + donations_to_father_of_nation_memory_allowable + "
-        "donation_to_disabled_organizations_allowable + donations_to_liberation_war_museum_allowable + "
-        "donation_to_ahsania_cancer_hospital_allowable + donations_to_icddrb_allowable + "
-        "donation_to_crp_savar_allowable + donations_to_charitable_educational_institutions_allowable + "
-        "donation_to_asiatic_society_allowable + donation_to_dhaka_ahsania_mission_allowable + "
-        "contribution_to_super_annuity_fund_allowable + other_allowable"
-    ), nullable=True)
+    allowable_investment = Column(Integer, default=0)
     
     etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
     
@@ -448,10 +425,10 @@ class GivenPremium(Base):
     company = Column(String(100), index= True, nullable= True)
     policy_value = Column(Integer, index= True, default= 0)
     given_premium = Column(Integer, index= True, default= 0)
-    allowable = Column(Integer, Computed("given_premium * 0.1"), index= True, default= 0)
+    allowable = Column(Integer, index= True, default= 0)
     remarks = Column(String(100), index= True, nullable= True)
     
-    invetment_id = Column(Integer, ForeignKey('investment_record.id'), nullable=False)
+    investment_id = Column(Integer, ForeignKey('investment_record.id'), nullable=False)
 
     investment_record = relationship("InvestmentRecord", back_populates="given_premium")
     
@@ -463,9 +440,9 @@ class GovSecurities(Base):
     id = Column(Integer, primary_key=True, index=True, unique= True)
     description = Column(String(100), index= True, nullable= True)
     actual = Column(Integer, index= True, default= 0)
-    allowable = Column(Integer, Computed("CASE WHEN actual > 500000 THEN 500000 ELSE actual END"), index= True, default= 0)
+    allowable = Column(Integer, index= True, default= 0)
     
-    invetment_id = Column(Integer, ForeignKey('investment_record.id'), nullable=False)
+    investment_id = Column(Integer, ForeignKey('investment_record.id'), nullable=False)
 
     investment_record = relationship("InvestmentRecord", back_populates="gov_securities")    
     
@@ -478,9 +455,9 @@ class EFT(Base):
     id = Column(Integer, primary_key=True, index=True, unique= True)
     description = Column(String(100), index= True, nullable= True)
     actual = Column(Integer, index= True, default= 0)
-    allowable = Column(Integer, Computed("CASE WHEN actual > 500000 THEN 500000 ELSE actual END"), index= True, default= 0)
+    allowable = Column(Integer, index= True, default= 0)
     
-    invetment_id = Column(Integer, ForeignKey('investment_record.id'), nullable=False)
+    investment_id = Column(Integer, ForeignKey('investment_record.id'), nullable=False)
 
     investment_record = relationship("InvestmentRecord", back_populates="eft")    
     
@@ -494,9 +471,9 @@ class DPS(Base):
     id = Column(Integer, primary_key=True, index=True, unique= True)
     description = Column(String(100), index= True, nullable= True)
     actual = Column(Integer, index= True, default= 0)
-    allowable = Column(Integer, Computed("CASE WHEN actual > 120000 THEN 120000 ELSE actual END"), index= True, default= 0)
+    allowable = Column(Integer, index= True, default= 0)
     
-    invetment_id = Column(Integer, ForeignKey('investment_record.id'), nullable=False)
+    investment_id = Column(Integer, ForeignKey('investment_record.id'), nullable=False)
 
     investment_record = relationship("InvestmentRecord", back_populates="dps")    
     
