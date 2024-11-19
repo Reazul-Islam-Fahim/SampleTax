@@ -450,7 +450,7 @@ def create_given_premium(db: Session, given_premium: schemas.Given_Premium):
 def get_gov_securities(db: Session, investment_id: int):
     return db.query(models.GovSecurities).filter(models.GovSecurities.investment_id == investment_id).first()
 
-def get_gov_securities(db: Session, skip: int , limit: int):
+def get_gov_securitiess(db: Session, skip: int , limit: int):
     return db.query(models.GovSecurities).offset(skip).limit(limit).all()
 
 
