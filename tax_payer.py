@@ -4,6 +4,21 @@ import crud, models, schemas
 from db import SessionLocal, engine, get_db
 
 
+# origins = [
+#     "https://localhost:8000",
+#     "https://yourfrontenddomain.com",
+# ]
+
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins = origins,
+#     allow_credentials = True,
+#     allow_methods = ['*'],
+#     allow_headers = ['*']
+# )
+
+
+
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()

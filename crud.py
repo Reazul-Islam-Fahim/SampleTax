@@ -187,7 +187,7 @@ def get_allowances(db: Session, skip: int , limit: int):
 def create_allowance(db: Session, allowances: schemas.Allowance_Details):
     allowances = models.AllowanceDetails(
         etin = allowances.etin,
-        salary_income_record_id = allowances.salary_income_record_id,
+        # salary_income_record_id = allowances.salary_income_record_id,
         any_allowance = allowances.any_allowance,
         any_allowance_remarks = allowances.any_allowance_remarks,
         leave_allowance = allowances.leave_allowance,
@@ -225,7 +225,7 @@ def get_perquisites(db: Session, skip: int , limit: int):
 def create_perquisite(db: Session, perquisite: schemas.Perquisite_Details):
     perquisite = models.PerquisiteDetails(
         etin = perquisite.etin,
-        salary_income_record_id = perquisite.salary_income_record_id,
+        # salary_income_record_id = perquisite.salary_income_record_id,
         mohargha_allowance = perquisite.mohargha_allowance,
         mohargha_allowance_remarks = perquisite.mohargha_allowance_remarks,
         insurance_premium_borne_by_the_employer = perquisite.insurance_premium_borne_by_the_employer,
@@ -265,7 +265,7 @@ def get_vehicle_falities(db: Session, skip: int , limit: int):
 def create_vehicle_falitiy(db: Session, vehicle_facility: schemas.Vehicale_facility_Details):
     vehicle_facility = models.VehicleFacilityDetails(
         etin = vehicle_facility.etin,
-        salary_income_record_id = vehicle_facility.salary_income_record_id,
+        # salary_income_record_id = vehicle_facility.salary_income_record_id,
         upto_2500CC = vehicle_facility.upto_2500CC,
         cost_for_upto_2500 = vehicle_facility.cost_for_upto_2500,
         greater_than_2500cc = vehicle_facility.greater_than_2500cc,
@@ -422,8 +422,8 @@ def create_investment_record(db: Session, investment_record: schemas.Investment_
 
 
 
-def get_given_premium(db: Session, investment_id: int):
-    return db.query(models.GivenPremium).filter(models.GivenPremium.investment_id == investment_id).first()
+def get_given_premium(db: Session, etin : str):
+    return db.query(models.GivenPremium).filter(models.GivenPremium.etin == etin).first()
 
 def get_given_premiums(db: Session, skip: int , limit: int):
     return db.query(models.GivenPremium).offset(skip).limit(limit).all()
@@ -431,7 +431,7 @@ def get_given_premiums(db: Session, skip: int , limit: int):
 
 def create_given_premium(db: Session, given_premium: schemas.Given_Premium):
     given_premium = models.GivenPremium(
-        investment_id = given_premium.investment_id,
+        etin = given_premium.etin,
         policy_no=given_premium.policy_no,
         company=given_premium.company,
         policy_value=given_premium.policy_value,
@@ -447,8 +447,8 @@ def create_given_premium(db: Session, given_premium: schemas.Given_Premium):
 
 
 
-def get_gov_securities(db: Session, investment_id: int):
-    return db.query(models.GovSecurities).filter(models.GovSecurities.investment_id == investment_id).first()
+def get_gov_securities(db: Session, etin : str):
+    return db.query(models.GovSecurities).filter(models.GovSecurities.etin == etin).first()
 
 def get_gov_securitiess(db: Session, skip: int , limit: int):
     return db.query(models.GovSecurities).offset(skip).limit(limit).all()
@@ -456,7 +456,7 @@ def get_gov_securitiess(db: Session, skip: int , limit: int):
 
 def create_gov_securities(db: Session, gov_securities: schemas.Gov_Securities):
     gov_securities = models.GovSecurities(
-        investment_id = gov_securities.investment_id,
+        etin = gov_securities.etin,
         description=gov_securities.description,
         actual=gov_securities.actual,
         allowable=gov_securities.allowable
@@ -469,8 +469,8 @@ def create_gov_securities(db: Session, gov_securities: schemas.Gov_Securities):
 
 
 
-def get_eft(db: Session, investment_id: int):
-    return db.query(models.EFT).filter(models.EFT.investment_id == investment_id).first()
+def get_eft(db: Session, etin : str):
+    return db.query(models.EFT).filter(models.EFT.etin == etin).first()
 
 def get_efts(db: Session, skip: int , limit: int):
     return db.query(models.EFT).offset(skip).limit(limit).all()
@@ -478,7 +478,7 @@ def get_efts(db: Session, skip: int , limit: int):
 
 def create_eft(db: Session, eft: schemas.E_FT):
     eft = models.EFT(
-        investment_id = eft.investment_id,
+        etin = eft.etin,
         description=eft.description,
         actual=eft.actual,
         allowable=eft.allowable
@@ -491,8 +491,8 @@ def create_eft(db: Session, eft: schemas.E_FT):
 
 
 
-def get_dps(db: Session, investment_id: int):
-    return db.query(models.DPS).filter(models.DPS.investment_id == investment_id).first()
+def get_dps(db: Session, etin : str):
+    return db.query(models.DPS).filter(models.DPS.etin == etin).first()
 
 def get_dpss(db: Session, skip: int , limit: int):
     return db.query(models.DPS).offset(skip).limit(limit).all()
@@ -500,7 +500,7 @@ def get_dpss(db: Session, skip: int , limit: int):
 
 def create_dps(db: Session, dps: schemas.D_PS):
     dps = models.DPS(
-        investment_id = dps.investment_id,
+        etin = dps.etin,
         description=dps.description,
         actual=dps.actual,
         allowable=dps.allowable
@@ -524,7 +524,7 @@ def get_rebate_records(db: Session, skip: int , limit: int):
 def create_rebate_record(db: Session, rebate_record: schemas.Rebate_Record):
     rebate_record = models.InvestmentRecord(
         etin = rebate_record.etin,
-        actual_investment=rebate_record.actual_investment,
+        taxable_income=rebate_record.taxable_income,
         allowable_investment=rebate_record.allowable_investment,
         rebate=rebate_record.rebate
     )
@@ -533,6 +533,8 @@ def create_rebate_record(db: Session, rebate_record: schemas.Rebate_Record):
     db.commit()
     db.refresh(rebate_record)
     return rebate_record
+
+
 
 
 

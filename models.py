@@ -107,6 +107,10 @@ class Taxpayer(Base):
     vehicle_facility_details = relationship("VehicleFacilityDetails", back_populates="taxpayer")
     salary_income_summary = relationship("SalaryIncomeSummary", back_populates="taxpayer")
     investment_record = relationship("InvestmentRecord", back_populates="taxpayer")
+    given_premium = relationship("GivenPremium", back_populates="taxpayer")
+    gov_securities = relationship("GovSecurities", back_populates="taxpayer")
+    eft = relationship("EFT", back_populates="taxpayer")
+    dps = relationship("DPS", back_populates="taxpayer")
     rebate_record = relationship("RebateRecord", back_populates="taxpayer")
     
     
@@ -192,9 +196,9 @@ class SalaryIncomeRecord(Base):
     taxpayer = relationship("Taxpayer", back_populates="salary_income_records")    
     
     employer_info = relationship("EmployerInfo", back_populates="salary_income_records")
-    allowance_details = relationship("AllowanceDetails", back_populates="salary_income_records")
-    perquisite_details = relationship("PerquisiteDetails", back_populates="salary_income_records")
-    vehicle_facility_details = relationship("VehicleFacilityDetails", back_populates="salary_income_records")
+    # allowance_details = relationship("AllowanceDetails", back_populates="salary_income_records")
+    # perquisite_details = relationship("PerquisiteDetails", back_populates="salary_income_records")
+    # vehicle_facility_details = relationship("VehicleFacilityDetails", back_populates="salary_income_records")
     
 
     
@@ -222,11 +226,11 @@ class AllowanceDetails(Base):
     total = Column(Integer, default=0 )
     
     etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
-    salary_income_record_id = Column(Integer, ForeignKey('salary_income_records.id'), nullable=False)
+    # salary_income_record_id = Column(Integer, ForeignKey('salary_income_records.id'), nullable=False)
     
     
     taxpayer = relationship("Taxpayer", back_populates="allowance_details")
-    salary_income_records = relationship("SalaryIncomeRecord", back_populates="allowance_details")
+    # salary_income_records = relationship("SalaryIncomeRecord", back_populates="allowance_details")
     
     
     
@@ -256,10 +260,10 @@ class PerquisiteDetails(Base):
     total = Column(Integer, default=0)
     
     etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
-    salary_income_record_id = Column(Integer, ForeignKey('salary_income_records.id'), nullable=False)
+    # salary_income_record_id = Column(Integer, ForeignKey('salary_income_records.id'), nullable=False)
     
     taxpayer = relationship("Taxpayer", back_populates="perquisite_details")
-    salary_income_records = relationship("SalaryIncomeRecord", back_populates="perquisite_details")
+    # salary_income_records = relationship("SalaryIncomeRecord", back_populates="perquisite_details")
     
     
     
@@ -276,10 +280,10 @@ class VehicleFacilityDetails(Base):
     total = Column(Integer, default=0)  # Default value as 0
     
     etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
-    salary_income_record_id = Column(Integer, ForeignKey('salary_income_records.id'), nullable=False)
+    # salary_income_record_id = Column(Integer, ForeignKey('salary_income_records.id'), nullable=False)
     
     taxpayer = relationship("Taxpayer", back_populates="vehicle_facility_details")
-    salary_income_records = relationship("SalaryIncomeRecord", back_populates="vehicle_facility_details")
+    # salary_income_records = relationship("SalaryIncomeRecord", back_populates="vehicle_facility_details")
     
     
     
@@ -297,6 +301,7 @@ class SalaryIncomeSummary(Base):
     etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
     
     taxpayer = relationship("Taxpayer", back_populates="salary_income_summary")
+    # rebate_record = relationship("RebateRecord", back_populates="salary_income_summary")
     
     
     
@@ -401,17 +406,11 @@ class InvestmentRecord(Base):
     total_investment = Column(Integer, default=0)
     allowable_investment = Column(Integer, default=0)
     
-    total_investment = Column(Integer, default=0)
-
-    allowable_investment = Column(Integer, default=0)
     
     etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
     
     taxpayer = relationship("Taxpayer", back_populates="investment_record")
-    given_premium = relationship("GivenPremium", back_populates="investment_record")
-    gov_securities = relationship("GovSecurities", back_populates="investment_record")
-    eft = relationship("EFT", back_populates="investment_record")
-    dps = relationship("DPS", back_populates="investment_record")
+    # rebate_record = relationship("RebateRecord", back_populates="investment_record")
     
     
     
@@ -428,9 +427,13 @@ class GivenPremium(Base):
     allowable = Column(Integer, index= True, default= 0)
     remarks = Column(String(100), index= True, nullable= True)
     
-    investment_id = Column(Integer, ForeignKey('investment_record.id'), nullable=False)
+    etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
+    
+    taxpayer = relationship("Taxpayer", back_populates="given_premium")
+    
+    # investment_id = Column(Integer, ForeignKey('investment_record.id'), nullable=False)
 
-    investment_record = relationship("InvestmentRecord", back_populates="given_premium")
+    # investment_record = relationship("InvestmentRecord", back_populates="given_premium")
     
     
 class GovSecurities(Base):
@@ -442,9 +445,13 @@ class GovSecurities(Base):
     actual = Column(Integer, index= True, default= 0)
     allowable = Column(Integer, index= True, default= 0)
     
-    investment_id = Column(Integer, ForeignKey('investment_record.id'), nullable=False)
+    etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
+    
+    taxpayer = relationship("Taxpayer", back_populates="gov_securities")
+    
+    # investment_id = Column(Integer, ForeignKey('investment_record.id'), nullable=False)
 
-    investment_record = relationship("InvestmentRecord", back_populates="gov_securities")    
+    # investment_record = relationship("InvestmentRecord", back_populates="gov_securities")    
     
     
     
@@ -457,9 +464,13 @@ class EFT(Base):
     actual = Column(Integer, index= True, default= 0)
     allowable = Column(Integer, index= True, default= 0)
     
-    investment_id = Column(Integer, ForeignKey('investment_record.id'), nullable=False)
+    etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
+    
+    taxpayer = relationship("Taxpayer", back_populates="eft")
+    
+    # investment_id = Column(Integer, ForeignKey('investment_record.id'), nullable=False)
 
-    investment_record = relationship("InvestmentRecord", back_populates="eft")    
+    # investment_record = relationship("InvestmentRecord", back_populates="eft")    
     
     
     
@@ -473,9 +484,13 @@ class DPS(Base):
     actual = Column(Integer, index= True, default= 0)
     allowable = Column(Integer, index= True, default= 0)
     
-    investment_id = Column(Integer, ForeignKey('investment_record.id'), nullable=False)
+    etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
+    
+    taxpayer = relationship("Taxpayer", back_populates="dps")
+    
+    # investment_id = Column(Integer, ForeignKey('investment_record.id'), nullable=False)
 
-    investment_record = relationship("InvestmentRecord", back_populates="dps")    
+    # investment_record = relationship("InvestmentRecord", back_populates="dps")    
     
     
     
@@ -485,13 +500,19 @@ class RebateRecord(Base):
     
     
     id = Column(Integer, primary_key=True, index=True, unique= True)
-    actual_investment = Column(Integer, index= True, default= 0)
-    allowable_investment = Column(Integer, index= True, default= 0)
-    rebate = Column(Integer, index= True, default= 0)
+    taxable_income = Column(Integer,  default=0, nullable=False)
+    allowable_investment = Column(Integer, default=0, nullable=False)
+    
     
     etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
+
+    
+    rebate = Column(Integer, index= True, default= 0)
     
     taxpayer = relationship("Taxpayer", back_populates="rebate_record")
+    # salary_income_summary = relationship("SalaryIncomeSummary", back_populates="rebate_record")
+    # investment_record = relationship("InvestmentRecord", back_populates="rebate_record")
+    
     
     
     
