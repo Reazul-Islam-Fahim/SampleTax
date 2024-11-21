@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import schemas
 from sqlalchemy.orm import Session
 import schemas 
-import crud
+import crud,models
 from age import calculate_age
 
 app = FastAPI()
@@ -175,6 +175,7 @@ async def calculate_salary_income(
     tax_calculator.set_exemption_limit(category, user.num_autistic_children)
     tax_liability = tax_calculator.calculate_taxable_income()
     
+    salary_data.private_allowances = allowances.total
     
     crud.create_salary_income_record(db, salary_data)
     crud.create_allowance(db, allowances, salary_data.etin)
@@ -182,19 +183,26 @@ async def calculate_salary_income(
     crud.create_vehicle_falitiy(db, vehicle_facility, salary_data.etin)
         
     
-    # get_allowance = crud.get_allowance(db, salary_data.etin)
-    # get_perquisite = crud.get_perquisite(db, salary_data.etin)
-    # get_vehicle = crud.get_vehicle_falitiy(db, salary_data.etin)
+    get_allowance = crud.get_allowance(db, salary_data.etin)
+    get_perquisite = crud.get_perquisite(db, salary_data.etin)
+    get_vehicle = crud.get_vehicle_falitiy(db, salary_data.etin)
     
+    print(get_allowance.total, get_perquisite.total, get_vehicle.total)
     
-    # salary_data.private_allowances = get_allowance.total
-    # salary_data.private_perquisites = get_perquisite.total
-    # salary_data.private_vehicle_facility = get_vehicle.total
-    
-    
+    # orm_salary_data = db.query(models.SalaryIncomeRecord).filter_by(etin=salary_data.etin).first()
+    # if orm_salary_data is None:
+    #     raise HTTPException(status_code=404, detail="Salary income record not found.")
+
+    # orm_salary_data.private_allowances = get_allowance.total
+    # orm_salary_data.private_perquisites = get_perquisite.total
+    # orm_salary_data.private_vehicle_facility = get_vehicle.total
+
+    # # db.add(orm_salary_data)
     # db.commit()
-    # db.refresh(salary_data)
+    # db.refresh(orm_salary_data)
     
+    # print(orm_salary_data.private_allowances, orm_salary_data.private_perquisites, orm_salary_data.private_vehicle_facility)
+
     
 
     # # Save the salary income summary
