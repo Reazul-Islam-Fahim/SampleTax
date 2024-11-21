@@ -12,18 +12,18 @@ from age import calculate_age
 
 app = FastAPI()
 
-# origins = [
-#     "https://localhost:8000",
-#     # "https://yourfrontenddomain.com",
-# ]
+origins = [
+    "http://192.168.2.33:5173",
+    # "https://yourfrontenddomain.com",
+]
 
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins = origins,
-#     allow_credentials = True,
-#     allow_methods = ['*'],
-#     allow_headers = ['*']
-# )
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins = origins,
+    allow_credentials = True,
+    allow_methods = ['*'],
+    allow_headers = ['*']
+)
 
 
 
@@ -141,7 +141,7 @@ class TaxLiabilityCalculator:
 
 
 
-@app.post("/calculate_salary_income/")
+@app.post("/api/calculate_salary_income/")
 async def calculate_salary_income(
     salary_data: schemas.SalaryIncome_Record = Body(...),
     allowances: schemas.Allowance_Details = Body(...),
@@ -176,22 +176,38 @@ async def calculate_salary_income(
     tax_liability = tax_calculator.calculate_taxable_income()
     
     
-    crud.create_salary_income_record(db, salary_data)    
+    crud.create_salary_income_record(db, salary_data)
     crud.create_allowance(db, allowances, salary_data.etin)
     crud.create_perquisite(db, perquisites, salary_data.etin)
     crud.create_vehicle_falitiy(db, vehicle_facility, salary_data.etin)
+        
+    
+    # get_allowance = crud.get_allowance(db, salary_data.etin)
+    # get_perquisite = crud.get_perquisite(db, salary_data.etin)
+    # get_vehicle = crud.get_vehicle_falitiy(db, salary_data.etin)
+    
+    
+    # salary_data.private_allowances = get_allowance.total
+    # salary_data.private_perquisites = get_perquisite.total
+    # salary_data.private_vehicle_facility = get_vehicle.total
+    
+    
+    # db.commit()
+    # db.refresh(salary_data)
+    
     
 
-    # Save the salary income summary
+    # # Save the salary income summary
     exempted_income = total_income - taxable_income
+   
     salary_income_summary = schemas.SalaryIncome_Summary(
-        etin=salary_data.etin,
-        total_income=total_income,
-        exempted_income=exempted_income,
-        taxable_income=taxable_income,
-        tax_liability=tax_liability
+        total_income=int(total_income),
+        exempted_income= int(exempted_income),
+        taxable_income=int(taxable_income),
+        tax_liability=int(tax_liability)
     )
-    # crud.create_salary_income_summary(db, salary_income_summary)
+    
+    crud.create_salary_income_summary(db, salary_income_summary, salary_data.etin)
 
     return {
         "total_income": total_income,
@@ -199,12 +215,14 @@ async def calculate_salary_income(
         "taxable_income": taxable_income,
         "tax_liability": tax_liability
     }
+    
+    # return 0
 
 
 
 
     
-@app.get("/get_salary_income_record/{etin}")
+@app.get("/api/get_salary_income_record/{etin}")
 async def get_income_records(etin : str = Path(...),  db: Session = Depends(get_db)):
     db_item = crud.get_salary_income_summary(db, etin = etin)
     if db_item is None:
@@ -213,7 +231,7 @@ async def get_income_records(etin : str = Path(...),  db: Session = Depends(get_
 
     
 
-@app.get("/get_salary_income_records/")
+@app.get("/api/get_salary_income_records/")
 async def get_income_records(skip : int = Query(...), limit : int = Query(...),  db: Session = Depends(get_db)):
     return crud.get_salary_income_summarys(db, skip=skip, limit=limit)
 

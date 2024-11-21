@@ -203,9 +203,9 @@ class Perquisite_Details(BaseModel):
             
 
 class Vehicale_facility_Details(BaseModel):
-    upto_2500CC : str
+    upto_2500CC : str = "No"
     cost_for_upto_2500 : int = 10000
-    greater_than_2500cc : str
+    greater_than_2500cc : str = "No"
     cost_for_more_than_2500 : int = 25000
     no_of_months : int = 0
     total : int = 0  
