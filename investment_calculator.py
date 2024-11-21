@@ -101,7 +101,7 @@ def create_investment_record(
     gov_securities: schemas.Gov_Securities = Body(...),
     eft: schemas.E_FT = Body(...),
     dps: schemas.D_PS = Body(...),
-    # etin : str = Body(...),
+    etin : str = Body(...),
     db: Session = Depends(get_db)
 ):
     
@@ -110,25 +110,20 @@ def create_investment_record(
         db.begin()
 
         # Step 1: Add the investment record
-        crud.create_investment_record(db, investment_record)
+        crud.create_investment_record(db, investment_record, etin)
+        
+        investment = crud.get_investment_record(db, etin)
 
-        # Step 2: Add related records concurrently
-        given_premium.etin = investment_record.etin
-        crud.create_given_premium(db, given_premium)
-
-        gov_securities.etin = investment_record.etin
-        crud.create_gov_securities(db, gov_securities)
-
-        eft.etin = investment_record.etin
-        crud.create_eft(db, eft)
-
-        dps.etin = investment_record.etin
-        crud.create_dps(db, dps)
+        
+        crud.create_given_premium(db, given_premium, investment.etin)
+        crud.create_gov_securities(db, gov_securities, investment.etin)
+        crud.create_eft(db, eft, investment.etin)
+        crud.create_dps(db, dps, investment.etin)
 
         # Step 3: Fetch and update `InvestmentRecord` with calculated data
         inv_record = (
             db.query(models.InvestmentRecord)
-            .filter(models.InvestmentRecord.etin == investment_record.etin)
+            .filter(models.InvestmentRecord.etin == investment.etin)
             .first()
         )
 
@@ -167,7 +162,7 @@ def read_investment_record(etin: str = Path(...), db: Session = Depends(get_db))
 
 
 @app.get("/investment_records/", response_model=list[schemas.Investment_Record])
-def read_investment_records(skip: int = Query(0), limit: int = Query(100), db: Session = Depends(get_db)):
+def read_investment_records(skip: int = Query(...), limit: int = Query(...), db: Session = Depends(get_db)):
     items = crud.get_investment_records(db, skip=skip, limit=limit)
     if not items:
         raise HTTPException(status_code=404, detail="No investment records found")

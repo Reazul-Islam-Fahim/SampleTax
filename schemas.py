@@ -52,7 +52,6 @@ class TaxPayerCreate(TaxPayers):
 
 
 class Employer_info(BaseModel):
-    etin:str
     name : str
     start_date : str
     end_date : str
@@ -126,8 +125,6 @@ class SalaryIncome_Record(BaseModel):
 
 
 class Allowance_Details(BaseModel):
-    etin : str
-    # salary_income_record_id : int = 0
     any_allowance: int = 0
     any_allowance_remarks: Optional[str] = None
     leave_allowance: int = 0
@@ -166,8 +163,6 @@ class Allowance_Details(BaseModel):
 
 
 class Perquisite_Details(BaseModel):
-    etin : str
-    # salary_income_record_id : int = 0
     mohargha_allowance: int = 0
     mohargha_allowance_remarks: Optional[str] = None
     insurance_premium_borne_by_the_employer: int = 0
@@ -208,8 +203,6 @@ class Perquisite_Details(BaseModel):
             
 
 class Vehicale_facility_Details(BaseModel):
-    etin : str
-    # salary_income_record_id : int = 0
     upto_2500CC : str
     cost_for_upto_2500 : int = 10000
     greater_than_2500cc : str
@@ -231,7 +224,6 @@ class Vehicale_facility_Details(BaseModel):
     
     
 class SalaryIncome_Summary(BaseModel):
-    etin : str
     total_income : int
     exempted_income : int
     taxable_income : int
@@ -244,7 +236,6 @@ class SalaryIncome_Summary(BaseModel):
         
         
 class Investment_Record(BaseModel):
-    etin: str
     gov_securities_actual: int = 0
     gov_securities_allowable: int = 0
     gov_securities_remarks: Optional[str] = None
@@ -404,8 +395,6 @@ class Investment_Record(BaseModel):
         
         
 class Given_Premium(BaseModel):
-    etin : str
-    # investment_id : int = 0
     policy_no : Optional[str] = None
     company : Optional[str] = None
     policy_value : int = 0
@@ -425,8 +414,6 @@ class Given_Premium(BaseModel):
         
         
 class Gov_Securities(BaseModel):
-    etin : str
-    # investment_id : int = 0
     description : Optional[str] = None
     actual : int = 0
     allowable : int =0
@@ -443,8 +430,6 @@ class Gov_Securities(BaseModel):
         
         
 class E_FT(BaseModel):
-    etin : str
-    # investment_id : int = 0
     description : Optional[str] = None
     actual : int = 0
     allowable : int =0
@@ -460,8 +445,6 @@ class E_FT(BaseModel):
         
         
 class D_PS(BaseModel):
-    etin : str
-    # investment_id : int = 0
     description : Optional[str] = None
     actual : int = 0
     allowable : int =0
@@ -476,7 +459,6 @@ class D_PS(BaseModel):
         
         
 class Rebate_Record(BaseModel):
-    etin : str
     taxable_income : int = 0
     allowable_investment : int = 0
     rebate : int = 0

@@ -175,10 +175,12 @@ async def calculate_salary_income(
     tax_calculator.set_exemption_limit(category, user.num_autistic_children)
     tax_liability = tax_calculator.calculate_taxable_income()
     
-    crud.create_salary_income_record(db, salary_data)
-    crud.create_allowance(db, allowances)
-    crud.create_perquisite(db, perquisites)
-    crud.create_vehicle_falitiy(db, vehicle_facility)
+    
+    crud.create_salary_income_record(db, salary_data)    
+    crud.create_allowance(db, allowances, salary_data.etin)
+    crud.create_perquisite(db, perquisites, salary_data.etin)
+    crud.create_vehicle_falitiy(db, vehicle_facility, salary_data.etin)
+    
 
     # Save the salary income summary
     exempted_income = total_income - taxable_income
@@ -189,7 +191,7 @@ async def calculate_salary_income(
         taxable_income=taxable_income,
         tax_liability=tax_liability
     )
-    crud.create_salary_income_summary(db, salary_income_summary)
+    # crud.create_salary_income_summary(db, salary_income_summary)
 
     return {
         "total_income": total_income,
