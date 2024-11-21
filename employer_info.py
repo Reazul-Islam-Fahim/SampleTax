@@ -24,5 +24,4 @@ def read_employer_infos(skip: int = Query(...), limit: int = Query(...), db: Ses
 @app.post("/employer_info/", response_model=schemas.Employer_info)
 def create_employer_info_route(employer_info: schemas.Employer_info = Body(...), etin : str = Body(...), db: Session = Depends(get_db)):
     user = crud.get_tax_payer(db, etin)
-    print(user)
     return crud.create_employer_info(db=db, employer_info=employer_info, petin= user.etin)
