@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Enum as senum, ForeignKey, Computed
+from sqlalchemy import Column, Integer, Float, String, Enum as senum, ForeignKey, Computed
 from sqlalchemy.orm import relationship
 from db import Base
 from enum import Enum
@@ -196,9 +196,9 @@ class SalaryIncomeRecord(Base):
     taxpayer = relationship("Taxpayer", back_populates="salary_income_records")    
     
     employer_info = relationship("EmployerInfo", back_populates="salary_income_records")
-    # allowance_details = relationship("AllowanceDetails", back_populates="salary_income_records")
-    # perquisite_details = relationship("PerquisiteDetails", back_populates="salary_income_records")
-    # vehicle_facility_details = relationship("VehicleFacilityDetails", back_populates="salary_income_records")
+    allowance_details = relationship("AllowanceDetails", back_populates="salary_income_records")
+    perquisite_details = relationship("PerquisiteDetails", back_populates="salary_income_records")
+    vehicle_facility_details = relationship("VehicleFacilityDetails", back_populates="salary_income_records")
     
 
     
@@ -226,11 +226,11 @@ class AllowanceDetails(Base):
     total = Column(Integer, default=0 )
     
     etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
-    # salary_income_record_id = Column(Integer, ForeignKey('salary_income_records.id'), nullable=False)
+    salary_income_record_id = Column(Integer, ForeignKey('salary_income_records.id'), nullable=False)
     
     
     taxpayer = relationship("Taxpayer", back_populates="allowance_details")
-    # salary_income_records = relationship("SalaryIncomeRecord", back_populates="allowance_details")
+    salary_income_records = relationship("SalaryIncomeRecord", back_populates="allowance_details")
     
     
     
@@ -260,10 +260,10 @@ class PerquisiteDetails(Base):
     total = Column(Integer, default=0)
     
     etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
-    # salary_income_record_id = Column(Integer, ForeignKey('salary_income_records.id'), nullable=False)
+    salary_income_record_id = Column(Integer, ForeignKey('salary_income_records.id'), nullable=False)
     
     taxpayer = relationship("Taxpayer", back_populates="perquisite_details")
-    # salary_income_records = relationship("SalaryIncomeRecord", back_populates="perquisite_details")
+    salary_income_records = relationship("SalaryIncomeRecord", back_populates="perquisite_details")
     
     
     
@@ -280,10 +280,10 @@ class VehicleFacilityDetails(Base):
     total = Column(Integer, default=0)  # Default value as 0
     
     etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
-    # salary_income_record_id = Column(Integer, ForeignKey('salary_income_records.id'), nullable=False)
+    salary_income_record_id = Column(Integer, ForeignKey('salary_income_records.id'), nullable=False)
     
     taxpayer = relationship("Taxpayer", back_populates="vehicle_facility_details")
-    # salary_income_records = relationship("SalaryIncomeRecord", back_populates="vehicle_facility_details")
+    salary_income_records = relationship("SalaryIncomeRecord", back_populates="vehicle_facility_details")
     
     
     
@@ -403,8 +403,8 @@ class InvestmentRecord(Base):
     other_allowable = Column(Integer, default=0)
     other_remarks = Column(String, nullable=True)
     
-    total_investment = Column(Integer, default=0)
-    allowable_investment = Column(Integer, default=0)
+    total_investment = Column(Float, default=0)
+    allowable_investment = Column(Float, default=0)
     
     
     etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)

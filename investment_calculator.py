@@ -20,45 +20,46 @@ def create_investment_record(
     
     try:
     # Start a transaction
-        db.begin()
+        with db.begin():
+            # Step 1: Add the investment record
+            crud.create_investment_record(db, investment_record, etin)
+            
+            investment = crud.get_investment_record(db, etin)
 
-        # Step 1: Add the investment record
-        crud.create_investment_record(db, investment_record, etin)
-        
-        investment = crud.get_investment_record(db, etin)
+            
+            crud.create_given_premium(db, given_premium, investment.etin)
+            crud.create_gov_securities(db, gov_securities, investment.etin)
+            crud.create_eft(db, eft, investment.etin)
+            crud.create_dps(db, dps, investment.etin)
 
-        
-        crud.create_given_premium(db, given_premium, investment.etin)
-        crud.create_gov_securities(db, gov_securities, investment.etin)
-        crud.create_eft(db, eft, investment.etin)
-        crud.create_dps(db, dps, investment.etin)
+            # Step 3: Fetch and update `InvestmentRecord` with calculated data
+            inv_record = (
+                db.query(models.InvestmentRecord)
+                .filter(models.InvestmentRecord.etin == investment.etin)
+                .first()
+            )
 
-        # Step 3: Fetch and update `InvestmentRecord` with calculated data
-        inv_record = (
-            db.query(models.InvestmentRecord)
-            .filter(models.InvestmentRecord.etin == investment.etin)
-            .first()
-        )
+            if not inv_record:
+                raise HTTPException(status_code=404, detail="InvestmentRecord not found")
 
-        if not inv_record:
-            raise HTTPException(status_code=404, detail="InvestmentRecord not found")
+            inv_record.gov_securities_actual = gov_securities.actual
+            inv_record.gov_securities_allowable = gov_securities.allowable
 
-        inv_record.gov_securities_actual = gov_securities.actual
-        inv_record.gov_securities_allowable = gov_securities.allowable
+            inv_record.eft_actual = eft.actual
+            inv_record.eft_allowable = eft.allowable
 
-        inv_record.eft_actual = eft.actual
-        inv_record.eft_allowable = eft.allowable
+            inv_record.life_insurance_given_premium_actual = given_premium.given_premium
+            inv_record.life_insurance_given_premium_allowable = given_premium.allowable
 
-        inv_record.life_insurance_given_premium_actual = given_premium.given_premium
-        inv_record.life_insurance_given_premium_allowable = given_premium.allowable
+            inv_record.contribution_paid_to_deposit_pension_actual = dps.actual
+            inv_record.contribution_paid_to_deposit_pension_allowable = dps.allowable
 
-        inv_record.contribution_paid_to_deposit_pension_actual = dps.actual
-        inv_record.contribution_paid_to_deposit_pension_allowable = dps.allowable
+            db.commit()  # Commit the transaction
+            db.refresh(inv_record)
+            
+            print(inv_record)
 
-        db.commit()  # Commit the transaction
-        db.refresh(inv_record)
-
-        return inv_record
+            return inv_record
 
     except Exception as e:
         db.rollback()  # Rollback on error
