@@ -316,7 +316,7 @@ def get_investment_records(db: Session, skip: int , limit: int):
 
 
 def create_investment_record(db: Session, investment_record: schemas.Investment_Record, petin : str):
-    investment_record_instance = models.InvestmentRecord(
+    db_investment_record = models.InvestmentRecord(
         etin=petin,
         gov_securities_actual=investment_record.gov_securities_actual,
         gov_securities_allowable=investment_record.gov_securities_allowable,
@@ -411,65 +411,11 @@ def create_investment_record(db: Session, investment_record: schemas.Investment_
         other_allowable=investment_record.other_actual,
         other_remarks=investment_record.other_remarks,
         
-    # )
-        
-        total_investment=investment_record.total_investment,
-        allowable_investment=investment_record.allowable_investment
-    #     # Calculate total investment and allowable investment
-    # investment_record_instance.total_investment = (
-    #     investment_record_instance.gov_securities_actual
-    #     + investment_record_instance.eft_actual
-    #     + investment_record_instance.life_insurance_given_premium_actual
-    #     + investment_record_instance.premium_or_contractual_deferred_annuity_actual
-    #     + investment_record_instance.contribution_paid_to_deposit_pension_actual
-    #     + investment_record_instance.investment_in_any_securities_actual
-    #     + investment_record_instance.provisions_of_pf_act_1925_actual
-    #     + investment_record_instance.contributions_to_approved_provident_fund_actual
-    #     + investment_record_instance.contributions_to_superannuation_funds_actual
-    #     + investment_record_instance.contribution_to_welfare_fund_actual
-    #     + investment_record_instance.contribution_to_zakat_fund_actual
-    #     + investment_record_instance.donation_to_liberation_war_memory_actual
-    #     + investment_record_instance.donations_to_father_of_nation_memory_actual
-    #     + investment_record_instance.donation_to_disabled_organizations_actual
-    #     + investment_record_instance.donations_to_liberation_war_museum_actual
-    #     + investment_record_instance.donation_to_ahsania_cancer_hospital_actual
-    #     + investment_record_instance.donations_to_icddrb_actual
-    #     + investment_record_instance.donation_to_crp_savar_actual
-    #     + investment_record_instance.donations_to_charitable_educational_institutions_actual
-    #     + investment_record_instance.donation_to_asiatic_society_actual
-    #     + investment_record_instance.donation_to_dhaka_ahsania_mission_actual
-    #     + investment_record_instance.contribution_to_super_annuity_fund_actual
-    #     + investment_record_instance.other_actual
-    # )
-
-    # investment_record_instance.allowable_investment = (
-    #     investment_record_instance.gov_securities_allowable
-    #     + investment_record_instance.eft_allowable
-    #     + investment_record_instance.life_insurance_given_premium_allowable
-    #     + investment_record_instance.premium_or_contractual_deferred_annuity_allowable
-    #     + investment_record_instance.contribution_paid_to_deposit_pension_allowable
-    #     + investment_record_instance.investment_in_any_securities_allowable
-    #     + investment_record_instance.provisions_of_pf_act_1925_allowable
-    #     + investment_record_instance.contributions_to_approved_provident_fund_allowable
-    #     + investment_record_instance.contributions_to_superannuation_funds_allowable
-    #     + investment_record_instance.contribution_to_welfare_fund_allowable
-    #     + investment_record_instance.contribution_to_zakat_fund_allowable
-    #     + investment_record_instance.donation_to_liberation_war_memory_allowable
-    #     + investment_record_instance.donations_to_father_of_nation_memory_allowable
-    #     + investment_record_instance.donation_to_disabled_organizations_allowable
-    #     + investment_record_instance.donations_to_liberation_war_museum_allowable
-    #     + investment_record_instance.donation_to_ahsania_cancer_hospital_allowable
-    #     + investment_record_instance.donations_to_icddrb_allowable
-    #     + investment_record_instance.donation_to_crp_savar_allowable
-    #     + investment_record_instance.donations_to_charitable_educational_institutions_allowable
-    #     + investment_record_instance.donation_to_asiatic_society_allowable
-    #     + investment_record_instance.donation_to_dhaka_ahsania_mission_allowable
-    #     + investment_record_instance.contribution_to_super_annuity_fund_allowable
-    #     + investment_record_instance.other_allowable
-    #     )
-    
+        # total_investment=investment_record.total_investment,
+        # allowable_investment=investment_record.allowable_investment
+   
     )
-    
+
     db.add(investment_record)
     db.commit()
     db.refresh(investment_record)
