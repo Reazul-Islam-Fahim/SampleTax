@@ -191,21 +191,6 @@ async def calculate_salary_income(
     
     print(get_allowance.total, get_perquisite.total, get_vehicle.total)
     
-    # orm_salary_data = db.query(models.SalaryIncomeRecord).filter_by(etin=salary_data.etin).first()
-    # if orm_salary_data is None:
-    #     raise HTTPException(status_code=404, detail="Salary income record not found.")
-
-    # orm_salary_data.private_allowances = get_allowance.total
-    # orm_salary_data.private_perquisites = get_perquisite.total
-    # orm_salary_data.private_vehicle_facility = get_vehicle.total
-
-    # # db.add(orm_salary_data)
-    # db.commit()
-    # db.refresh(orm_salary_data)
-    
-    # print(orm_salary_data.private_allowances, orm_salary_data.private_perquisites, orm_salary_data.private_vehicle_facility)
-
-    
 
     # # Save the salary income summary
     exempted_income = total_income - taxable_income
