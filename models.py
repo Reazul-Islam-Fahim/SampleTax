@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, Float, String, Enum as senum, ForeignKey, Computed
+from sqlalchemy import Column, Integer, String, Enum as senum, ForeignKey, Computed
 from sqlalchemy.orm import relationship
 from db import Base
 from enum import Enum
@@ -403,8 +403,8 @@ class InvestmentRecord(Base):
     other_allowable = Column(Integer, default=0)
     other_remarks = Column(String, nullable=True)
     
-    total_investment = Column(Float, default=0)
-    allowable_investment = Column(Float, default=0)
+    total_investment = Column(Integer, default=0)
+    allowable_investment = Column(Integer, default=0)
     
     
     etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)

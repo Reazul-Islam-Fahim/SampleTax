@@ -54,6 +54,9 @@ def create_investment_record(
             inv_record.contribution_paid_to_deposit_pension_actual = dps.actual
             inv_record.contribution_paid_to_deposit_pension_allowable = dps.allowable
 
+            inv_record.total_investment = inv_record.total_investment
+            inv_record.allowable_investment = inv_record.allowable_investment
+
             db.commit()  # Commit the transaction
             db.refresh(inv_record)
             
