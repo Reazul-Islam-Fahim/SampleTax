@@ -522,12 +522,12 @@ def get_rebate_records(db: Session, skip: int , limit: int):
     return db.query(models.RebateRecord).offset(skip).limit(limit).all()
 
 
-def create_rebate_record(db: Session, rebate_record: schemas.Rebate_Record, petin : str ):
-    rebate_record = models.InvestmentRecord(
+def create_rebate_record(db: Session, rebate_record: int, petin : str, taxable_income : int, allowable_investment : int ):
+    rebate_record = models.RebateRecord(
         etin = petin,
-        taxable_income=rebate_record.taxable_income,
-        allowable_investment=rebate_record.allowable_investment,
-        rebate=rebate_record.rebate
+        taxable_income=taxable_income,
+        allowable_investment=allowable_investment,
+        rebate=rebate_record
     )
     
     db.add(rebate_record)
