@@ -176,6 +176,8 @@ async def calculate_salary_income(
     tax_liability = tax_calculator.calculate_taxable_income()
     
     salary_data.private_allowances = allowances.total
+    salary_data.private_perquisites = perquisites.total
+    salary_data.private_vehicle_facility = vehicle_facility.total
     
     crud.create_salary_income_record(db, salary_data)
     crud.create_allowance(db, allowances, salary_data.etin)

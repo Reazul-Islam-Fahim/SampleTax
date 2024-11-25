@@ -24,8 +24,8 @@ models.Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
 @app.post("/tax_payer/", response_model=schemas.TaxPayers)
-def create_tax_payer(taxpayer: schemas.TaxPayerCreate = Body(...), db: Session = Depends(get_db)): #Body(...) can be use instead of Query(...) for json format
-    return crud.create_tax_payer(db=db, tax_payer=taxpayer)
+def create_tax_payer(taxpayer: schemas.TaxPayerCreate = Body(...), user_id: int = Body(...), db: Session = Depends(get_db)): 
+    return crud.create_tax_payer(db=db, tax_payer=taxpayer, user_id=user_id)
 
 @app.get("/tax_payer/{tax_payer_id}", response_model=schemas.TaxPayers)
 def read_tax_payer(etin: str, db: Session = Depends(get_db)):

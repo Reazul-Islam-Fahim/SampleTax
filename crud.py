@@ -316,7 +316,7 @@ def get_investment_records(db: Session, skip: int , limit: int):
 
 
 def create_investment_record(db: Session, investment_record: schemas.Investment_Record, petin : str):
-    db_investment_record = models.InvestmentRecord(
+    investment_record = models.InvestmentRecord(
         etin=petin,
         gov_securities_actual=investment_record.gov_securities_actual,
         gov_securities_allowable=investment_record.gov_securities_allowable,
@@ -411,8 +411,8 @@ def create_investment_record(db: Session, investment_record: schemas.Investment_
         other_allowable=investment_record.other_actual,
         other_remarks=investment_record.other_remarks,
         
-        # total_investment=investment_record.total_investment,
-        # allowable_investment=investment_record.allowable_investment
+        total_investment=investment_record.total_investment,
+        allowable_investment=investment_record.allowable_investment
    
     )
 

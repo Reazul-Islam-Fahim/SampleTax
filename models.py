@@ -194,11 +194,10 @@ class SalaryIncomeRecord(Base):
     
     # Define a relationship to the Taxpayer table
     taxpayer = relationship("Taxpayer", back_populates="salary_income_records")    
-    
     employer_info = relationship("EmployerInfo", back_populates="salary_income_records")
-    allowance_details = relationship("AllowanceDetails", back_populates="salary_income_records")
-    perquisite_details = relationship("PerquisiteDetails", back_populates="salary_income_records")
-    vehicle_facility_details = relationship("VehicleFacilityDetails", back_populates="salary_income_records")
+    # allowance_details = relationship("AllowanceDetails", back_populates="salary_income_records")
+    # perquisite_details = relationship("PerquisiteDetails", back_populates="salary_income_records")
+    # vehicle_facility_details = relationship("VehicleFacilityDetails", back_populates="salary_income_records")
     
 
     
@@ -226,11 +225,11 @@ class AllowanceDetails(Base):
     total = Column(Integer, default=0 )
     
     etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
-    salary_income_record_id = Column(Integer, ForeignKey('salary_income_records.id'), nullable=False)
+    # salary_income_record_id = Column(Integer, ForeignKey('salary_income_records.id'), nullable=False)
     
     
     taxpayer = relationship("Taxpayer", back_populates="allowance_details")
-    salary_income_records = relationship("SalaryIncomeRecord", back_populates="allowance_details")
+    # salary_income_records = relationship("SalaryIncomeRecord", back_populates="allowance_details")
     
     
     
@@ -260,10 +259,10 @@ class PerquisiteDetails(Base):
     total = Column(Integer, default=0)
     
     etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
-    salary_income_record_id = Column(Integer, ForeignKey('salary_income_records.id'), nullable=False)
+    # salary_income_record_id = Column(Integer, ForeignKey('salary_income_records.id'), nullable=False)
     
     taxpayer = relationship("Taxpayer", back_populates="perquisite_details")
-    salary_income_records = relationship("SalaryIncomeRecord", back_populates="perquisite_details")
+    # salary_income_records = relationship("SalaryIncomeRecord", back_populates="perquisite_details")
     
     
     
@@ -280,10 +279,10 @@ class VehicleFacilityDetails(Base):
     total = Column(Integer, default=0)  # Default value as 0
     
     etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
-    salary_income_record_id = Column(Integer, ForeignKey('salary_income_records.id'), nullable=False)
+    # salary_income_record_id = Column(Integer, ForeignKey('salary_income_records.id'), nullable=False)
     
     taxpayer = relationship("Taxpayer", back_populates="vehicle_facility_details")
-    salary_income_records = relationship("SalaryIncomeRecord", back_populates="vehicle_facility_details")
+    # salary_income_records = relationship("SalaryIncomeRecord", back_populates="vehicle_facility_details")
     
     
     
@@ -411,63 +410,6 @@ class InvestmentRecord(Base):
     
     taxpayer = relationship("Taxpayer", back_populates="investment_record")
     # rebate_record = relationship("RebateRecord", back_populates="investment_record")
-    
-    
-    # def calculate_total_investment(self):
-    #     """This method can calculate the total investment dynamically if required."""
-    #     self.total_investment = (
-    #         self.gov_securities_actual
-    #         + self.eft_actual
-    #         + self.life_insurance_given_premium_actual
-    #         + self.contribution_paid_to_deposit_pension_actual
-    #         + self.premium_or_contractual_deferred_annuity_actual
-    #         + self.investment_in_any_securities_actual
-    #         + self.provisions_of_pf_act_1925_actual
-    #         + self.contributions_to_approved_provident_fund_actual
-    #         + self.contributions_to_superannuation_funds_actual
-    #         + self.contribution_to_welfare_fund_actual
-    #         + self.contribution_to_zakat_fund_actual
-    #         + self.donation_to_liberation_war_memory_actual
-    #         + self.donations_to_father_of_nation_memory_actual
-    #         + self.donation_to_disabled_organizations_actual
-    #         + self.donations_to_liberation_war_museum_actual
-    #         + self.donation_to_ahsania_cancer_hospital_actual
-    #         + self.donations_to_icddrb_actual
-    #         + self.donation_to_crp_savar_actual
-    #         + self.donations_to_charitable_educational_institutions_actual
-    #         + self.donation_to_asiatic_society_actual
-    #         + self.donation_to_dhaka_ahsania_mission_actual
-    #         + self.contribution_to_super_annuity_fund_actual
-    #         + self.other_actual
-    #     )
-
-    # def calculate_allowable_investment(self):
-    #     """This method can calculate the allowable investment dynamically if required."""
-    #     self.allowable_investment = (
-    #         self.gov_securities_allowable
-    #         + self.eft_allowable
-    #         + self.life_insurance_given_premium_allowable
-    #         + self.contribution_paid_to_deposit_pension_allowable
-    #         + self.premium_or_contractual_deferred_annuity_allowable
-    #         + self.investment_in_any_securities_allowable
-    #         + self.provisions_of_pf_act_1925_allowable
-    #         + self.contributions_to_approved_provident_fund_allowable
-    #         + self.contributions_to_superannuation_funds_allowable
-    #         + self.contribution_to_welfare_fund_allowable
-    #         + self.contribution_to_zakat_fund_allowable
-    #         + self.donation_to_liberation_war_memory_allowable
-    #         + self.donations_to_father_of_nation_memory_allowable
-    #         + self.donation_to_disabled_organizations_allowable
-    #         + self.donations_to_liberation_war_museum_allowable
-    #         + self.donation_to_ahsania_cancer_hospital_allowable
-    #         + self.donations_to_icddrb_allowable
-    #         + self.donation_to_crp_savar_allowable
-    #         + self.donations_to_charitable_educational_institutions_allowable
-    #         + self.donation_to_asiatic_society_allowable
-    #         + self.donation_to_dhaka_ahsania_mission_allowable
-    #         + self.contribution_to_super_annuity_fund_allowable
-    #         + self.other_allowable
-    #     )
     
     
 class GivenPremium(Base):
