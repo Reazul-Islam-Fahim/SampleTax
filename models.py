@@ -112,6 +112,7 @@ class Taxpayer(Base):
     eft = relationship("EFT", back_populates="taxpayer")
     dps = relationship("DPS", back_populates="taxpayer")
     rebate_record = relationship("RebateRecord", back_populates="taxpayer")
+    tax = relationship("TaxRecord", back_populates="taxpayer")
     
     
     
@@ -512,5 +513,19 @@ class RebateRecord(Base):
     # investment_record = relationship("InvestmentRecord", back_populates="rebate_record")
     
     
+    
+    
+class TaxRecord(Base):
+    __tablename__ = "tax"
+    
+    
+    id = Column(Integer, primary_key=True, index=True, unique= True)
+    etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
+    net_tax_liability = Column(Integer, index= True, default= 0)
+    area_tax = Column(Integer, index= True, default= 0)
+    actual_payable_tax = Column(Integer, index= True, default= 0)
+    
+    
+    taxpayer = relationship("Taxpayer", back_populates="tax")
     
     

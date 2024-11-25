@@ -467,6 +467,16 @@ class Rebate_Record(BaseModel):
         orm_mode = True
         
         
+class Tax_Record(BaseModel):
+    net_taxable_income : int = 0
+    area_tax : int = 0
+    actual_payable_tax : int = 0
+    
+    class Config:
+        orm_mode = True
+        
+        
+        
         
 
         
