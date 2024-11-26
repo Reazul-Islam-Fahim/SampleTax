@@ -119,10 +119,6 @@ def create_investment_record(
             raise HTTPException(status_code=404, detail="InvestmentRecord not found")
 
         
-
-        # db.commit()  # Commit the transaction
-        # db.refresh(inv_record)
-        
         print(inv_record)
 
         return inv_record
