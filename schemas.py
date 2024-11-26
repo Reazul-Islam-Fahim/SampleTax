@@ -468,7 +468,7 @@ class Rebate_Record(BaseModel):
         
         
 class Tax_Record(BaseModel):
-    net_taxable_income : int = 0
+    net_tax_liability : int = 0
     area_tax : int = 0
     actual_payable_tax : int = 0
     

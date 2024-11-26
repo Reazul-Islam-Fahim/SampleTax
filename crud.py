@@ -538,18 +538,18 @@ def create_rebate_record(db: Session, rebate_record: int, petin : str, taxable_i
 
 
 def get_tax_record(db: Session, etin: str):
-    return db.query(models.RebateRecord).filter(models.RebateRecord.etin == etin).first()
+    return db.query(models.TaxRecord).filter(models.TaxRecord.etin == etin).first()
 
 def get_tax_records(db: Session, skip: int , limit: int):
-    return db.query(models.RebateRecord).offset(skip).limit(limit).all()
+    return db.query(models.TaxRecord).offset(skip).limit(limit).all()
 
 
-def create_tax_record(db: Session, tax_record: schemas.Tax_Record, petin : str):
+def create_tax_record(db: Session, petin : str, net_tax_liability : int, area_tax : int, actual_payable_tax : int):
     tax_record = models.TaxRecord(
         etin = petin,
-        net_taxable_income=tax_record.net_taxable_income,
-        area_tax=tax_record.area_tax,
-        actual_payable_tax=tax_record.actual_payable_tax
+        net_tax_liability=net_tax_liability,
+        area_tax=area_tax,
+        actual_payable_tax=actual_payable_tax
     )
     
     db.add(tax_record)
