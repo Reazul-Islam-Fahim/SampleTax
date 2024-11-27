@@ -141,7 +141,7 @@ class TaxLiabilityCalculator:
 
 
 
-@app.post("/api/calculate_salary_income/")
+@app.post("/api/salary_income/")
 async def calculate_salary_income(
     salary_data: schemas.SalaryIncome_Record = Body(...),
     allowances: schemas.Allowance_Details = Body(...),
@@ -214,13 +214,16 @@ async def calculate_salary_income(
 
 
 
-@app.put("/salary_income_record/{etin}", response_model=schemas.SalaryIncome_Record)
+@app.put("/api/salary_income/{etin}", response_model=schemas.SalaryIncome_Record)
 async def update_salary_income_record_endpoint(
     etin: str,
-    updated_salary: schemas.SalaryIncome_Record,
+    salary_data: schemas.SalaryIncome_Record,
+    allowances: schemas.Allowance_Details = Body(...),
+    perquisites: schemas.Perquisite_Details = Body(...),
+    vehicle_facility: schemas.Vehicale_facility_Details = Body(...),
     db: Session = Depends(get_db),
 ):
-    updated_record = crud.update_salary_income_record(db, etin, updated_salary)
+    updated_record = crud.update_salary_income_record(db, etin, salary_data)
 
     if updated_record is None:
         raise HTTPException(status_code=404, detail="SalaryIncomeRecord not found")
@@ -231,7 +234,7 @@ async def update_salary_income_record_endpoint(
 
 
     
-@app.get("/api/get_salary_income_record/{etin}")
+@app.get("/api/salary_income/{etin}")
 async def get_income_records(etin : str = Path(...),  db: Session = Depends(get_db)):
     db_item = crud.get_salary_income_record(db, etin = etin)
     if db_item is None:
@@ -240,7 +243,7 @@ async def get_income_records(etin : str = Path(...),  db: Session = Depends(get_
 
     
 
-@app.get("/api/get_salary_income_records/")
+@app.get("/api/salary_income/")
 async def get_income_records(skip : int = Query(...), limit : int = Query(...),  db: Session = Depends(get_db)):
     return crud.get_salary_income_records(db, skip=skip, limit=limit)
 

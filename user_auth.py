@@ -52,7 +52,7 @@ def read_user_auth(id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Item not found")
     return db_item
 
-@app.get("/user_auths/", response_model=list[schemas.User_Auth])
+@app.get("/user_auth/", response_model=list[schemas.User_Auth])
 def read_user_auths(skip: int = Query(...), limit: int = Query(...), db: Session = Depends(get_db)):
     items = crud.get_user_auths(db, skip=skip, limit=limit)
     return items

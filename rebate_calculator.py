@@ -21,7 +21,7 @@ app.add_middleware(
 )
 
 
-@app.post("/calculate_rebate/", response_model=schemas.Rebate_Record)
+@app.post("/rebate/", response_model=schemas.Rebate_Record)
 def create_rebate_record(rebate_record: schemas.Rebate_Record = Body(...), etin : str = Body(...), db: Session = Depends(get_db)):
     
     try:
@@ -71,14 +71,14 @@ def create_rebate_record(rebate_record: schemas.Rebate_Record = Body(...), etin 
 
 
 
-@app.get("/get_rebate/{tax_payer_id}", response_model=schemas.Rebate_Record)
+@app.get("/rebate/{tax_payer_id}", response_model=schemas.Rebate_Record)
 def read_rebate_record(etin: str, db: Session = Depends(get_db)):
     db_item = crud.get_tax_record(db, etin= etin)
     if db_item is None:
         raise HTTPException(status_code=404, detail="Item not found")
     return db_item
 
-@app.get("/get_rebates/", response_model=list[schemas.Rebate_Record])
+@app.get("/rebate/", response_model=list[schemas.Rebate_Record])
 def read_rebate_records(skip: int = Query(...), limit: int = Query(...), db: Session = Depends(get_db)):
     items = crud.get_tax_records(db, skip=skip, limit=limit)
     return items

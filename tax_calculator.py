@@ -32,7 +32,7 @@ def calculate_area_tax(zone):
     return area_tax
 
 
-@app.post("/calculate_tax/", response_model=schemas.Tax_Record)
+@app.post("/tax/", response_model=schemas.Tax_Record)
 def create_tax_record(
     # tax_record: schemas.Tax_Record = Body(...), 
     etin : str = Query(...), 
@@ -69,14 +69,14 @@ def create_tax_record(
 
 
 
-@app.get("/get_tax/{etin}", response_model=schemas.Tax_Record)
+@app.get("/tax/{etin}", response_model=schemas.Tax_Record)
 def read_tax_record(etin: str, db: Session = Depends(get_db)):
     db_item = crud.get_tax_record(db, etin= etin)
     if db_item is None:
         raise HTTPException(status_code=404, detail="Item not found")
     return db_item
 
-@app.get("/get_taxes/", response_model=list[schemas.Tax_Record])
+@app.get("/tax/", response_model=list[schemas.Tax_Record])
 def read_tax_records(skip: int = Query(...), limit: int = Query(...), db: Session = Depends(get_db)):
     items = crud.get_tax_records(db, skip=skip, limit=limit)
     return items

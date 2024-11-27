@@ -27,7 +27,7 @@ app.add_middleware(
 def create_salary_summary(etin: str = Body(...), db: Session = Depends(get_db)): 
     return crud.create_salary_income_summary(db=db, etin=etin)
 
-@app.put("/salary-income-summary/{etin}", response_model=schemas.SalaryIncome_Summary)
+@app.put("/salary_summary/{etin}", response_model=schemas.SalaryIncome_Summary)
 async def update_salary_income_summary_endpoint(
     etin: str,
     updated_summary: schemas.SalaryIncome_Summary,
@@ -51,7 +51,7 @@ def read_salary_summary(etin: str, db: Session = Depends(get_db)):
     print(total)
     return total
 
-@app.get("/salary_summarys/", response_model=list[schemas.SalaryIncome_Summary])
+@app.get("/salary_summary/", response_model=list[schemas.SalaryIncome_Summary])
 def read_salary_summarys(skip: int = Query(...), limit: int = Query(...), db: Session = Depends(get_db)):
     items = crud.get_salary_income_summarys(db, skip=skip, limit=limit)
     return items

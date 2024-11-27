@@ -24,7 +24,7 @@ app.add_middleware(
 def create_tax_payer(taxpayer: schemas.TaxPayerCreate = Body(...), user_id: int = Body(...), db: Session = Depends(get_db)): 
     return crud.create_tax_payer(db=db, tax_payer=taxpayer, user_id=user_id)
 
-@app.put("/tax_payers/{etin}", response_model=schemas.TaxPayerCreate)
+@app.put("/tax_payer/{etin}", response_model=schemas.TaxPayerCreate)
 async def update_tax_payer_endpoint(
     etin: str,
     updated_tax_payer: schemas.TaxPayerCreate,
@@ -43,7 +43,7 @@ def read_tax_payer(etin: str, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Item not found")
     return db_item
 
-@app.get("/tax_payers/", response_model=list[schemas.TaxPayers])
+@app.get("/tax_payer/", response_model=list[schemas.TaxPayers])
 def read_tax_payers(skip: int = Query(...), limit: int = Query(...), db: Session = Depends(get_db)):
     items = crud.get_tax_payers(db, skip=skip, limit=limit)
     return items

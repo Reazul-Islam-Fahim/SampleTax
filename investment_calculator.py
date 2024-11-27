@@ -146,7 +146,7 @@ def create_investment_record(
     
     
     
-@app.put("/investment-record/{etin}", response_model=schemas.Investment_Record)
+@app.put("/investment_record/{etin}", response_model=schemas.Investment_Record)
 async def update_investment_record_endpoint(
     etin: str,
     updated_record: schemas.Investment_Record,
@@ -171,7 +171,7 @@ def read_investment_record(etin: str = Path(...), db: Session = Depends(get_db))
     return db_item
 
 
-@app.get("/investment_records/", response_model=list[schemas.Investment_Record])
+@app.get("/investment_record/", response_model=list[schemas.Investment_Record])
 def read_investment_records(skip: int = Query(...), limit: int = Query(...), db: Session = Depends(get_db)):
     items = crud.get_investment_records(db, skip=skip, limit=limit)
     if not items:

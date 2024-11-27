@@ -44,7 +44,7 @@ async def update_employer_info_endpoint(
     return updated_record
 
 
-@app.get("/employer_infos/", response_model=list[schemas.Employer_info])
+@app.get("/employer_info/", response_model=list[schemas.Employer_info])
 def read_employer_infos(skip: int = Query(...), limit: int = Query(...), db: Session = Depends(get_db)):
     items = crud.get_employer_infos(db, skip=skip, limit=limit)
     return items
