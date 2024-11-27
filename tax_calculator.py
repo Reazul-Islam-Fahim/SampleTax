@@ -5,23 +5,21 @@ from fastapi.middleware.cors import CORSMiddleware
 import schemas,crud, models, re
 
 
-# origins = [
-#     "https://localhost:8000",
-#     "https://yourfrontenddomain.com",
-# ]
-
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins = origins,
-#     allow_credentials = True,
-#     allow_methods = ['*'],
-#     allow_headers = ['*']
-# )
-
-
-
-
 app = FastAPI()
+
+origins = [
+    "http://192.168.2.33:5173",
+    # "https://yourfrontenddomain.com",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins = origins,
+    allow_credentials = True,
+    allow_methods = ['*'],
+    allow_headers = ['*']
+)
+
 
 def calculate_area_tax(zone):
     # Use regular expression to match "Dhaka" in any part of the string

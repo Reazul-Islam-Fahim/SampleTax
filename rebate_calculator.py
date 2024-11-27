@@ -5,22 +5,21 @@ from fastapi.middleware.cors import CORSMiddleware
 import schemas,crud, models
 
 
-# origins = [
-#     "https://localhost:8000",
-#     "https://yourfrontenddomain.com",
-# ]
-
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins = origins,
-#     allow_credentials = True,
-#     allow_methods = ['*'],
-#     allow_headers = ['*']
-# )
-
-
-
 app = FastAPI()
+
+origins = [
+    "http://192.168.2.33:5173",
+    # "https://yourfrontenddomain.com",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins = origins,
+    allow_credentials = True,
+    allow_methods = ['*'],
+    allow_headers = ['*']
+)
+
 
 @app.post("/calculate_rebate/", response_model=schemas.Rebate_Record)
 def create_rebate_record(rebate_record: schemas.Rebate_Record = Body(...), etin : str = Body(...), db: Session = Depends(get_db)):
