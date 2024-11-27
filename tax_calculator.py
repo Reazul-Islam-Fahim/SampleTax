@@ -25,9 +25,9 @@ app = FastAPI()
 
 def calculate_area_tax(zone):
     # Use regular expression to match "Dhaka" in any part of the string
-    if re.search(r"\bDHAKA\b", zone, re.IGNORECASE):  
+    if re.search(r"\b(DHAKA|CHITTAGONG)\b", zone, re.IGNORECASE):  
         area_tax = 5000
-    elif re.search(r"\bCHITTAGONG\b", zone, re.IGNORECASE):
+    elif re.search(r"\bCITY\b", zone, re.IGNORECASE):
         area_tax = 4000
     else:
         area_tax = 3000  # Assuming no tax for other zones
