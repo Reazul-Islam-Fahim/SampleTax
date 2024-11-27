@@ -2,30 +2,39 @@ from fastapi import FastAPI, Depends, HTTPException, Body, Query
 from sqlalchemy.orm import Session
 import crud, models, schemas
 from db import SessionLocal, engine, get_db
-
-
-# origins = [
-#     "https://localhost:8000",
-#     "https://yourfrontenddomain.com",
-# ]
-
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins = origins,
-#     allow_credentials = True,
-#     allow_methods = ['*'],
-#     allow_headers = ['*']
-# )
-
-
-
-models.Base.metadata.create_all(bind=engine)
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+origins = [
+    "http://192.168.2.33:5173",
+    # "https://yourfrontenddomain.com",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins = origins,
+    allow_credentials = True,
+    allow_methods = ['*'],
+    allow_headers = ['*']
+)
+
 
 @app.post("/tax_payer/", response_model=schemas.TaxPayers)
 def create_tax_payer(taxpayer: schemas.TaxPayerCreate = Body(...), user_id: int = Body(...), db: Session = Depends(get_db)): 
     return crud.create_tax_payer(db=db, tax_payer=taxpayer, user_id=user_id)
+
+@app.put("/tax_payers/{etin}", response_model=schemas.TaxPayerCreate)
+async def update_tax_payer_endpoint(
+    etin: str,
+    updated_tax_payer: schemas.TaxPayerCreate,
+    db: Session = Depends(get_db),
+):
+    updated_record = crud.update_tax_payer(db, etin, updated_tax_payer)
+    if updated_record is None:
+        raise HTTPException(status_code=404, detail="Taxpayer record not found")
+    return updated_record
+
 
 @app.get("/tax_payer/{tax_payer_id}", response_model=schemas.TaxPayers)
 def read_tax_payer(etin: str, db: Session = Depends(get_db)):

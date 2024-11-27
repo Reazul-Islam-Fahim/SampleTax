@@ -2,10 +2,27 @@ from fastapi import FastAPI, Depends, HTTPException, Body, Query, Path
 from sqlalchemy.orm import Session
 import crud, models, schemas
 from db import get_db
-
-# models.Base.metadata.create_all(bind=models.engine)
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+
+app = FastAPI()
+
+origins = [
+    "http://192.168.2.33:5173",
+    # "https://yourfrontenddomain.com",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins = origins,
+    allow_credentials = True,
+    allow_methods = ['*'],
+    allow_headers = ['*']
+)
+
+
 
 @app.post("/investment_record/", response_model=schemas.Investment_Record)
 def create_investment_record(
@@ -126,6 +143,23 @@ def create_investment_record(
     except Exception as e:
         db.rollback()  # Rollback on error
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
+    
+    
+    
+@app.put("/investment-record/{etin}", response_model=schemas.Investment_Record)
+async def update_investment_record_endpoint(
+    etin: str,
+    updated_record: schemas.Investment_Record,
+    db: Session = Depends(get_db),
+):
+  
+    updated_investment_record = crud.update_investment_record(db, etin, updated_record)
+
+    if updated_investment_record is None:
+        raise HTTPException(status_code=404, detail="Investment record not found")
+
+    return updated_investment_record
+
     
     
 

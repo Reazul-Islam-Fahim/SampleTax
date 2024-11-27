@@ -2,11 +2,25 @@ from fastapi import FastAPI, Depends, HTTPException, Body, Query
 from sqlalchemy.orm import Session
 import crud, models, schemas
 from db import SessionLocal, engine, get_db
+from fastapi.middleware.cors import CORSMiddleware
 
 
-models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+origins = [
+    "http://192.168.2.33:5173",
+    # "https://yourfrontenddomain.com",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins = origins,
+    allow_credentials = True,
+    allow_methods = ['*'],
+    allow_headers = ['*']
+)
+
 
 
 @app.get("/employer_info/{employer_info_id}", response_model=schemas.Employer_info)
@@ -15,6 +29,20 @@ def read_employer_info(etin: str, db: Session = Depends(get_db)):
     if db_item is None:
         raise HTTPException(status_code=404, detail="Employer info not found")
     return db_item
+
+@app.put("/employer_info/{etin}", response_model=schemas.Employer_info)
+async def update_employer_info_endpoint(
+    etin: str,
+    updated_employer_info: schemas.Employer_info,
+    db: Session = Depends(get_db),
+):
+    updated_record = crud.update_employer_info(db, etin, updated_employer_info)
+    
+    if updated_record is None:
+        raise HTTPException(status_code=404, detail="EmployerInfo record not found")
+    
+    return updated_record
+
 
 @app.get("/employer_infos/", response_model=list[schemas.Employer_info])
 def read_employer_infos(skip: int = Query(...), limit: int = Query(...), db: Session = Depends(get_db)):

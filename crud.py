@@ -24,6 +24,25 @@ def create_user_auth(db: Session, user_auth: schemas.User_Auth):
 
 
 
+def update_user_auth(db: Session, id: int, updated_user_auth: schemas.User_Auth):
+
+    db_user_auth = db.query(models.UserAuth).filter(models.UserAuth.id == id).first()
+
+    if not db_user_auth:
+        return None  # Record does not exist
+
+    db_user_auth.username = updated_user_auth.username
+    db_user_auth.email = updated_user_auth.email
+    db_user_auth.password = updated_user_auth.password  # Ensure password is handled securely in production
+
+    db.commit()
+    db.refresh(db_user_auth)
+
+    return db_user_auth
+
+
+
+
 
 def get_tax_payer(db: Session, etin: str):
     return db.query(models.Taxpayer).filter(models.Taxpayer.etin == etin).first()
@@ -70,6 +89,43 @@ def create_tax_payer(db: Session, tax_payer: schemas.TaxPayerCreate, user_id : i
     return db_tax_payer
 
 
+def update_tax_payer(db: Session, etin: str, updated_tax_payer: schemas.TaxPayerCreate):
+
+    db_tax_payer = db.query(models.Taxpayer).filter(models.Taxpayer.etin == etin).first()
+
+    if not db_tax_payer:
+        return None 
+
+    db_tax_payer.nid = updated_tax_payer.nid
+    db_tax_payer.name = updated_tax_payer.name
+    db_tax_payer.gender = updated_tax_payer.gender
+    db_tax_payer.circle = updated_tax_payer.circle
+    db_tax_payer.zone = updated_tax_payer.zone
+    db_tax_payer.employment_type = updated_tax_payer.employment_type
+    db_tax_payer.company_name = updated_tax_payer.company_name
+    db_tax_payer.assesment_year = updated_tax_payer.assesment_year
+    db_tax_payer.residential_status = updated_tax_payer.residential_status
+    db_tax_payer.freedom_fighter = updated_tax_payer.freedom_fighter
+    db_tax_payer.disable = updated_tax_payer.disable
+    db_tax_payer.parent_of_disable = updated_tax_payer.parent_of_disable
+    db_tax_payer.num_autistic_children = updated_tax_payer.num_autistic_children
+    db_tax_payer.age_above_65 = updated_tax_payer.age_above_65
+    db_tax_payer.date_of_birth = updated_tax_payer.date_of_birth
+    db_tax_payer.spouse_name = updated_tax_payer.spouse_name
+    db_tax_payer.spouse_tin = updated_tax_payer.spouse_tin
+    db_tax_payer.address = updated_tax_payer.address
+    db_tax_payer.telephone = updated_tax_payer.telephone
+    db_tax_payer.mobile = updated_tax_payer.mobile
+    db_tax_payer.email = updated_tax_payer.email
+    db_tax_payer.employer_name = updated_tax_payer.employer_name
+    db_tax_payer.name_of_organization = updated_tax_payer.name_of_organization
+    db_tax_payer.bin_no = updated_tax_payer.bin_no
+    db_tax_payer.name_tin_partners = updated_tax_payer.name_tin_partners
+
+    db.commit()
+    db.refresh(db_tax_payer)
+
+    return db_tax_payer
 
 
 
@@ -94,6 +150,25 @@ def create_employer_info(db: Session, employer_info: schemas.Employer_info, peti
     db.commit()
     db.refresh(db_employer_info)
     return db_employer_info
+
+
+def update_employer_info(db: Session, etin: str, updated_employer_info: schemas.Employer_info):
+    db_employer_info = db.query(models.EmployerInfo).filter(models.EmployerInfo.etin == etin).first()
+
+    if not db_employer_info:
+        return None  # Record does not exist
+
+    # Update fields with new data
+    db_employer_info.name = updated_employer_info.name
+    db_employer_info.start_date = updated_employer_info.start_date
+    db_employer_info.end_date = updated_employer_info.end_date
+
+    # Commit changes to the database
+    db.commit()
+    db.refresh(db_employer_info)
+
+    return db_employer_info
+
 
 
 
@@ -174,6 +249,75 @@ def create_salary_income_record(db: Session, salary: schemas.SalaryIncome_Record
     db.commit()
     db.refresh(salary_income_record)
     return salary_income_record
+
+
+def update_salary_income_record(db: Session, etin: str, updated_salary: schemas.SalaryIncome_Record):
+  
+    # Fetch the existing record
+    salary_income_record = db.query(models.SalaryIncomeRecord).filter(models.SalaryIncomeRecord.etin == etin).first()
+
+    if not salary_income_record:
+        return None  # Record does not exist
+
+    # Update the fields of the existing record with new data
+    salary_income_record.basic_salary = updated_salary.basic_salary
+    salary_income_record.basic_salary_remarks = updated_salary.basic_salary_remarks
+    salary_income_record.private_allowances = updated_salary.private_allowances
+    salary_income_record.private_allowances_remarks = updated_salary.private_allowances_remarks
+    salary_income_record.private_arrear_salary = updated_salary.private_arrear_salary
+    salary_income_record.private_arrear_salary_remarks = updated_salary.private_arrear_salary_remarks
+    salary_income_record.private_gratuity = updated_salary.private_gratuity
+    salary_income_record.private_gratuity_remarks = updated_salary.private_gratuity_remarks
+    salary_income_record.private_perquisites = updated_salary.private_perquisites
+    salary_income_record.private_perquisites_remarks = updated_salary.private_perquisites_remarks
+    salary_income_record.private_receipts_or_additional_receipts_in_lieu_of_salary = updated_salary.private_receipts_or_additional_receipts_in_lieu_of_salary
+    salary_income_record.private_receipts_or_additional_receipts_in_lieu_of_salary_remarks = updated_salary.private_receipts_or_additional_receipts_in_lieu_of_salary_remarks
+    salary_income_record.private_income_from_employee_share_scheme = updated_salary.private_income_from_employee_share_scheme
+    salary_income_record.private_income_from_employee_share_scheme_remarks = updated_salary.private_income_from_employee_share_scheme_remarks
+    salary_income_record.private_housing_facility = updated_salary.private_housing_facility
+    salary_income_record.private_housing_facility_remarks = updated_salary.private_housing_facility_remarks
+    salary_income_record.private_vehicle_facility = updated_salary.private_vehicle_facility
+    salary_income_record.private_vehicle_facility_remarks = updated_salary.private_vehicle_facility_remarks
+    salary_income_record.private_any_other_benefit_provided_by_the_employer = updated_salary.private_any_other_benefit_provided_by_the_employer
+    salary_income_record.private_any_other_benefit_provided_by_the_employer_remarks = updated_salary.private_any_other_benefit_provided_by_the_employer_remarks
+    salary_income_record.private_contribution_paid_by_employer_to_recognized_pf = updated_salary.private_contribution_paid_by_employer_to_recognized_pf
+    salary_income_record.private_contribution_paid_by_employer_to_recognized_pf_remarks = updated_salary.private_contribution_paid_by_employer_to_recognized_pf_remarks
+    salary_income_record.private_others = updated_salary.private_others
+    salary_income_record.private_others_remarks = updated_salary.private_others_remarks
+
+    salary_income_record.gov_arrear_pay = updated_salary.gov_arrear_pay
+    salary_income_record.gov_arrear_pay_remarks = updated_salary.gov_arrear_pay_remarks
+    salary_income_record.gov_festival_allowance = updated_salary.gov_festival_allowance
+    salary_income_record.gov_festival_allowance_remarks = updated_salary.gov_festival_allowance_remarks
+    salary_income_record.gov_special_allowance = updated_salary.gov_special_allowance
+    salary_income_record.gov_special_allowance_remarks = updated_salary.gov_special_allowance_remarks
+    salary_income_record.gov_support_staff_allowance = updated_salary.gov_support_staff_allowance
+    salary_income_record.gov_support_staff_allowance_remarks = updated_salary.gov_support_staff_allowance_remarks
+    salary_income_record.gov_leave_allowance = updated_salary.gov_leave_allowance
+    salary_income_record.gov_leave_allowance_remarks = updated_salary.gov_leave_allowance_remarks
+    salary_income_record.gov_reward = updated_salary.gov_reward
+    salary_income_record.gov_reward_remarks = updated_salary.gov_reward_remarks
+    salary_income_record.gov_overtime = updated_salary.gov_overtime
+    salary_income_record.gov_overtime_remarks = updated_salary.gov_overtime_remarks
+    salary_income_record.gov_bangla_noboborsho = updated_salary.gov_bangla_noboborsho
+    salary_income_record.gov_bangla_noboborsho_remarks = updated_salary.gov_bangla_noboborsho_remarks
+    salary_income_record.gov_interest_accrued_from_PF = updated_salary.gov_interest_accrued_from_PF
+    salary_income_record.gov_interest_accrued_from_PF_remarks = updated_salary.gov_interest_accrued_from_PF_remarks
+    salary_income_record.gov_lump_grant = updated_salary.gov_lump_grant
+    salary_income_record.gov_lump_grant_remarks = updated_salary.gov_lump_grant_remarks
+    salary_income_record.gov_gratuity = updated_salary.gov_gratuity
+    salary_income_record.gov_gratuity_remarks = updated_salary.gov_gratuity_remarks
+    salary_income_record.gov_others = updated_salary.gov_others
+    salary_income_record.gov_others_remarks = updated_salary.gov_others_remarks
+    salary_income_record.etin = updated_salary.etin
+    salary_income_record.employer_info_id = updated_salary.employer_info_id
+
+    # Commit changes to the database
+    db.commit()
+    db.refresh(salary_income_record)
+
+    return salary_income_record
+
 
 
 
@@ -306,6 +450,27 @@ def create_salary_income_summary(db: Session, salary_summary: schemas.SalaryInco
     return salary_income_summary
 
 
+def update_salary_income_summary(
+    db: Session, etin: str, updated_summary: schemas.SalaryIncome_Summary
+):
+    db_salary_summary = db.query(models.SalaryIncomeSummary).filter(models.SalaryIncomeSummary.etin == etin).first()
+
+    if not db_salary_summary:
+        return None  
+    
+    db_salary_summary.total_income = updated_summary.total_income
+    db_salary_summary.exempted_income = updated_summary.exempted_income
+    db_salary_summary.taxable_income = updated_summary.taxable_income
+    db_salary_summary.tax_liability = updated_summary.tax_liability
+
+    # Commit changes to the database
+    db.commit()
+    db.refresh(db_salary_summary)
+
+    return db_salary_summary
+
+
+
 
 
 def get_investment_record(db: Session, etin: str):
@@ -420,6 +585,170 @@ def create_investment_record(db: Session, investment_record: schemas.Investment_
     db.commit()
     db.refresh(investment_record)
     return investment_record
+
+
+def update_investment_record(
+    db: Session, etin: str, updated_record: schemas.Investment_Record
+):
+
+    db_investment_record = db.query(models.InvestmentRecord).filter(models.InvestmentRecord.etin == etin).first()
+
+    if not db_investment_record:
+        return None  # Record does not exist
+
+    # Update the fields with new data
+    db_investment_record.gov_securities_actual = updated_record.gov_securities_actual
+    db_investment_record.gov_securities_allowable = updated_record.gov_securities_allowable
+    db_investment_record.gov_securities_remarks = updated_record.gov_securities_remarks
+
+    db_investment_record.eft_actual = updated_record.eft_actual
+    db_investment_record.eft_allowable = updated_record.eft_allowable
+    db_investment_record.eft_remarks = updated_record.eft_remarks
+
+    db_investment_record.life_insurance_given_premium_actual = updated_record.life_insurance_given_premium_actual
+    db_investment_record.life_insurance_given_premium_allowable = updated_record.life_insurance_given_premium_allowable
+    db_investment_record.life_insurance_given_premium_remarks = updated_record.life_insurance_given_premium_remarks
+
+    db_investment_record.contribution_paid_to_deposit_pension_actual = updated_record.contribution_paid_to_deposit_pension_actual
+    db_investment_record.contribution_paid_to_deposit_pension_allowable = updated_record.contribution_paid_to_deposit_pension_allowable
+    db_investment_record.contribution_paid_to_deposit_pension_remarks = updated_record.contribution_paid_to_deposit_pension_remarks
+
+    db_investment_record.premium_or_contractual_deferred_annuity_actual = updated_record.premium_or_contractual_deferred_annuity_actual
+    db_investment_record.premium_or_contractual_deferred_annuity_allowable = updated_record.premium_or_contractual_deferred_annuity_actual
+    db_investment_record.premium_or_contractual_deferred_annuity_remarks = updated_record.premium_or_contractual_deferred_annuity_remarks
+
+    db_investment_record.investment_in_any_securities_actual = updated_record.investment_in_any_securities_actual
+    db_investment_record.investment_in_any_securities_allowable = updated_record.investment_in_any_securities_actual
+    db_investment_record.investment_in_any_securities_remarks = updated_record.investment_in_any_securities_remarks
+
+    db_investment_record.provisions_of_pf_act_1925_actual = updated_record.provisions_of_pf_act_1925_actual
+    db_investment_record.provisions_of_pf_act_1925_allowable = updated_record.provisions_of_pf_act_1925_actual
+    db_investment_record.provisions_of_pf_act_1925_remarks = updated_record.provisions_of_pf_act_1925_remarks
+
+    db_investment_record.contributions_to_approved_provident_fund_actual = updated_record.contributions_to_approved_provident_fund_actual
+    db_investment_record.contributions_to_approved_provident_fund_allowable = updated_record.contributions_to_approved_provident_fund_actual
+    db_investment_record.contributions_to_approved_provident_fund_remarks = updated_record.contributions_to_approved_provident_fund_remarks
+
+    db_investment_record.contributions_to_superannuation_funds_actual = updated_record.contributions_to_superannuation_funds_actual
+    db_investment_record.contributions_to_superannuation_funds_allowable = updated_record.contributions_to_superannuation_funds_actual
+    db_investment_record.contributions_to_superannuation_funds_remarks = updated_record.contributions_to_superannuation_funds_remarks
+
+    db_investment_record.contribution_to_welfare_fund_actual = updated_record.contribution_to_welfare_fund_actual
+    db_investment_record.contribution_to_welfare_fund_allowable = updated_record.contribution_to_welfare_fund_actual
+    db_investment_record.contribution_to_welfare_fund_remarks = updated_record.contribution_to_welfare_fund_remarks
+
+    db_investment_record.contribution_to_zakat_fund_actual = updated_record.contribution_to_zakat_fund_actual
+    db_investment_record.contribution_to_zakat_fund_allowable = updated_record.contribution_to_zakat_fund_actual
+    db_investment_record.contribution_to_zakat_fund_remarks = updated_record.contribution_to_zakat_fund_remarks
+
+    db_investment_record.donation_to_liberation_war_memory_actual = updated_record.donation_to_liberation_war_memory_actual
+    db_investment_record.donation_to_liberation_war_memory_allowable = updated_record.donation_to_liberation_war_memory_actual
+    db_investment_record.donation_to_liberation_war_memory_remarks = updated_record.donation_to_liberation_war_memory_remarks
+
+    db_investment_record.donations_to_father_of_nation_memory_actual = updated_record.donations_to_father_of_nation_memory_actual
+    db_investment_record.donations_to_father_of_nation_memory_allowable = updated_record.donations_to_father_of_nation_memory_actual
+    db_investment_record.donations_to_father_of_nation_memory_remarks = updated_record.donations_to_father_of_nation_memory_remarks
+
+    db_investment_record.donation_to_disabled_organizations_actual = updated_record.donation_to_disabled_organizations_actual
+    db_investment_record.donation_to_disabled_organizations_allowable = updated_record.donation_to_disabled_organizations_actual
+    db_investment_record.donation_to_disabled_organizations_remarks = updated_record.donation_to_disabled_organizations_remarks
+
+    db_investment_record.donations_to_liberation_war_museum_actual = updated_record.donations_to_liberation_war_museum_actual
+    db_investment_record.donations_to_liberation_war_museum_allowable = updated_record.donations_to_liberation_war_museum_actual
+    db_investment_record.donations_to_liberation_war_museum_remarks = updated_record.donations_to_liberation_war_museum_remarks
+
+    db_investment_record.donation_to_ahsania_cancer_hospital_actual = updated_record.donation_to_ahsania_cancer_hospital_actual
+    db_investment_record.donation_to_ahsania_cancer_hospital_allowable = updated_record.donation_to_ahsania_cancer_hospital_actual
+    db_investment_record.donation_to_ahsania_cancer_hospital_remarks = updated_record.donation_to_ahsania_cancer_hospital_remarks
+
+    db_investment_record.donations_to_icddrb_actual = updated_record.donations_to_icddrb_actual
+    db_investment_record.donations_to_icddrb_allowable = updated_record.donations_to_icddrb_actual
+    db_investment_record.donations_to_icddrb_remarks = updated_record.donations_to_icddrb_remarks
+
+    db_investment_record.donation_to_crp_savar_actual = updated_record.donation_to_crp_savar_actual
+    db_investment_record.donation_to_crp_savar_allowable = updated_record.donation_to_crp_savar_actual
+    db_investment_record.donation_to_crp_savar_remarks = updated_record.donation_to_crp_savar_remarks
+
+    db_investment_record.donations_to_charitable_educational_institutions_actual = updated_record.donations_to_charitable_educational_institutions_actual
+    db_investment_record.donations_to_charitable_educational_institutions_allowable = updated_record.donations_to_charitable_educational_institutions_actual
+    db_investment_record.donations_to_charitable_educational_institutions_remarks = updated_record.donations_to_charitable_educational_institutions_remarks
+
+    db_investment_record.donation_to_asiatic_society_actual = updated_record.donation_to_asiatic_society_actual
+    db_investment_record.donation_to_asiatic_society_allowable = updated_record.donation_to_asiatic_society_actual
+    db_investment_record.donation_to_asiatic_society_remarks = updated_record.donation_to_asiatic_society_remarks
+
+    db_investment_record.donation_to_dhaka_ahsania_mission_actual = updated_record.donation_to_dhaka_ahsania_mission_actual
+    db_investment_record.donation_to_dhaka_ahsania_mission_allowable = updated_record.donation_to_dhaka_ahsania_mission_actual
+    db_investment_record.donation_to_dhaka_ahsania_mission_remarks = updated_record.donation_to_dhaka_ahsania_mission_remarks
+
+    db_investment_record.contribution_to_super_annuity_fund_actual = updated_record.contribution_to_super_annuity_fund_actual
+    db_investment_record.contribution_to_super_annuity_fund_allowable = updated_record.contribution_to_super_annuity_fund_actual
+    db_investment_record.contribution_to_super_annuity_fund_remarks = updated_record.contribution_to_super_annuity_fund_remarks
+
+    db_investment_record.other_actual = updated_record.other_actual
+    db_investment_record.other_allowable = updated_record.other_actual
+    db_investment_record.other_remarks = updated_record.other_remarks
+
+    db_investment_record.total_investment = updated_record.total_investment = (
+            updated_record.gov_securities_actual +
+            updated_record.eft_actual +
+            updated_record.life_insurance_given_premium_actual +
+            updated_record.premium_or_contractual_deferred_annuity_actual +
+            updated_record.contribution_paid_to_deposit_pension_actual +
+            updated_record.investment_in_any_securities_actual +
+            updated_record.provisions_of_pf_act_1925_actual +
+            updated_record.contributions_to_approved_provident_fund_actual +
+            updated_record.contributions_to_superannuation_funds_actual +
+            updated_record.contribution_to_welfare_fund_actual +
+            updated_record.contribution_to_zakat_fund_actual +
+            updated_record.donation_to_liberation_war_memory_actual +
+            updated_record.donations_to_father_of_nation_memory_actual +
+            updated_record.donation_to_disabled_organizations_actual +
+            updated_record.donations_to_liberation_war_museum_actual +
+            updated_record.donation_to_ahsania_cancer_hospital_actual +
+            updated_record.donations_to_icddrb_actual +
+            updated_record.donation_to_crp_savar_actual +
+            updated_record.donations_to_charitable_educational_institutions_actual +
+            updated_record.donation_to_asiatic_society_actual +
+            updated_record.donation_to_dhaka_ahsania_mission_actual +
+            updated_record.contribution_to_super_annuity_fund_actual +
+            updated_record.other_actual
+        )
+
+ 
+    
+    db_investment_record.allowable_investment = updated_record.allowable_investment = (
+            updated_record.gov_securities_allowable +
+            updated_record.eft_allowable +
+            updated_record.life_insurance_given_premium_allowable +
+            updated_record.premium_or_contractual_deferred_annuity_allowable +
+            updated_record.contribution_paid_to_deposit_pension_allowable +
+            updated_record.investment_in_any_securities_allowable +
+            updated_record.provisions_of_pf_act_1925_allowable +
+            updated_record.contributions_to_approved_provident_fund_allowable +
+            updated_record.contributions_to_superannuation_funds_allowable +
+            updated_record.contribution_to_welfare_fund_allowable +
+            updated_record.contribution_to_zakat_fund_allowable +
+            updated_record.donation_to_liberation_war_memory_allowable +
+            updated_record.donations_to_father_of_nation_memory_allowable +
+            updated_record.donation_to_disabled_organizations_allowable +
+            updated_record.donations_to_liberation_war_museum_allowable +
+            updated_record.donation_to_ahsania_cancer_hospital_allowable +
+            updated_record.donations_to_icddrb_allowable +
+            updated_record.donation_to_crp_savar_allowable +
+            updated_record.donations_to_charitable_educational_institutions_allowable +
+            updated_record.donation_to_asiatic_society_allowable +
+            updated_record.donation_to_dhaka_ahsania_mission_allowable +
+            updated_record.contribution_to_super_annuity_fund_allowable +
+            updated_record.other_allowable
+        )
+
+    # Commit changes to the database
+    db.commit()
+    db.refresh(db_investment_record)
+
+    return db_investment_record
+
 
 
 
