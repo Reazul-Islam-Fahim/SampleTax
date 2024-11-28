@@ -223,6 +223,10 @@ async def update_salary_income_record_endpoint(
     vehicle_facility: schemas.Vehicale_facility_Details = Body(...),
     db: Session = Depends(get_db),
 ):
+    crud.update_allowance(db, etin, allowances)
+    crud.update_perquisite(db, etin, perquisites)
+    crud.update_vehicle_facility(db, etin, vehicle_facility)
+    
     updated_record = crud.update_salary_income_record(db, etin, salary_data)
 
     if updated_record is None:

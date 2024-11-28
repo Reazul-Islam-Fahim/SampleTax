@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
 import models, schemas
+from fastapi import HTTPException
 
 
 def get_user_auth(db: Session, id: int):
@@ -356,6 +357,41 @@ def create_allowance(db: Session, allowances: schemas.Allowance_Details, petin :
     return allowances
 
 
+def update_allowance(db: Session, etin: str, allowances: schemas.Allowance_Details):
+    # Find the existing record by ETIN
+    existing_record = db.query(models.AllowanceDetails).filter(models.AllowanceDetails.etin == etin).first()
+    
+    if not existing_record:
+        # If the record doesn't exist, return None or raise an exception
+        raise HTTPException(status_code=404, detail="Allowance record not found")
+    
+    # Update the fields with the new data
+    existing_record.any_allowance = allowances.any_allowance
+    existing_record.any_allowance_remarks = allowances.any_allowance_remarks
+    existing_record.leave_allowance = allowances.leave_allowance
+    existing_record.leave_allowance_remarks = allowances.leave_allowance_remarks
+    existing_record.lump_grant = allowances.lump_grant
+    existing_record.lump_grant_remarks = allowances.lump_grant_remarks
+    existing_record.bonus = allowances.bonus
+    existing_record.bonus_remarks = allowances.bonus_remarks
+    existing_record.fee = allowances.fee
+    existing_record.fee_remarks = allowances.fee_remarks
+    existing_record.commission = allowances.commission
+    existing_record.commission_remarks = allowances.commission_remarks
+    existing_record.overtime = allowances.overtime
+    existing_record.overtime_remarks = allowances.overtime_remarks
+    existing_record.other = allowances.other
+    existing_record.other_details = allowances.other_details
+    existing_record.total = allowances.total
+
+    # Commit the changes to the database
+    db.commit()
+    db.refresh(existing_record)  # Refresh the instance with the updated data
+    
+    return existing_record
+
+
+
 
 
 def get_perquisite(db: Session, etin: str):
@@ -397,6 +433,43 @@ def create_perquisite(db: Session, perquisite: schemas.Perquisite_Details, petin
     return perquisite
 
 
+def update_perquisite(db: Session, etin: str, perquisite: schemas.Perquisite_Details):
+    # Fetch the existing record by ETIN
+    existing_record = db.query(models.PerquisiteDetails).filter(models.PerquisiteDetails.etin == etin).first()
+    
+    if not existing_record:
+        # If the record doesn't exist, return None or raise an exception
+        raise HTTPException(status_code=404, detail="Perquisite record not found")
+    
+    # Update the fields with the new data
+    existing_record.mohargha_allowance = perquisite.mohargha_allowance
+    existing_record.mohargha_allowance_remarks = perquisite.mohargha_allowance_remarks
+    existing_record.insurance_premium_borne_by_the_employer = perquisite.insurance_premium_borne_by_the_employer
+    existing_record.insurance_premium_borne_by_the_employer_remarks = perquisite.insurance_premium_borne_by_the_employer_remarks
+    existing_record.housing_allowance = perquisite.housing_allowance
+    existing_record.housing_allowance_remarks = perquisite.housing_allowance_remarks
+    existing_record.house_rent_allowance = perquisite.house_rent_allowance
+    existing_record.house_rent_allowance_remarks = perquisite.house_rent_allowance_remarks
+    existing_record.entertainment_allowance = perquisite.entertainment_allowance
+    existing_record.entertainment_allowance_remarks = perquisite.entertainment_allowance_remarks
+    existing_record.passage_leave = perquisite.passage_leave
+    existing_record.passage_leave_remarks = perquisite.passage_leave_remarks
+    existing_record.medical_allowance = perquisite.medical_allowance
+    existing_record.medical_allowance_remarks = perquisite.medical_allowance_remarks
+    existing_record.any_other_obligations_of_the_employee = perquisite.any_other_obligations_of_the_employee
+    existing_record.any_other_obligations_of_the_employee_remarks = perquisite.any_other_obligations_of_the_employee_remarks
+    existing_record.other = perquisite.other
+    existing_record.other_remarks = perquisite.other_remarks
+    existing_record.total = perquisite.total
+
+    # Commit the changes to the database
+    db.commit()
+    db.refresh(existing_record)  # Refresh the instance with updated data
+    
+    return existing_record
+
+
+
 
 def get_vehicle_falitiy(db: Session, etin: str):
     return db.query(models.VehicleFacilityDetails).filter(models.VehicleFacilityDetails.etin == etin).first()
@@ -421,6 +494,29 @@ def create_vehicle_falitiy(db: Session, vehicle_facility: schemas.Vehicale_facil
     db.commit()
     db.refresh(vehicle_facility)
     return vehicle_facility
+
+
+def update_vehicle_facility(db: Session, etin: str, vehicle_facility: schemas.Vehicale_facility_Details):
+    # Find the existing record by ETIN
+    existing_record = db.query(models.VehicleFacilityDetails).filter(models.VehicleFacilityDetails.etin == etin).first()
+    
+    if not existing_record:
+        # If the record doesn't exist, return None or raise an exception
+        raise HTTPException(status_code=404, detail="Vehicle facility record not found")
+    
+    # Update the fields with the new data
+    existing_record.upto_2500CC = vehicle_facility.upto_2500CC
+    existing_record.cost_for_upto_2500 = vehicle_facility.cost_for_upto_2500
+    existing_record.greater_than_2500cc = vehicle_facility.greater_than_2500cc
+    existing_record.cost_for_more_than_2500 = vehicle_facility.cost_for_more_than_2500
+    existing_record.no_of_months = vehicle_facility.no_of_months
+    existing_record.total = vehicle_facility.total
+
+    # Commit the changes to the database
+    db.commit()
+    db.refresh(existing_record)  # Refresh the instance with updated data
+    
+    return existing_record
 
 
 
