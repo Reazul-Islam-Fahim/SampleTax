@@ -150,9 +150,18 @@ def create_investment_record(
 async def update_investment_record_endpoint(
     etin: str,
     updated_record: schemas.Investment_Record,
+    given_premium: schemas.Given_Premium,
+    gov_securities: schemas.Gov_Securities,
+    eft: schemas.E_FT,
+    dps: schemas.D_PS,
     db: Session = Depends(get_db),
 ):
-  
+    
+    crud.update_given_premium(db, etin, given_premium)
+    crud.update_gov_securities(db, etin, gov_securities)
+    crud.update_eft(db, etin, eft)
+    crud.update_dps(db, etin, dps)
+    
     updated_investment_record = crud.update_investment_record(db, etin, updated_record)
 
     if updated_investment_record is None:

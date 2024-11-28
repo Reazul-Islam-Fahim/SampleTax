@@ -872,6 +872,30 @@ def create_given_premium(db: Session, given_premium: schemas.Given_Premium, peti
     return given_premium
 
 
+def update_given_premium(db: Session, etin: str, given_premium: schemas.Given_Premium):
+    # Find the existing record by ETIN
+    existing_record = db.query(models.GivenPremium).filter(models.GivenPremium.etin == etin).first()
+    
+    if not existing_record:
+        # If the record doesn't exist, return None or raise an exception
+        raise HTTPException(status_code=404, detail="Given premium record not found")
+    
+    # Update the fields with the new data
+    existing_record.policy_no = given_premium.policy_no
+    existing_record.company = given_premium.company
+    existing_record.policy_value = given_premium.policy_value
+    existing_record.given_premium = given_premium.given_premium
+    existing_record.allowable = given_premium.allowable
+    existing_record.remarks = given_premium.remarks
+
+    # Commit the changes to the database
+    db.commit()
+    db.refresh(existing_record)  # Refresh the instance with updated data
+    
+    return existing_record
+
+
+
 
 def get_gov_securities(db: Session, etin : str):
     return db.query(models.GovSecurities).filter(models.GovSecurities.etin == etin).first()
@@ -892,6 +916,26 @@ def create_gov_securities(db: Session, gov_securities: schemas.Gov_Securities, p
     db.commit()
     db.refresh(gov_securities)
     return gov_securities
+
+
+def update_gov_securities(db: Session, etin: str, gov_securities: schemas.Gov_Securities):
+    # Find the existing record by ETIN
+    existing_record = db.query(models.GovSecurities).filter(models.GovSecurities.etin == etin).first()
+    
+    if not existing_record:
+        # If the record doesn't exist, return None or raise an exception
+        raise HTTPException(status_code=404, detail="Gov securities record not found")
+    
+    # Update the fields with the new data
+    existing_record.description = gov_securities.description
+    existing_record.actual = gov_securities.actual
+    existing_record.allowable = gov_securities.allowable
+
+    # Commit the changes to the database
+    db.commit()
+    db.refresh(existing_record)  # Refresh the instance with updated data
+    
+    return existing_record
 
 
 
@@ -916,6 +960,26 @@ def create_eft(db: Session, eft: schemas.E_FT, petin : str ):
     return eft
 
 
+def update_eft(db: Session, etin: str, eft: schemas.E_FT):
+    # Find the existing record by ETIN
+    existing_record = db.query(models.EFT).filter(models.EFT.etin == etin).first()
+    
+    if not existing_record:
+        # If the record doesn't exist, return None or raise an exception
+        raise HTTPException(status_code=404, detail="EFT record not found")
+    
+    # Update the fields with the new data
+    existing_record.description = eft.description
+    existing_record.actual = eft.actual
+    existing_record.allowable = eft.allowable
+
+    # Commit the changes to the database
+    db.commit()
+    db.refresh(existing_record)  # Refresh the instance with updated data
+    
+    return existing_record
+
+
 
 def get_dps(db: Session, etin : str):
     return db.query(models.DPS).filter(models.DPS.etin == etin).first()
@@ -936,6 +1000,26 @@ def create_dps(db: Session, dps: schemas.D_PS, petin : str ):
     db.commit()
     db.refresh(dps)
     return dps
+
+
+def update_dps(db: Session, etin: str, dps: schemas.D_PS):
+    # Find the existing record by ETIN
+    existing_record = db.query(models.DPS).filter(models.DPS.etin == etin).first()
+    
+    if not existing_record:
+        # If the record doesn't exist, raise an HTTP exception
+        raise HTTPException(status_code=404, detail="DPS record not found")
+    
+    # Update the fields with the new data
+    existing_record.description = dps.description
+    existing_record.actual = dps.actual
+    existing_record.allowable = dps.allowable
+
+    # Commit the changes to the database
+    db.commit()
+    db.refresh(existing_record)  # Refresh the instance with updated data
+    
+    return existing_record
 
 
 
