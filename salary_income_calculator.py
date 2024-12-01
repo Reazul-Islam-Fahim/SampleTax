@@ -141,7 +141,7 @@ class TaxLiabilityCalculator:
 
 
 
-@app.post("/api/salary_income/")
+@app.post("/salary_income/")
 async def calculate_salary_income(
     salary_data: schemas.SalaryIncome_Record = Body(...),
     allowances: schemas.Allowance_Details = Body(...),
@@ -214,7 +214,7 @@ async def calculate_salary_income(
 
 
 
-@app.put("/api/salary_income/{etin}", response_model=schemas.SalaryIncome_Record)
+@app.put("/salary_income/{etin}", response_model=schemas.SalaryIncome_Record)
 async def update_salary_income_record_endpoint(
     etin: str,
     salary_data: schemas.SalaryIncome_Record,
@@ -238,7 +238,7 @@ async def update_salary_income_record_endpoint(
 
 
     
-@app.get("/api/salary_income/{etin}")
+@app.get("/salary_income/{etin}")
 async def get_income_records(etin : str = Path(...),  db: Session = Depends(get_db)):
     db_item = crud.get_salary_income_record(db, etin = etin)
     if db_item is None:
@@ -247,7 +247,7 @@ async def get_income_records(etin : str = Path(...),  db: Session = Depends(get_
 
     
 
-@app.get("/api/salary_income/")
+@app.get("/salary_income/")
 async def get_income_records(skip : int = Query(...), limit : int = Query(...),  db: Session = Depends(get_db)):
     return crud.get_salary_income_records(db, skip=skip, limit=limit)
 
