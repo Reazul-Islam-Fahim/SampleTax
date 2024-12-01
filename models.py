@@ -165,30 +165,76 @@ class SalaryIncomeRecord(Base):
     private_others_remarks = Column(String(100), nullable=True)
 
     # Government salary fields with 'gov_' prefix
-    gov_arrear_pay = Column(Integer, default=0)
-    gov_arrear_pay_remarks = Column(String(100), nullable=True)
-    gov_festival_allowance = Column(Integer, default=0)
-    gov_festival_allowance_remarks = Column(String(100), nullable=True)
-    gov_special_allowance = Column(Integer, default=0)
-    gov_special_allowance_remarks = Column(String(100), nullable=True)
-    gov_support_staff_allowance = Column(Integer, default=0)
-    gov_support_staff_allowance_remarks = Column(String(100), nullable=True)
-    gov_leave_allowance = Column(Integer, default=0)
-    gov_leave_allowance_remarks = Column(String(100), nullable=True)
-    gov_reward = Column(Integer, default=0)
-    gov_reward_remarks = Column(String(100), nullable=True)
-    gov_overtime = Column(Integer, default=0)
-    gov_overtime_remarks = Column(String(100), nullable=True)
-    gov_bangla_noboborsho = Column(Integer, default=0)
-    gov_bangla_noboborsho_remarks = Column(String(100), nullable=True)
-    gov_interest_accrued_from_PF = Column(Integer, default=0)
-    gov_interest_accrued_from_PF_remarks = Column(String(100), nullable=True)
-    gov_lump_grant = Column(Integer, default=0)
-    gov_lump_grant_remarks = Column(String(100), nullable=True)
-    gov_gratuity = Column(Integer, default=0)
-    gov_gratuity_remarks = Column(String(100), nullable=True)
-    gov_others = Column(Integer, default=0)
-    gov_others_remarks = Column(String(100), nullable=True)                        # Government (renamed to avoid conflict)
+    gov_arrear_pay = Column(Integer, nullable=False, default=0)
+    gov_arrear_pay_exempted = Column(Integer, nullable=False, default=0)
+    gov_arrear_pay_taxable = Column(Integer, nullable=False, default=0)
+    gov_arrear_pay_remarks = Column(String, nullable=True)
+
+    # Festival Allowance
+    gov_festival_allowance = Column(Integer, nullable=False, default=0)
+    gov_festival_allowance_exempted = Column(Integer, nullable=False, default=0)
+    gov_festival_allowance_taxable = Column(Integer, nullable=False, default=0)
+    gov_festival_allowance_remarks = Column(String, nullable=True)
+
+    # Special Allowance
+    gov_special_allowance = Column(Integer, nullable=False, default=0)
+    gov_special_allowance_exempted = Column(Integer, nullable=False, default=0)
+    gov_special_allowance_taxable = Column(Integer, nullable=False, default=0)
+    gov_special_allowance_remarks = Column(String, nullable=True)
+
+    # Support Staff Allowance
+    gov_support_staff_allowance = Column(Integer, nullable=False, default=0)
+    gov_support_staff_allowance_exempted = Column(Integer, nullable=False, default=0)
+    gov_support_staff_allowance_taxable = Column(Integer, nullable=False, default=0)
+    gov_support_staff_allowance_remarks = Column(String, nullable=True)
+
+    # Leave Allowance
+    gov_leave_allowance = Column(Integer, nullable=False, default=0)
+    gov_leave_allowance_exempted = Column(Integer, nullable=False, default=0)
+    gov_leave_allowance_taxable = Column(Integer, nullable=False, default=0)
+    gov_leave_allowance_remarks = Column(String, nullable=True)
+
+    # Reward
+    gov_reward = Column(Integer, nullable=False, default=0)
+    gov_reward_exempted = Column(Integer, nullable=False, default=0)
+    gov_reward_taxable = Column(Integer, nullable=False, default=0)
+    gov_reward_remarks = Column(String, nullable=True)
+
+    # Overtime
+    gov_overtime = Column(Integer, nullable=False, default=0)
+    gov_overtime_exempted = Column(Integer, nullable=False, default=0)
+    gov_overtime_taxable = Column(Integer, nullable=False, default=0)
+    gov_overtime_remarks = Column(String, nullable=True)
+
+    # Bangla Noboborsho Allowance
+    gov_bangla_noboborsho = Column(Integer, nullable=False, default=0)
+    gov_bangla_noboborsho_exempted = Column(Integer, nullable=False, default=0)
+    gov_bangla_noboborsho_taxable = Column(Integer, nullable=False, default=0)
+    gov_bangla_noboborsho_remarks = Column(String, nullable=True)
+
+    # Interest Accrued from Provident Fund (PF)
+    gov_interest_accrued_from_PF = Column(Integer, nullable=False, default=0)
+    gov_interest_accrued_from_PF_exempted = Column(Integer, nullable=False, default=0)
+    gov_interest_accrued_from_PF_taxable = Column(Integer, nullable=False, default=0)
+    gov_interest_accrued_from_PF_remarks = Column(String, nullable=True)
+
+    # Lump Sum Grant
+    gov_lump_grant = Column(Integer, nullable=False, default=0)
+    gov_lump_grant_exempted = Column(Integer, nullable=False, default=0)
+    gov_lump_grant_taxable = Column(Integer, nullable=False, default=0)
+    gov_lump_grant_remarks = Column(String, nullable=True)
+
+    # Gratuity
+    gov_gratuity = Column(Integer, nullable=False, default=0)
+    gov_gratuity_exempted = Column(Integer, nullable=False, default=0)
+    gov_gratuity_taxable = Column(Integer, nullable=False, default=0)
+    gov_gratuity_remarks = Column(String, nullable=True)
+
+    # Other Allowances
+    gov_others = Column(Integer, nullable=False, default=0)
+    gov_others_exempted = Column(Integer, nullable=False, default=0)
+    gov_others_taxable = Column(Integer, nullable=False, default=0)
+    gov_others_remarks = Column(String, nullable=True)
     
     etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
     employer_info_id = Column(Integer, ForeignKey('employer_info.id'), nullable=False)

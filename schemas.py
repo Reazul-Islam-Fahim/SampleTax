@@ -93,30 +93,77 @@ class SalaryIncome_Record(BaseModel):
     private_others_remarks: Optional[str] = None
 
     # Government salary fields with 'gov_' prefix
-    gov_arrear_pay: int = 0
-    gov_arrear_pay_remarks: Optional[str] = None
-    gov_festival_allowance: int = 0
-    gov_festival_allowance_remarks: Optional[str] = None
-    gov_special_allowance: int = 0
-    gov_special_allowance_remarks: Optional[str] = None
-    gov_support_staff_allowance: int = 0
-    gov_support_staff_allowance_remarks: Optional[str] = None
-    gov_leave_allowance: int = 0
-    gov_leave_allowance_remarks: Optional[str] = None
-    gov_reward: int = 0
-    gov_reward_remarks: Optional[str] = None
-    gov_overtime: int = 0
-    gov_overtime_remarks: Optional[str] = None
-    gov_bangla_noboborsho: int = 0
-    gov_bangla_noboborsho_remarks: Optional[str] = None
-    gov_interest_accrued_from_PF: int = 0
-    gov_interest_accrued_from_PF_remarks: Optional[str] = None
-    gov_lump_grant: int = 0
-    gov_lump_grant_remarks: Optional[str] = None
-    gov_gratuity: int = 0
-    gov_gratuity_remarks: Optional[str] = None
-    gov_others: int = 0
-    gov_others_remarks: Optional[str] = None
+    # Arrear Pay
+    gov_arrear_pay: int
+    gov_arrear_pay_exempted: int
+    gov_arrear_pay_taxable: int
+    gov_arrear_pay_remarks: Optional[str]
+
+    # Festival Allowance
+    gov_festival_allowance: int
+    gov_festival_allowance_exempted: int
+    gov_festival_allowance_taxable: int
+    gov_festival_allowance_remarks: Optional[str]
+
+    # Special Allowance
+    gov_special_allowance: int
+    gov_special_allowance_exempted: int
+    gov_special_allowance_taxable: int
+    gov_special_allowance_remarks: Optional[str]
+
+    # Support Staff Allowance
+    gov_support_staff_allowance: int
+    gov_support_staff_allowance_exempted: int
+    gov_support_staff_allowance_taxable: int
+    gov_support_staff_allowance_remarks: Optional[str]
+
+    # Leave Allowance
+    gov_leave_allowance: int
+    gov_leave_allowance_exempted: int
+    gov_leave_allowance_taxable: int
+    gov_leave_allowance_remarks: Optional[str]
+
+    # Reward
+    gov_reward: int
+    gov_reward_exempted: int
+    gov_reward_taxable: int
+    gov_reward_remarks: Optional[str]
+
+    # Overtime
+    gov_overtime: int
+    gov_overtime_exempted: int
+    gov_overtime_taxable: int
+    gov_overtime_remarks: Optional[str]
+
+    # Bangla Noboborsho Allowance
+    gov_bangla_noboborsho: int
+    gov_bangla_noboborsho_exempted: int
+    gov_bangla_noboborsho_taxable: int
+    gov_bangla_noboborsho_remarks: Optional[str]
+
+    # Interest Accrued from Provident Fund (PF)
+    gov_interest_accrued_from_PF: int
+    gov_interest_accrued_from_PF_exempted: int
+    gov_interest_accrued_from_PF_taxable: int
+    gov_interest_accrued_from_PF_remarks: Optional[str]
+
+    # Lump Sum Grant
+    gov_lump_grant: int
+    gov_lump_grant_exempted: int
+    gov_lump_grant_taxable: int
+    gov_lump_grant_remarks: Optional[str]
+
+    # Gratuity
+    gov_gratuity: int
+    gov_gratuity_exempted: int
+    gov_gratuity_taxable: int
+    gov_gratuity_remarks: Optional[str]
+
+    # Other Allowances
+    gov_others: int
+    gov_others_exempted: int
+    gov_others_taxable: int
+    gov_others_remarks: Optional[str]
 
     class Config:
         orm_mode = True
