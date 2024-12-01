@@ -700,9 +700,9 @@ def create_investment_record(db: Session, investment_record: schemas.Investment_
         contribution_paid_to_deposit_pension_allowable=investment_record.contribution_paid_to_deposit_pension_allowable,
         contribution_paid_to_deposit_pension_remarks=investment_record.contribution_paid_to_deposit_pension_remarks,
         
-        premium_or_contractual_deferred_annuity_actual=investment_record.premium_or_contractual_deferred_annuity_actual,
-        premium_or_contractual_deferred_annuity_allowable=investment_record.premium_or_contractual_deferred_annuity_actual,
-        premium_or_contractual_deferred_annuity_remarks=investment_record.premium_or_contractual_deferred_annuity_remarks,
+        # premium_or_contractual_deferred_annuity_actual=investment_record.premium_or_contractual_deferred_annuity_actual,
+        # premium_or_contractual_deferred_annuity_allowable=investment_record.premium_or_contractual_deferred_annuity_actual,
+        # premium_or_contractual_deferred_annuity_remarks=investment_record.premium_or_contractual_deferred_annuity_remarks,
        
         investment_in_any_securities_actual=investment_record.investment_in_any_securities_actual,
         investment_in_any_securities_allowable=investment_record.investment_in_any_securities_actual,

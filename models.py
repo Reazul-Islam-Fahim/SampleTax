@@ -389,9 +389,9 @@ class InvestmentRecord(Base):
     life_insurance_given_premium_allowable = Column(Integer, default=0)
     life_insurance_given_premium_remarks = Column(String, nullable=True)
 
-    premium_or_contractual_deferred_annuity_actual = Column(Integer, default=0)
-    premium_or_contractual_deferred_annuity_allowable = Column(Integer, default=0)
-    premium_or_contractual_deferred_annuity_remarks = Column(String, nullable=True)
+    # premium_or_contractual_deferred_annuity_actual = Column(Integer, default=0)
+    # premium_or_contractual_deferred_annuity_allowable = Column(Integer, default=0)
+    # premium_or_contractual_deferred_annuity_remarks = Column(String, nullable=True)
 
     contribution_paid_to_deposit_pension_actual = Column(Integer, default=0)
     contribution_paid_to_deposit_pension_allowable = Column(Integer, default=0)
