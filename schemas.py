@@ -64,7 +64,10 @@ class Employer_info(BaseModel):
 class SalaryIncome_Record(BaseModel):
     etin: str
     employer_info_id : int
+    
     basic_salary: int
+    basic_salary_exempted: int
+    basic_salary_taxable: int
     basic_salary_remarks : Optional[str] = None
       
     
@@ -99,17 +102,35 @@ class SalaryIncome_Record(BaseModel):
     gov_arrear_pay_taxable: int
     gov_arrear_pay_remarks: Optional[str]
 
-    # Festival Allowance
-    gov_festival_allowance: int
-    gov_festival_allowance_exempted: int
-    gov_festival_allowance_taxable: int
-    gov_festival_allowance_remarks: Optional[str]
-
     # Special Allowance
-    gov_special_allowance: int
-    gov_special_allowance_exempted: int
-    gov_special_allowance_taxable: int
-    gov_special_allowance_remarks: Optional[str]
+    gov_special_allowance: int = 0
+    gov_special_allowance_exempted: int = 0
+    gov_special_allowance_taxable: int = 0
+    gov_special_allowance_remarks: Optional[str] = None
+
+    # Medical Allowance
+    gov_medical_allowance: int = 0
+    gov_medical_allowance_exempted: int = 0
+    gov_medical_allowance_taxable: int = 0
+    gov_medical_allowance_remarks: Optional[str] = None
+
+    # Conveyance Allowance
+    gov_conveyance_allowance: int = 0
+    gov_conveyance_allowance_exempted: int = 0
+    gov_conveyance_allowance_taxable: int = 0
+    gov_conveyance_allowance_remarks: Optional[str] = None
+
+    # Festival Allowance
+    gov_festival_allowance: int = 0
+    gov_festival_allowance_exempted: int = 0
+    gov_festival_allowance_taxable: int = 0
+    gov_festival_allowance_remarks: Optional[str] = None
+
+    # House Rent Allowance
+    gov_house_rent_allowance: int = 0
+    gov_house_rent_allowance_exempted: int = 0
+    gov_house_rent_allowance_taxable: int = 0
+    gov_house_rent_allowance_remarks: Optional[str] = None
 
     # Support Staff Allowance
     gov_support_staff_allowance: int

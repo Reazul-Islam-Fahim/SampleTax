@@ -138,6 +138,8 @@ class SalaryIncomeRecord(Base):
     
     # Common fields
     basic_salary = Column(Integer, default=0)
+    basic_salary_exempted = Column(Integer, default=0)
+    basic_salary_taxable = Column(Integer, default=0)
     basic_salary_remarks = Column(String(100), nullable=True)
 
     # Private salary fields with 'private_' prefix
@@ -169,18 +171,36 @@ class SalaryIncomeRecord(Base):
     gov_arrear_pay_exempted = Column(Integer, default=0)
     gov_arrear_pay_taxable = Column(Integer, default=0)
     gov_arrear_pay_remarks = Column(String, nullable=True)
+    
+    # Special Allowance
+    gov_special_allowance = Column(Integer, default=0)
+    gov_special_allowance_exempted = Column(Integer, default=0)
+    gov_special_allowance_taxable = Column(Integer, default=0)
+    gov_special_allowance_remarks = Column(String, nullable=True)
+    
+    # Medical Allowance
+    gov_medical_allowance = Column(Integer, default=0)
+    gov_medical_allowance_exempted = Column(Integer, default=0)
+    gov_medical_allowance_taxable = Column(Integer, default=0)
+    gov_medical_allowance_remarks = Column(String, nullable=True)
+    
+    # Conveyance Allowance
+    gov_conveyance_allowance = Column(Integer, default=0)
+    gov_conveyance_allowance_exempted = Column(Integer, default=0)
+    gov_conveyance_allowance_taxable = Column(Integer, default=0)
+    gov_conveyance_allowance_remarks = Column(String, nullable=True)
 
     # Festival Allowance
     gov_festival_allowance = Column(Integer, nullable=False, default=0)
     gov_festival_allowance_exempted = Column(Integer, default=0)
     gov_festival_allowance_taxable = Column(Integer, default=0)
     gov_festival_allowance_remarks = Column(String, nullable=True)
-
-    # Special Allowance
-    gov_special_allowance = Column(Integer, default=0)
-    gov_special_allowance_exempted = Column(Integer, default=0)
-    gov_special_allowance_taxable = Column(Integer, default=0)
-    gov_special_allowance_remarks = Column(String, nullable=True)
+    
+    # House Rent Allowance
+    gov_house_rent_allowance = Column(Integer, default=0)
+    gov_house_rent_allowance_exempted = Column(Integer, default=0)
+    gov_house_rent_allowance_taxable = Column(Integer, default=0)
+    gov_house_rent_allowance_remarks = Column(String, nullable=True)
 
     # Support Staff Allowance
     gov_support_staff_allowance = Column(Integer, default=0)

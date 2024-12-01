@@ -220,15 +220,30 @@ def create_salary_income_record(db: Session, salary: schemas.SalaryIncome_Record
         gov_arrear_pay_taxable=0,
         gov_arrear_pay_remarks=salary.gov_arrear_pay_remarks,
         
-        gov_festival_allowance=salary.gov_festival_allowance,
-        gov_festival_allowance_exempted=0,
-        gov_festival_allowance_taxable=salary.gov_festival_allowance,
-        gov_festival_allowance_remarks=salary.gov_festival_allowance_remarks,
-        
         gov_special_allowance=salary.gov_special_allowance,
-        gov_special_allowance_exempted=salary.gov_special_allowance,
-        gov_special_allowance_taxable=0,
+        gov_special_allowance_exempted=salary.gov_special_allowance_exempted,
+        gov_special_allowance_taxable=salary.gov_special_allowance_taxable,
         gov_special_allowance_remarks=salary.gov_special_allowance_remarks,
+        
+        gov_medical_allowance=salary.gov_medical_allowance,
+        gov_medical_allowance_exempted=salary.gov_medical_allowance_exempted,
+        gov_medical_allowance_taxable=salary.gov_medical_allowance_taxable,
+        gov_medical_allowance_remarks=salary.gov_medical_allowance_remarks,
+
+        gov_conveyance_allowance=salary.gov_conveyance_allowance,
+        gov_conveyance_allowance_exempted=salary.gov_conveyance_allowance_exempted,
+        gov_conveyance_allowance_taxable=salary.gov_conveyance_allowance_taxable,
+        gov_conveyance_allowance_remarks=salary.gov_conveyance_allowance_remarks,
+
+        gov_festival_allowance=salary.gov_festival_allowance,
+        gov_festival_allowance_exempted=salary.gov_festival_allowance_exempted,
+        gov_festival_allowance_taxable=salary.gov_festival_allowance_taxable,
+        gov_festival_allowance_remarks=salary.gov_festival_allowance_remarks,
+
+        gov_house_rent_allowance=salary.gov_house_rent_allowance,
+        gov_house_rent_allowance_exempted=salary.gov_house_rent_allowance_exempted,
+        gov_house_rent_allowance_taxable=salary.gov_house_rent_allowance_taxable,
+        gov_house_rent_allowance_remarks=salary.gov_house_rent_allowance_remarks,
         
         gov_support_staff_allowance=salary.gov_support_staff_allowance,
         gov_support_staff_allowance_exempted=salary.gov_support_staff_allowance,
@@ -295,7 +310,10 @@ def update_salary_income_record(db: Session, etin: str, updated_salary: schemas.
 
     # Update the fields of the existing record with new data
     salary_income_record.basic_salary = updated_salary.basic_salary,
+    salary_income_record.basic_salary_exempted=0,
+    salary_income_record.basic_salary_taxable=updated_salary.basic_salary,
     salary_income_record.basic_salary_remarks = updated_salary.basic_salary_remarks,
+    
     salary_income_record.private_allowances = updated_salary.private_allowances,
     salary_income_record.private_allowances_remarks = updated_salary.private_allowances_remarks,
     salary_income_record.private_arrear_salary = updated_salary.private_arrear_salary,
@@ -324,16 +342,31 @@ def update_salary_income_record(db: Session, etin: str, updated_salary: schemas.
     salary_income_record.gov_arrear_pay_taxable = 0,
     salary_income_record.gov_arrear_pay_remarks = updated_salary.gov_arrear_pay_remarks,
     
-    salary_income_record.gov_festival_allowance = updated_salary.gov_festival_allowance,
-    salary_income_record.gov_festival_allowance_exempted = 0,
-    salary_income_record.gov_festival_allowance_taxable = updated_salary.gov_festival_allowance,
-    salary_income_record.gov_festival_allowance_remarks = updated_salary.gov_festival_allowance_remarks,
-    
     salary_income_record.gov_special_allowance = updated_salary.gov_special_allowance,
     salary_income_record.gov_special_allowance_exempted = updated_salary.gov_special_allowance,
     salary_income_record.gov_special_allowance_taxable = 0,
     salary_income_record.gov_special_allowance_remarks = updated_salary.gov_special_allowance_remarks,
+
+    salary_income_record.gov_medical_allowance = updated_salary.gov_medical_allowance,
+    salary_income_record.gov_medical_allowance_exempted = updated_salary.gov_medical_allowance,
+    salary_income_record.gov_medical_allowance_taxable = 0,
+    salary_income_record.gov_medical_allowance_remarks = updated_salary.gov_medical_allowance_remarks,
+
+    salary_income_record.gov_conveyance_allowance = updated_salary.gov_conveyance_allowance,
+    salary_income_record.gov_conveyance_allowance_exempted = updated_salary.gov_conveyance_allowance,
+    salary_income_record.gov_conveyance_allowance_taxable = 0,
+    salary_income_record.gov_conveyance_allowance_remarks = updated_salary.gov_conveyance_allowance_remarks,
     
+    salary_income_record.gov_festival_allowance = updated_salary.gov_festival_allowance,
+    salary_income_record.gov_festival_allowance_exempted = 0,
+    salary_income_record.gov_festival_allowance_taxable = updated_salary.gov_festival_allowance,
+    salary_income_record.gov_festival_allowance_remarks = updated_salary.gov_festival_allowance_remarks,
+
+    salary_income_record.gov_house_rent_allowance = updated_salary.gov_house_rent_allowance,
+    salary_income_record.gov_house_rent_allowance_exempted = updated_salary.gov_house_rent_allowance_exempted,
+    salary_income_record.gov_house_rent_allowance_taxable = 0,
+    salary_income_record.gov_house_rent_allowance_remarks = updated_salary.gov_house_rent_allowance_remarks,
+
     salary_income_record.gov_support_staff_allowance = updated_salary.gov_support_staff_allowance,
     salary_income_record.gov_support_staff_allowance_exempted = updated_salary.gov_support_staff_allowance,
     salary_income_record.gov_support_staff_allowance_taxable = 0,

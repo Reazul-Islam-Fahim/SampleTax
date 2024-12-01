@@ -68,8 +68,11 @@ class IncomeCalculator:
     def _calculate_gov_income(self):
         return (
             self.salary_data.gov_arrear_pay +
-            self.salary_data.gov_festival_allowance +
             self.salary_data.gov_special_allowance +
+            self.salary_data.gov_medical_allowance +
+            self.salary_data.gov_conveyance_allowance +
+            self.salary_data.gov_festival_allowance +
+            self.salary_data.gov_house_rent_allowance +
             self.salary_data.gov_support_staff_allowance +
             self.salary_data.gov_leave_allowance +
             self.salary_data.gov_reward +
