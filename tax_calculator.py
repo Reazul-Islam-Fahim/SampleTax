@@ -63,7 +63,7 @@ def create_tax_record(
     
     actual_payable_tax = max(net_tax_liability, minimum_tax, area_tax)
     
-    tax = crud.create_tax_record(db, petin = etin, net_tax_liability = net_tax_liability, area_tax = area_tax, actual_payable_tax = actual_payable_tax)
+    tax = crud.create_tax_record(db, petin = etin, net_tax_liability = net_tax_liability, area_tax = area_tax, min_tax = minimum_tax, actual_payable_tax = actual_payable_tax)
     
     return tax
 

@@ -585,6 +585,7 @@ class TaxRecord(Base):
     id = Column(Integer, primary_key=True, index=True, unique= True)
     etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
     net_tax_liability = Column(Integer, index= True, default= 0)
+    min_tax = Column(Integer, index= True, default= 0)
     area_tax = Column(Integer, index= True, default= 0)
     actual_payable_tax = Column(Integer, index= True, default= 0)
     

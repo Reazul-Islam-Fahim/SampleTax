@@ -1155,10 +1155,11 @@ def get_tax_records(db: Session, skip: int , limit: int):
     return db.query(models.TaxRecord).offset(skip).limit(limit).all()
 
 
-def create_tax_record(db: Session, petin : str, net_tax_liability : int, area_tax : int, actual_payable_tax : int):
+def create_tax_record(db: Session, petin : str, net_tax_liability : int, area_tax : int, min_tax:int, actual_payable_tax : int):
     tax_record = models.TaxRecord(
         etin = petin,
         net_tax_liability=net_tax_liability,
+        min_tax=min_tax,
         area_tax=area_tax,
         actual_payable_tax=actual_payable_tax
     )
