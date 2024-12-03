@@ -76,6 +76,7 @@ class Taxpayer(Base):
     company_name = Column(String(500), index = True, nullable= False)
     assesment_year = Column (String(20), index= True, nullable= False)
     residential_status = Column(senum(ResidentialStatus), index= True, nullable= False)
+    tax_payer_status = Column(senum(TaxPayerStatus), index= True, nullable= False)
     freedom_fighter = Column(senum(FreedomFighter), index= True, nullable= False)
     disable = Column(senum(Disable), index= True, nullable= False)
     parent_of_disable = Column(senum(ParentOfDisable), index= True, nullable= False)
@@ -388,10 +389,6 @@ class InvestmentRecord(Base):
     life_insurance_given_premium_actual = Column(Integer, default=0)
     life_insurance_given_premium_allowable = Column(Integer, default=0)
     life_insurance_given_premium_remarks = Column(String, nullable=True)
-
-    # premium_or_contractual_deferred_annuity_actual = Column(Integer, default=0)
-    # premium_or_contractual_deferred_annuity_allowable = Column(Integer, default=0)
-    # premium_or_contractual_deferred_annuity_remarks = Column(String, nullable=True)
 
     contribution_paid_to_deposit_pension_actual = Column(Integer, default=0)
     contribution_paid_to_deposit_pension_allowable = Column(Integer, default=0)

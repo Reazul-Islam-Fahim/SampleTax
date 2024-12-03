@@ -47,3 +47,12 @@ def read_tax_payer(etin: str, db: Session = Depends(get_db)):
 def read_tax_payers(skip: int = Query(...), limit: int = Query(...), db: Session = Depends(get_db)):
     items = crud.get_tax_payers(db, skip=skip, limit=limit)
     return items
+
+
+@app.post("/tax_payer_post_update/", response_model=schemas.TaxPayers)
+def create_tax_payer(taxpayer: schemas.TaxPayerCreate = Body(...), user_id: int = Body(...), etin : str = Body(...), db: Session = Depends(get_db)): 
+    db_item = crud.get_tax_payer(db, etin= etin)
+    if db_item is None:
+        return crud.create_tax_payer(db=db, tax_payer=taxpayer, user_id=user_id)
+    else:
+        return crud.update_tax_payer(db, etin, taxpayer)

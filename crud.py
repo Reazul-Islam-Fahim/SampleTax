@@ -66,6 +66,7 @@ def create_tax_payer(db: Session, tax_payer: schemas.TaxPayerCreate, user_id : i
         company_name=tax_payer.company_name,
         assesment_year=tax_payer.assesment_year,
         residential_status=tax_payer.residential_status,
+        tax_payer_status = tax_payer.tax_payer_status,
         freedom_fighter=tax_payer.freedom_fighter,
         disable=tax_payer.disable,
         parent_of_disable=tax_payer.parent_of_disable,
@@ -106,6 +107,7 @@ def update_tax_payer(db: Session, etin: str, updated_tax_payer: schemas.TaxPayer
     db_tax_payer.company_name = updated_tax_payer.company_name,
     db_tax_payer.assesment_year = updated_tax_payer.assesment_year,
     db_tax_payer.residential_status = updated_tax_payer.residential_status,
+    db_tax_payer.tax_payer_status = updated_tax_payer.tax_payer_status,
     db_tax_payer.freedom_fighter = updated_tax_payer.freedom_fighter,
     db_tax_payer.disable = updated_tax_payer.disable,
     db_tax_payer.parent_of_disable = updated_tax_payer.parent_of_disable,
@@ -700,10 +702,6 @@ def create_investment_record(db: Session, investment_record: schemas.Investment_
         contribution_paid_to_deposit_pension_allowable=investment_record.contribution_paid_to_deposit_pension_allowable,
         contribution_paid_to_deposit_pension_remarks=investment_record.contribution_paid_to_deposit_pension_remarks,
         
-        # premium_or_contractual_deferred_annuity_actual=investment_record.premium_or_contractual_deferred_annuity_actual,
-        # premium_or_contractual_deferred_annuity_allowable=investment_record.premium_or_contractual_deferred_annuity_actual,
-        # premium_or_contractual_deferred_annuity_remarks=investment_record.premium_or_contractual_deferred_annuity_remarks,
-       
         investment_in_any_securities_actual=investment_record.investment_in_any_securities_actual,
         investment_in_any_securities_allowable=investment_record.investment_in_any_securities_actual,
         investment_in_any_securities_remarks=investment_record.investment_in_any_securities_remarks,

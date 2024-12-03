@@ -21,6 +21,7 @@ class TaxPayers(BaseModel):
     zone : str
     assesment_year : str
     residential_status : ResidentialStatus
+    tax_payer_status : TaxPayerStatus
     gender : Gender
     employment_type : EmploymentType
     company_name : str
@@ -315,10 +316,6 @@ class Investment_Record(BaseModel):
     life_insurance_given_premium_actual: int = 0
     life_insurance_given_premium_allowable: int = 0
     life_insurance_given_premium_remarks: Optional[str] = None
-
-    # premium_or_contractual_deferred_annuity_actual: int = 0
-    # premium_or_contractual_deferred_annuity_allowable: int = 0
-    # premium_or_contractual_deferred_annuity_remarks: Optional[str] = None
 
     contribution_paid_to_deposit_pension_actual: int = 0
     contribution_paid_to_deposit_pension_allowable: int = 0
