@@ -1136,7 +1136,7 @@ def create_financial_asste_income(db: Session, financial_asset_income: schemas.F
         savings_ban_interest_tax_deduction_at_source=financial_asset_income.savings_ban_interest_tax_deduction_at_source,
         savings_ban_interest_interest_on_loans=financial_asset_income.savings_ban_interest_interest_on_loans,
         savings_ban_interest_allowable_expenditure=financial_asset_income.savings_ban_interest_allowable_expenditure,
-        savings_ban_interest_taxable=financial_asset_income.savings_ban_interest_taxable,
+        savings_ban_interest_taxable= ((financial_asset_income.savings_ban_interest_net_income + financial_asset_income.savings_ban_interest_tax_deduction_at_source) - (financial_asset_income.savings_ban_interest_interest_on_loans + financial_asset_income.savings_ban_interest_allowable_expenditure)),
         savings_ban_interest_description=financial_asset_income.savings_ban_interest_description,
         
         # Other Securities
@@ -1144,7 +1144,7 @@ def create_financial_asste_income(db: Session, financial_asset_income: schemas.F
         other_securities_tax_deduction_at_source=financial_asset_income.other_securities_tax_deduction_at_source,
         other_securities_interest_on_loans=financial_asset_income.other_securities_interest_on_loans,
         other_securities_allowable_expenditure=financial_asset_income.other_securities_allowable_expenditure,
-        other_securities_taxable=financial_asset_income.other_securities_taxable,
+        other_securities_taxable=((financial_asset_income.other_securities_net_income + financial_asset_income.other_securities_tax_deduction_at_source) - (financial_asset_income.other_securities_interest_on_loans + financial_asset_income.other_securities_allowable_expenditure)),
         other_securities_description=financial_asset_income.other_securities_description,
         
         # Income from Islamic Principles
@@ -1152,7 +1152,7 @@ def create_financial_asste_income(db: Session, financial_asset_income: schemas.F
         income_from_islamic_principles_tax_deduction_at_source=financial_asset_income.income_from_islamic_principles_tax_deduction_at_source,
         income_from_islamic_principles_interest_on_loans=financial_asset_income.income_from_islamic_principles_interest_on_loans,
         income_from_islamic_principles_allowable_expenditure=financial_asset_income.income_from_islamic_principles_allowable_expenditure,
-        income_from_islamic_principles_taxable=financial_asset_income.income_from_islamic_principles_taxable,
+        income_from_islamic_principles_taxable=((financial_asset_income.income_from_islamic_principles_net_income + financial_asset_income.income_from_islamic_principles_tax_deduction_at_source) - (financial_asset_income.income_from_islamic_principles_interest_on_loans + financial_asset_income.income_from_islamic_principles_allowable_expenditure)),
         income_from_islamic_principles_description=financial_asset_income.income_from_islamic_principles_description,
         
         # Bank Interest Savings Deposits
@@ -1160,7 +1160,7 @@ def create_financial_asste_income(db: Session, financial_asset_income: schemas.F
         bank_interest_savings_deposits_tax_deduction_at_source=financial_asset_income.bank_interest_savings_deposits_tax_deduction_at_source,
         bank_interest_savings_deposits_interest_on_loans=financial_asset_income.bank_interest_savings_deposits_interest_on_loans,
         bank_interest_savings_deposits_allowable_expenditure=financial_asset_income.bank_interest_savings_deposits_allowable_expenditure,
-        bank_interest_savings_deposits_taxable=financial_asset_income.bank_interest_savings_deposits_taxable,
+        bank_interest_savings_deposits_taxable=((financial_asset_income.bank_interest_savings_deposits_net_income + financial_asset_income.bank_interest_savings_deposits_tax_deduction_at_source) - (financial_asset_income.bank_interest_savings_deposits_interest_on_loans + financial_asset_income.bank_interest_savings_deposits_allowable_expenditure)),
         bank_interest_savings_deposits_description=financial_asset_income.bank_interest_savings_deposits_description,
         
         # FDR Interest Income
@@ -1168,7 +1168,7 @@ def create_financial_asste_income(db: Session, financial_asset_income: schemas.F
         fdr_interest_income_tax_deduction_at_source=financial_asset_income.fdr_interest_income_tax_deduction_at_source,
         fdr_interest_income_interest_on_loans=financial_asset_income.fdr_interest_income_interest_on_loans,
         fdr_interest_income_allowable_expenditure=financial_asset_income.fdr_interest_income_allowable_expenditure,
-        fdr_interest_income_taxable=financial_asset_income.fdr_interest_income_taxable,
+        fdr_interest_income_taxable=((financial_asset_income.fdr_interest_income_net_income + financial_asset_income.fdr_interest_income_tax_deduction_at_source) - (financial_asset_income.fdr_interest_income_interest_on_loans + financial_asset_income.fdr_interest_income_allowable_expenditure)),
         fdr_interest_income_description=financial_asset_income.fdr_interest_income_description,
         
         # Dividend Income
@@ -1176,7 +1176,7 @@ def create_financial_asste_income(db: Session, financial_asset_income: schemas.F
         dividend_income_tax_deduction_at_source=financial_asset_income.dividend_income_tax_deduction_at_source,
         dividend_income_interest_on_loans=financial_asset_income.dividend_income_interest_on_loans,
         dividend_income_allowable_expenditure=financial_asset_income.dividend_income_allowable_expenditure,
-        dividend_income_taxable=financial_asset_income.dividend_income_taxable,
+        dividend_income_taxable=((financial_asset_income.dividend_income_net_income + financial_asset_income.dividend_income_tax_deduction_at_source) - (financial_asset_income.dividend_income_interest_on_loans + financial_asset_income.dividend_income_allowable_expenditure)),
         dividend_income_description=financial_asset_income.dividend_income_description,
 
         # Reduced Tax Rate Securities
@@ -1184,7 +1184,7 @@ def create_financial_asste_income(db: Session, financial_asset_income: schemas.F
         reduced_tax_rate_securities_tax_deduction_at_source=financial_asset_income.reduced_tax_rate_securities_tax_deduction_at_source,
         reduced_tax_rate_securities_interest_on_loans=financial_asset_income.reduced_tax_rate_securities_interest_on_loans,
         reduced_tax_rate_securities_allowable_expenditure=financial_asset_income.reduced_tax_rate_securities_allowable_expenditure,
-        reduced_tax_rate_securities_taxable=financial_asset_income.reduced_tax_rate_securities_taxable,
+        reduced_tax_rate_securities_taxable=((financial_asset_income.reduced_tax_rate_securities_net_income + financial_asset_income.reduced_tax_rate_securities_tax_deduction_at_source) - (financial_asset_income.reduced_tax_rate_securities_interest_on_loans + financial_asset_income.reduced_tax_rate_securities_allowable_expenditure)),
         reduced_tax_rate_securities_description=financial_asset_income.reduced_tax_rate_securities_description,
 
         # Income from Other Resources
@@ -1192,7 +1192,7 @@ def create_financial_asste_income(db: Session, financial_asset_income: schemas.F
         income_other_resources_tax_deduction_at_source=financial_asset_income.income_other_resources_tax_deduction_at_source,
         income_other_resources_interest_on_loans=financial_asset_income.income_other_resources_interest_on_loans,
         income_other_resources_allowable_expenditure=financial_asset_income.income_other_resources_allowable_expenditure,
-        income_other_resources_taxable=financial_asset_income.income_other_resources_taxable,
+        income_other_resources_taxable=((financial_asset_income.income_other_resources_net_income + financial_asset_income.income_other_resources_tax_deduction_at_source) - (financial_asset_income.income_other_resources_interest_on_loans + financial_asset_income.income_other_resources_allowable_expenditure)),
         income_other_resources_description=financial_asset_income.income_other_resources_description,
 
         # US Dollar Investment Bonds
@@ -1200,7 +1200,7 @@ def create_financial_asste_income(db: Session, financial_asset_income: schemas.F
         us_dollar_investment_bonds_tax_deduction_at_source=financial_asset_income.us_dollar_investment_bonds_tax_deduction_at_source,
         us_dollar_investment_bonds_interest_on_loans=financial_asset_income.us_dollar_investment_bonds_interest_on_loans,
         us_dollar_investment_bonds_allowable_expenditure=financial_asset_income.us_dollar_investment_bonds_allowable_expenditure,
-        us_dollar_investment_bonds_taxable=financial_asset_income.us_dollar_investment_bonds_taxable,
+        us_dollar_investment_bonds_taxable=((financial_asset_income.us_dollar_investment_bonds_net_income + financial_asset_income.us_dollar_investment_bonds_tax_deduction_at_source) - (financial_asset_income.us_dollar_investment_bonds_interest_on_loans + financial_asset_income.us_dollar_investment_bonds_allowable_expenditure)),
         us_dollar_investment_bonds_description=financial_asset_income.us_dollar_investment_bonds_description,
 
         # Euro Premium Bonds
@@ -1208,7 +1208,7 @@ def create_financial_asste_income(db: Session, financial_asset_income: schemas.F
         euro_premium_bonds_tax_deduction_at_source=financial_asset_income.euro_premium_bonds_tax_deduction_at_source,
         euro_premium_bonds_interest_on_loans=financial_asset_income.euro_premium_bonds_interest_on_loans,
         euro_premium_bonds_allowable_expenditure=financial_asset_income.euro_premium_bonds_allowable_expenditure,
-        euro_premium_bonds_taxable=financial_asset_income.euro_premium_bonds_taxable,
+        euro_premium_bonds_taxable=((financial_asset_income.euro_premium_bonds_net_income + financial_asset_income.euro_premium_bonds_tax_deduction_at_source) - (financial_asset_income.euro_premium_bonds_interest_on_loans + financial_asset_income.euro_premium_bonds_allowable_expenditure)),
         euro_premium_bonds_description=financial_asset_income.euro_premium_bonds_description,
 
         # Pound Sterling Premium Bonds
@@ -1216,7 +1216,7 @@ def create_financial_asste_income(db: Session, financial_asset_income: schemas.F
         pound_sterling_premium_bonds_tax_deduction_at_source=financial_asset_income.pound_sterling_premium_bonds_tax_deduction_at_source,
         pound_sterling_premium_bonds_interest_on_loans=financial_asset_income.pound_sterling_premium_bonds_interest_on_loans,
         pound_sterling_premium_bonds_allowable_expenditure=financial_asset_income.pound_sterling_premium_bonds_allowable_expenditure,
-        pound_sterling_premium_bonds_taxable=financial_asset_income.pound_sterling_premium_bonds_taxable,
+        pound_sterling_premium_bonds_taxable=((financial_asset_income.pound_sterling_premium_bonds_net_income + financial_asset_income.pound_sterling_premium_bonds_tax_deduction_at_source) - (financial_asset_income.pound_sterling_premium_bonds_interest_on_loans + financial_asset_income.pound_sterling_premium_bonds_allowable_expenditure)),
         pound_sterling_premium_bonds_description=financial_asset_income.pound_sterling_premium_bonds_description,
 
         # US Dollar Premium Bonds
@@ -1224,7 +1224,7 @@ def create_financial_asste_income(db: Session, financial_asset_income: schemas.F
         us_dollar_premium_bonds_tax_deduction_at_source=financial_asset_income.us_dollar_premium_bonds_tax_deduction_at_source,
         us_dollar_premium_bonds_interest_on_loans=financial_asset_income.us_dollar_premium_bonds_interest_on_loans,
         us_dollar_premium_bonds_allowable_expenditure=financial_asset_income.us_dollar_premium_bonds_allowable_expenditure,
-        us_dollar_premium_bonds_taxable=financial_asset_income.us_dollar_premium_bonds_taxable,
+        us_dollar_premium_bonds_taxable=((financial_asset_income.us_dollar_premium_bonds_net_income + financial_asset_income.us_dollar_premium_bonds_tax_deduction_at_source) - (financial_asset_income.us_dollar_premium_bonds_interest_on_loans + financial_asset_income.us_dollar_premium_bonds_allowable_expenditure)),
         us_dollar_premium_bonds_description=financial_asset_income.us_dollar_premium_bonds_description,
 
         # Wage Earners Development Bonds
@@ -1232,7 +1232,7 @@ def create_financial_asste_income(db: Session, financial_asset_income: schemas.F
         wage_earners_development_bonds_tax_deduction_at_source=financial_asset_income.wage_earners_development_bonds_tax_deduction_at_source,
         wage_earners_development_bonds_interest_on_loans=financial_asset_income.wage_earners_development_bonds_interest_on_loans,
         wage_earners_development_bonds_allowable_expenditure=financial_asset_income.wage_earners_development_bonds_allowable_expenditure,
-        wage_earners_development_bonds_taxable=financial_asset_income.wage_earners_development_bonds_taxable,
+        wage_earners_development_bonds_taxable=((financial_asset_income.wage_earners_development_bonds_net_income + financial_asset_income.wage_earners_development_bonds_tax_deduction_at_source) - (financial_asset_income.wage_earners_development_bonds_interest_on_loans + financial_asset_income.wage_earners_development_bonds_allowable_expenditure)),
         wage_earners_development_bonds_description=financial_asset_income.wage_earners_development_bonds_description,
 
         # Euro Investment Bonds
@@ -1240,7 +1240,7 @@ def create_financial_asste_income(db: Session, financial_asset_income: schemas.F
         euro_investment_bonds_tax_deduction_at_source=financial_asset_income.euro_investment_bonds_tax_deduction_at_source,
         euro_investment_bonds_interest_on_loans=financial_asset_income.euro_investment_bonds_interest_on_loans,
         euro_investment_bonds_allowable_expenditure=financial_asset_income.euro_investment_bonds_allowable_expenditure,
-        euro_investment_bonds_taxable=financial_asset_income.euro_investment_bonds_taxable,
+        euro_investment_bonds_taxable=((financial_asset_income.euro_investment_bonds_net_income + financial_asset_income.euro_investment_bonds_tax_deduction_at_source) - (financial_asset_income.euro_investment_bonds_interest_on_loans + financial_asset_income.euro_investment_bonds_allowable_expenditure)),
         euro_investment_bonds_description=financial_asset_income.euro_investment_bonds_description
     )
     
