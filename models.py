@@ -42,8 +42,10 @@ class  ParentOfDisable(str, Enum):
 class  AgeAbove65(str, Enum):
     yes = "Yes"
     no = "No"
-
-
+    
+class MaritalStatus(str,Enum):
+    married = "Married"
+    unmarried = "Unmarried"
 
 
 
@@ -84,9 +86,11 @@ class Taxpayer(Base):
     age_above_65 = Column(senum(AgeAbove65), index= True, nullable= False)
     date_of_birth = Column(String, index= True, nullable= False)
     father_name = Column (String(100), index= True, nullable= False)
+    marital_status = Column (senum(MaritalStatus), index= True, nullable= False)
     spouse_name = Column (String(100), index= True, nullable= False)
     spouse_tin = Column(String(12), index= True, nullable= True)
     address = Column (String(500), index= True, nullable= False)
+    present_address = Column (String(500), index= True, nullable= False)
     telephone = Column (String(15), index= True, nullable= True)
     mobile = Column (String(20), unique= True, index= True, nullable= False)
     email = Column (String(120), unique= True, index= True, nullable= False)

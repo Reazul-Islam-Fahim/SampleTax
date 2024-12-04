@@ -32,9 +32,11 @@ class TaxPayers(BaseModel):
     age_above_65 : AgeAbove65
     date_of_birth : str
     father_name : str
+    marital_status : MaritalStatus
     spouse_name : str
     spouse_tin : str | None = None
     address : str
+    present_address : str
     telephone : str | None = None
     mobile : str
     email : EmailStr
