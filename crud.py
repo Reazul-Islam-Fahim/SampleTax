@@ -73,6 +73,7 @@ def create_tax_payer(db: Session, tax_payer: schemas.TaxPayerCreate, user_id : i
         num_autistic_children=tax_payer.num_autistic_children,
         age_above_65=tax_payer.age_above_65,
         date_of_birth=tax_payer.date_of_birth,
+        father_name=tax_payer.father_name,
         spouse_name=tax_payer.spouse_name,
         spouse_tin=tax_payer.spouse_tin,
         address=tax_payer.address,
@@ -114,6 +115,7 @@ def update_tax_payer(db: Session, etin: str, updated_tax_payer: schemas.TaxPayer
     db_tax_payer.num_autistic_children = updated_tax_payer.num_autistic_children,
     db_tax_payer.age_above_65 = updated_tax_payer.age_above_65,
     db_tax_payer.date_of_birth = updated_tax_payer.date_of_birth,
+    db_tax_payer.father_name = updated_tax_payer.father_name,
     db_tax_payer.spouse_name = updated_tax_payer.spouse_name,
     db_tax_payer.spouse_tin = updated_tax_payer.spouse_tin,
     db_tax_payer.address = updated_tax_payer.address,
@@ -811,10 +813,6 @@ def update_investment_record(
     db_investment_record.contribution_paid_to_deposit_pension_allowable = updated_record.contribution_paid_to_deposit_pension_allowable,
     db_investment_record.contribution_paid_to_deposit_pension_remarks = updated_record.contribution_paid_to_deposit_pension_remarks,
 
-    db_investment_record.premium_or_contractual_deferred_annuity_actual = updated_record.premium_or_contractual_deferred_annuity_actual,
-    db_investment_record.premium_or_contractual_deferred_annuity_allowable = updated_record.premium_or_contractual_deferred_annuity_actual,
-    db_investment_record.premium_or_contractual_deferred_annuity_remarks = updated_record.premium_or_contractual_deferred_annuity_remarks,
-
     db_investment_record.investment_in_any_securities_actual = updated_record.investment_in_any_securities_actual,
     db_investment_record.investment_in_any_securities_allowable = updated_record.investment_in_any_securities_actual,
     db_investment_record.investment_in_any_securities_remarks = updated_record.investment_in_any_securities_remarks,
@@ -891,7 +889,6 @@ def update_investment_record(
             updated_record.gov_securities_actual +
             updated_record.eft_actual +
             updated_record.life_insurance_given_premium_actual +
-            updated_record.premium_or_contractual_deferred_annuity_actual +
             updated_record.contribution_paid_to_deposit_pension_actual +
             updated_record.investment_in_any_securities_actual +
             updated_record.provisions_of_pf_act_1925_actual +
@@ -919,7 +916,6 @@ def update_investment_record(
             updated_record.gov_securities_allowable +
             updated_record.eft_allowable +
             updated_record.life_insurance_given_premium_allowable +
-            updated_record.premium_or_contractual_deferred_annuity_allowable +
             updated_record.contribution_paid_to_deposit_pension_allowable +
             updated_record.investment_in_any_securities_allowable +
             updated_record.provisions_of_pf_act_1925_allowable +

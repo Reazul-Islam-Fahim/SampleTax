@@ -31,6 +31,7 @@ class TaxPayers(BaseModel):
     num_autistic_children : int
     age_above_65 : AgeAbove65
     date_of_birth : str
+    father_name : str
     spouse_name : str
     spouse_tin : str | None = None
     address : str

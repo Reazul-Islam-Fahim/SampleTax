@@ -83,6 +83,7 @@ class Taxpayer(Base):
     num_autistic_children = Column(Integer, default=0)
     age_above_65 = Column(senum(AgeAbove65), index= True, nullable= False)
     date_of_birth = Column(String, index= True, nullable= False)
+    father_name = Column (String(100), index= True, nullable= False)
     spouse_name = Column (String(100), index= True, nullable= False)
     spouse_tin = Column(String(12), index= True, nullable= True)
     address = Column (String(500), index= True, nullable= False)

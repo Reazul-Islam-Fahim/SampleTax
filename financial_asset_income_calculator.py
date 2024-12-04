@@ -41,12 +41,12 @@ def read_financial_asste_incomes(skip: int = Query(...), limit: int = Query(...)
 
 
 @app.post("/financial_asset_income/", response_model=schemas.Financial_Asset_Income)
-def create_financial_asste_income(financial_asset_income: schemas.FinancialAssetIncome = Body(...), etin: str = Body(...), db: Session = Depends(get_db)): 
+def create_financial_asste_income(financial_asset_income: schemas.Financial_Asset_Income = Body(...), etin: str = Body(...), db: Session = Depends(get_db)): 
     return crud.create_financial_asste_income(db=db, financial_asset_income=financial_asset_income, petin=etin)
 
 
 @app.put("/financial_asset_income/{etin}", response_model=schemas.Financial_Asset_Income)
-async def update_financial_asste_income(etin: str, financial_asset_income: schemas.FinancialAssetIncome, db: Session = Depends(get_db)):
+async def update_financial_asste_income(etin: str, financial_asset_income: schemas.Financial_Asset_Income, db: Session = Depends(get_db)):
     updated_record = crud.update_financial_asset_income(db, financial_asset_income=financial_asset_income, petin = etin)
     if updated_record is None:
         raise HTTPException(status_code=404, detail="Financial asset record not found")

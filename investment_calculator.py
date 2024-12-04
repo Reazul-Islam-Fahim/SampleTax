@@ -68,7 +68,6 @@ def create_investment_record(
             inv_record.gov_securities_actual +
             inv_record.eft_actual +
             inv_record.life_insurance_given_premium_actual +
-            inv_record.premium_or_contractual_deferred_annuity_actual +
             inv_record.contribution_paid_to_deposit_pension_actual +
             inv_record.investment_in_any_securities_actual +
             inv_record.provisions_of_pf_act_1925_actual +
@@ -95,7 +94,6 @@ def create_investment_record(
             inv_record.gov_securities_allowable +
             inv_record.eft_allowable +
             inv_record.life_insurance_given_premium_allowable +
-            inv_record.premium_or_contractual_deferred_annuity_allowable +
             inv_record.contribution_paid_to_deposit_pension_allowable +
             inv_record.investment_in_any_securities_allowable +
             inv_record.provisions_of_pf_act_1925_allowable +
