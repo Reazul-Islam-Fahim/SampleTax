@@ -529,6 +529,7 @@ class Financial_Asset_Income(BaseModel):
     us_dollar_investment_bonds_net_income: int = 0
     us_dollar_investment_bonds_tax_deduction_at_source: int = 0
     us_dollar_investment_bonds_interest_on_loans: int = 0
+    us_dollar_investment_bonds_exampted_amount : int = 0
     us_dollar_investment_bonds_allowable_expenditure: int = 0
     us_dollar_investment_bonds_taxable: int = 0
     us_dollar_investment_bonds_description: Optional[str] = None
@@ -536,6 +537,7 @@ class Financial_Asset_Income(BaseModel):
     euro_premium_bonds_net_income: int = 0
     euro_premium_bonds_tax_deduction_at_source: int = 0
     euro_premium_bonds_interest_on_loans: int = 0
+    euro_premium_bonds_exampted_amount : int = 0
     euro_premium_bonds_allowable_expenditure: int = 0
     euro_premium_bonds_taxable: int = 0
     euro_premium_bonds_description: Optional[str] = None
@@ -543,6 +545,7 @@ class Financial_Asset_Income(BaseModel):
     pound_sterling_premium_bonds_net_income: int = 0
     pound_sterling_premium_bonds_tax_deduction_at_source: int = 0
     pound_sterling_premium_bonds_interest_on_loans: int = 0
+    pound_sterling_premium_bonds_exampted_amount : int = 0
     pound_sterling_premium_bonds_allowable_expenditure: int = 0
     pound_sterling_premium_bonds_taxable: int = 0
     pound_sterling_premium_bonds_description: Optional[str] = None
@@ -550,6 +553,7 @@ class Financial_Asset_Income(BaseModel):
     us_dollar_premium_bonds_net_income: int = 0
     us_dollar_premium_bonds_tax_deduction_at_source: int = 0
     us_dollar_premium_bonds_interest_on_loans: int = 0
+    us_dollar_premium_bonds_exampted_amount : int = 0
     us_dollar_premium_bonds_allowable_expenditure: int = 0
     us_dollar_premium_bonds_taxable: int = 0
     us_dollar_premium_bonds_description: Optional[str] = None
@@ -557,6 +561,7 @@ class Financial_Asset_Income(BaseModel):
     wage_earners_development_bonds_net_income: int = 0
     wage_earners_development_bonds_tax_deduction_at_source: int = 0
     wage_earners_development_bonds_interest_on_loans: int = 0
+    wage_earners_development_bonds_exampted_amount : int = 0
     wage_earners_development_bonds_allowable_expenditure: int = 0
     wage_earners_development_bonds_taxable: int = 0
     wage_earners_development_bonds_description: Optional[str] = None
@@ -564,6 +569,7 @@ class Financial_Asset_Income(BaseModel):
     euro_investment_bonds_net_income: int = 0
     euro_investment_bonds_tax_deduction_at_source: int = 0
     euro_investment_bonds_interest_on_loans: int = 0
+    euro_investment_bonds_exampted_amount : int = 0
     euro_investment_bonds_allowable_expenditure: int = 0
     euro_investment_bonds_taxable: int = 0
     euro_investment_bonds_description: Optional[str] = None

@@ -1199,48 +1199,54 @@ def create_financial_asste_income(db: Session, financial_asset_income: schemas.F
         us_dollar_investment_bonds_net_income=financial_asset_income.us_dollar_investment_bonds_net_income,
         us_dollar_investment_bonds_tax_deduction_at_source=financial_asset_income.us_dollar_investment_bonds_tax_deduction_at_source,
         us_dollar_investment_bonds_interest_on_loans=financial_asset_income.us_dollar_investment_bonds_interest_on_loans,
+        us_dollar_investment_bonds_exampted_amount = financial_asset_income.us_dollar_investment_bonds_net_income,
         us_dollar_investment_bonds_allowable_expenditure=financial_asset_income.us_dollar_investment_bonds_allowable_expenditure,
-        us_dollar_investment_bonds_taxable=((financial_asset_income.us_dollar_investment_bonds_net_income + financial_asset_income.us_dollar_investment_bonds_tax_deduction_at_source) - (financial_asset_income.us_dollar_investment_bonds_interest_on_loans + financial_asset_income.us_dollar_investment_bonds_allowable_expenditure)),
+        us_dollar_investment_bonds_taxable=0,
         us_dollar_investment_bonds_description=financial_asset_income.us_dollar_investment_bonds_description,
 
         # Euro Premium Bonds
         euro_premium_bonds_net_income=financial_asset_income.euro_premium_bonds_net_income,
         euro_premium_bonds_tax_deduction_at_source=financial_asset_income.euro_premium_bonds_tax_deduction_at_source,
         euro_premium_bonds_interest_on_loans=financial_asset_income.euro_premium_bonds_interest_on_loans,
+        euro_premium_bonds_exampted_amount=financial_asset_income.euro_premium_bonds_net_income,
         euro_premium_bonds_allowable_expenditure=financial_asset_income.euro_premium_bonds_allowable_expenditure,
-        euro_premium_bonds_taxable=((financial_asset_income.euro_premium_bonds_net_income + financial_asset_income.euro_premium_bonds_tax_deduction_at_source) - (financial_asset_income.euro_premium_bonds_interest_on_loans + financial_asset_income.euro_premium_bonds_allowable_expenditure)),
+        euro_premium_bonds_taxable=0,
         euro_premium_bonds_description=financial_asset_income.euro_premium_bonds_description,
 
         # Pound Sterling Premium Bonds
         pound_sterling_premium_bonds_net_income=financial_asset_income.pound_sterling_premium_bonds_net_income,
         pound_sterling_premium_bonds_tax_deduction_at_source=financial_asset_income.pound_sterling_premium_bonds_tax_deduction_at_source,
         pound_sterling_premium_bonds_interest_on_loans=financial_asset_income.pound_sterling_premium_bonds_interest_on_loans,
+        pound_sterling_premium_bonds_exampted_amount=financial_asset_income.pound_sterling_premium_bonds_net_income,
         pound_sterling_premium_bonds_allowable_expenditure=financial_asset_income.pound_sterling_premium_bonds_allowable_expenditure,
-        pound_sterling_premium_bonds_taxable=((financial_asset_income.pound_sterling_premium_bonds_net_income + financial_asset_income.pound_sterling_premium_bonds_tax_deduction_at_source) - (financial_asset_income.pound_sterling_premium_bonds_interest_on_loans + financial_asset_income.pound_sterling_premium_bonds_allowable_expenditure)),
+        pound_sterling_premium_bonds_taxable=0,
         pound_sterling_premium_bonds_description=financial_asset_income.pound_sterling_premium_bonds_description,
 
         # US Dollar Premium Bonds
         us_dollar_premium_bonds_net_income=financial_asset_income.us_dollar_premium_bonds_net_income,
         us_dollar_premium_bonds_tax_deduction_at_source=financial_asset_income.us_dollar_premium_bonds_tax_deduction_at_source,
         us_dollar_premium_bonds_interest_on_loans=financial_asset_income.us_dollar_premium_bonds_interest_on_loans,
+        us_dollar_premium_bonds_exampted_amount=financial_asset_income.us_dollar_premium_bonds_net_income,
         us_dollar_premium_bonds_allowable_expenditure=financial_asset_income.us_dollar_premium_bonds_allowable_expenditure,
-        us_dollar_premium_bonds_taxable=((financial_asset_income.us_dollar_premium_bonds_net_income + financial_asset_income.us_dollar_premium_bonds_tax_deduction_at_source) - (financial_asset_income.us_dollar_premium_bonds_interest_on_loans + financial_asset_income.us_dollar_premium_bonds_allowable_expenditure)),
+        us_dollar_premium_bonds_taxable=0,
         us_dollar_premium_bonds_description=financial_asset_income.us_dollar_premium_bonds_description,
 
         # Wage Earners Development Bonds
         wage_earners_development_bonds_net_income=financial_asset_income.wage_earners_development_bonds_net_income,
         wage_earners_development_bonds_tax_deduction_at_source=financial_asset_income.wage_earners_development_bonds_tax_deduction_at_source,
         wage_earners_development_bonds_interest_on_loans=financial_asset_income.wage_earners_development_bonds_interest_on_loans,
+        wage_earners_development_bonds_exampted_amount=financial_asset_income.wage_earners_development_bonds_net_income,
         wage_earners_development_bonds_allowable_expenditure=financial_asset_income.wage_earners_development_bonds_allowable_expenditure,
-        wage_earners_development_bonds_taxable=((financial_asset_income.wage_earners_development_bonds_net_income + financial_asset_income.wage_earners_development_bonds_tax_deduction_at_source) - (financial_asset_income.wage_earners_development_bonds_interest_on_loans + financial_asset_income.wage_earners_development_bonds_allowable_expenditure)),
+        wage_earners_development_bonds_taxable=0,
         wage_earners_development_bonds_description=financial_asset_income.wage_earners_development_bonds_description,
 
         # Euro Investment Bonds
         euro_investment_bonds_net_income=financial_asset_income.euro_investment_bonds_net_income,
         euro_investment_bonds_tax_deduction_at_source=financial_asset_income.euro_investment_bonds_tax_deduction_at_source,
         euro_investment_bonds_interest_on_loans=financial_asset_income.euro_investment_bonds_interest_on_loans,
+        euro_investment_bonds_exampted_amount=financial_asset_income.euro_investment_bonds_net_income,
         euro_investment_bonds_allowable_expenditure=financial_asset_income.euro_investment_bonds_allowable_expenditure,
-        euro_investment_bonds_taxable=((financial_asset_income.euro_investment_bonds_net_income + financial_asset_income.euro_investment_bonds_tax_deduction_at_source) - (financial_asset_income.euro_investment_bonds_interest_on_loans + financial_asset_income.euro_investment_bonds_allowable_expenditure)),
+        euro_investment_bonds_taxable=0,
         euro_investment_bonds_description=financial_asset_income.euro_investment_bonds_description
     )
     

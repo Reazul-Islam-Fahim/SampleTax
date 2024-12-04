@@ -52,3 +52,13 @@ async def update_financial_asste_income(etin: str, financial_asset_income: schem
         raise HTTPException(status_code=404, detail="Financial asset record not found")
     return updated_record
 
+
+@app.post("/financial_asset_income/", response_model=schemas.Financial_Asset_Income)
+def create_financial_asste_income(financial_asset_income: schemas.Financial_Asset_Income = Body(...), etin: str = Body(...), db: Session = Depends(get_db)): 
+    db_item = crud.get_financial_asste_income(db, etin= etin)
+    if db_item is None:
+        return crud.create_financial_asste_income(db=db, financial_asset_income=financial_asset_income, petin = etin)
+    else: 
+        return crud.update_financial_asset_income(db, financial_asset_income=financial_asset_income, petin = etin)
+    
+
