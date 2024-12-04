@@ -573,7 +573,7 @@ class FinancialAssetIncome(Base):
     savings_ban_interest_taxable = Column(Integer, default=0)
     savings_ban_interest_description = Column(String, nullable=True)
 
-    other_securities_net_income = Column(String, nullable=True)
+    other_securities_net_income = Column(Integer, default=0)
     other_securities_tax_deduction_at_source = Column(Integer, default=0)
     other_securities_interest_on_loans = Column(Integer, default=0)
     other_securities_allowable_expenditure = Column(Integer, default=0)

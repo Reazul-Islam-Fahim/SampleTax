@@ -477,9 +477,9 @@ class Financial_Asset_Income(BaseModel):
     savings_ban_interest_interest_on_loans : int = 0
     savings_ban_interest_allowable_expenditure : int = 0
     savings_ban_interest_taxable : int = 0
-    savings_ban_interest_description : int = 0
-    other_securities_net_income: Optional[str] = None
-        
+    savings_ban_interest_description : Optional[str] = None
+    
+    other_securities_net_income: int = 0   
     other_securities_tax_deduction_at_source: int = 0
     other_securities_interest_on_loans: int = 0
     other_securities_allowable_expenditure: int = 0
