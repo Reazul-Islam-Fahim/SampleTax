@@ -112,6 +112,7 @@ class Taxpayer(Base):
     gov_securities = relationship("GovSecurities", back_populates="taxpayer")
     eft = relationship("EFT", back_populates="taxpayer")
     dps = relationship("DPS", back_populates="taxpayer")
+    financial_asset_income = relationship("FinancialAssetIncome", back_populates="taxpayer")
     rebate_record = relationship("RebateRecord", back_populates="taxpayer")
     tax = relationship("TaxRecord", back_populates="taxpayer")
     
@@ -554,6 +555,113 @@ class DPS(Base):
 
     # investment_record = relationship("InvestmentRecord", back_populates="dps")    
     
+    
+    
+class FinancialAssetIncome(Base):
+    __tablename__ = "financial_asset_income"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+
+    savings_ban_interest_net_income = Column(Integer, default=0)
+    savings_ban_interest_tax_deduction_at_source = Column(Integer, default=0)
+    savings_ban_interest_interest_on_loans = Column(Integer, default=0)
+    savings_ban_interest_allowable_expenditure = Column(Integer, default=0)
+    savings_ban_interest_taxable = Column(Integer, default=0)
+    savings_ban_interest_description = Column(String, nullable=True)
+
+    other_securities_net_income = Column(String, nullable=True)
+    other_securities_tax_deduction_at_source = Column(Integer, default=0)
+    other_securities_interest_on_loans = Column(Integer, default=0)
+    other_securities_allowable_expenditure = Column(Integer, default=0)
+    other_securities_taxable = Column(Integer, default=0)
+    other_securities_description = Column(String, nullable=True)
+
+    income_from_islamic_principles_net_income = Column(Integer, default=0)
+    income_from_islamic_principles_tax_deduction_at_source = Column(Integer, default=0)
+    income_from_islamic_principles_interest_on_loans = Column(Integer, default=0)
+    income_from_islamic_principles_allowable_expenditure = Column(Integer, default=0)
+    income_from_islamic_principles_taxable = Column(Integer, default=0)
+    income_from_islamic_principles_description = Column(String, nullable=True)
+
+    bank_interest_savings_deposits_net_income = Column(Integer, default=0)
+    bank_interest_savings_deposits_tax_deduction_at_source = Column(Integer, default=0)
+    bank_interest_savings_deposits_interest_on_loans = Column(Integer, default=0)
+    bank_interest_savings_deposits_allowable_expenditure = Column(Integer, default=0)
+    bank_interest_savings_deposits_taxable = Column(Integer, default=0)
+    bank_interest_savings_deposits_description = Column(String, nullable=True)
+
+    fdr_interest_income_net_income = Column(Integer, default=0)
+    fdr_interest_income_tax_deduction_at_source = Column(Integer, default=0)
+    fdr_interest_income_interest_on_loans = Column(Integer, default=0)
+    fdr_interest_income_allowable_expenditure = Column(Integer, default=0)
+    fdr_interest_income_taxable = Column(Integer, default=0)
+    fdr_interest_income_description = Column(String, nullable=True)
+
+    dividend_income_net_income = Column(Integer, default=0)
+    dividend_income_tax_deduction_at_source = Column(Integer, default=0)
+    dividend_income_interest_on_loans = Column(Integer, default=0)
+    dividend_income_allowable_expenditure = Column(Integer, default=0)
+    dividend_income_taxable = Column(Integer, default=0)
+    dividend_income_description = Column(String, nullable=True)
+
+    reduced_tax_rate_securities_net_income = Column(Integer, default=0)
+    reduced_tax_rate_securities_tax_deduction_at_source = Column(Integer, default=0)
+    reduced_tax_rate_securities_interest_on_loans = Column(Integer, default=0)
+    reduced_tax_rate_securities_allowable_expenditure = Column(Integer, default=0)
+    reduced_tax_rate_securities_taxable = Column(Integer, default=0)
+    reduced_tax_rate_securities_description = Column(String, nullable=True)
+
+    income_other_resources_net_income = Column(Integer, default=0)
+    income_other_resources_tax_deduction_at_source = Column(Integer, default=0)
+    income_other_resources_interest_on_loans = Column(Integer, default=0)
+    income_other_resources_allowable_expenditure = Column(Integer, default=0)
+    income_other_resources_taxable = Column(Integer, default=0)
+    income_other_resources_description = Column(String, nullable=True)
+
+    us_dollar_investment_bonds_net_income = Column(Integer, default=0)
+    us_dollar_investment_bonds_tax_deduction_at_source = Column(Integer, default=0)
+    us_dollar_investment_bonds_interest_on_loans = Column(Integer, default=0)
+    us_dollar_investment_bonds_allowable_expenditure = Column(Integer, default=0)
+    us_dollar_investment_bonds_taxable = Column(Integer, default=0)
+    us_dollar_investment_bonds_description = Column(String, nullable=True)
+
+    euro_premium_bonds_net_income = Column(Integer, default=0)
+    euro_premium_bonds_tax_deduction_at_source = Column(Integer, default=0)
+    euro_premium_bonds_interest_on_loans = Column(Integer, default=0)
+    euro_premium_bonds_allowable_expenditure = Column(Integer, default=0)
+    euro_premium_bonds_taxable = Column(Integer, default=0)
+    euro_premium_bonds_description = Column(String, nullable=True)
+
+    pound_sterling_premium_bonds_net_income = Column(Integer, default=0)
+    pound_sterling_premium_bonds_tax_deduction_at_source = Column(Integer, default=0)
+    pound_sterling_premium_bonds_interest_on_loans = Column(Integer, default=0)
+    pound_sterling_premium_bonds_allowable_expenditure = Column(Integer, default=0)
+    pound_sterling_premium_bonds_taxable = Column(Integer, default=0)
+    pound_sterling_premium_bonds_description = Column(String, nullable=True)
+
+    us_dollar_premium_bonds_net_income = Column(Integer, default=0)
+    us_dollar_premium_bonds_tax_deduction_at_source = Column(Integer, default=0)
+    us_dollar_premium_bonds_interest_on_loans = Column(Integer, default=0)
+    us_dollar_premium_bonds_allowable_expenditure = Column(Integer, default=0)
+    us_dollar_premium_bonds_taxable = Column(Integer, default=0)
+    us_dollar_premium_bonds_description = Column(String, nullable=True)
+
+    wage_earners_development_bonds_net_income = Column(Integer, default=0)
+    wage_earners_development_bonds_tax_deduction_at_source = Column(Integer, default=0)
+    wage_earners_development_bonds_interest_on_loans = Column(Integer, default=0)
+    wage_earners_development_bonds_allowable_expenditure = Column(Integer, default=0)
+    wage_earners_development_bonds_taxable = Column(Integer, default=0)
+    wage_earners_development_bonds_description = Column(String, nullable=True)
+
+    euro_investment_bonds_net_income = Column(Integer, default=0)
+    euro_investment_bonds_tax_deduction_at_source = Column(Integer, default=0)
+    euro_investment_bonds_interest_on_loans = Column(Integer, default=0)
+    euro_investment_bonds_allowable_expenditure = Column(Integer, default=0)
+    euro_investment_bonds_taxable = Column(Integer, default=0)
+    euro_investment_bonds_description = Column(String, nullable=True)
+    
+    etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
+    
+    taxpayer = relationship("Taxpayer", back_populates="financial_asset_income")
     
     
     

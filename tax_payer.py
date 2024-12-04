@@ -36,7 +36,7 @@ async def update_tax_payer_endpoint(
     return updated_record
 
 
-@app.get("/tax_payer/{tax_payer_id}", response_model=schemas.TaxPayers)
+@app.get("/tax_payer/{etin}", response_model=schemas.TaxPayers)
 def read_tax_payer(etin: str, db: Session = Depends(get_db)):
     db_item = crud.get_tax_payer(db, etin= etin)
     if db_item is None:

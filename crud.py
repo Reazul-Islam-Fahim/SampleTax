@@ -1125,6 +1125,250 @@ def update_dps(db: Session, etin: str, dps: schemas.D_PS):
 
 
 
+def get_financial_asste_income(db: Session, etin: str):
+    return db.query(models.FinancialAssetIncome).filter(models.FinancialAssetIncome.etin == etin).first()
+
+def get_financial_asste_incomes(db: Session, skip: int , limit: int):
+    return db.query(models.FinancialAssetIncome).offset(skip).limit(limit).all()
+
+def create_financial_asste_income(db: Session, financial_asset_income: schemas.Financial_Asset_Income, petin : str ):
+    financial_asset_income = models.FinancialAssetIncome(
+        etin=petin,
+        
+        # Savings Bank Interest
+        savings_ban_interest_net_income=financial_asset_income.savings_ban_interest_net_income,
+        savings_ban_interest_tax_deduction_at_source=financial_asset_income.savings_ban_interest_tax_deduction_at_source,
+        savings_ban_interest_interest_on_loans=financial_asset_income.savings_ban_interest_interest_on_loans,
+        savings_ban_interest_allowable_expenditure=financial_asset_income.savings_ban_interest_allowable_expenditure,
+        savings_ban_interest_taxable=financial_asset_income.savings_ban_interest_taxable,
+        savings_ban_interest_description=financial_asset_income.savings_ban_interest_description,
+        
+        # Other Securities
+        other_securities_net_income=financial_asset_income.other_securities_net_income,
+        other_securities_tax_deduction_at_source=financial_asset_income.other_securities_tax_deduction_at_source,
+        other_securities_interest_on_loans=financial_asset_income.other_securities_interest_on_loans,
+        other_securities_allowable_expenditure=financial_asset_income.other_securities_allowable_expenditure,
+        other_securities_taxable=financial_asset_income.other_securities_taxable,
+        other_securities_description=financial_asset_income.other_securities_description,
+        
+        # Income from Islamic Principles
+        income_from_islamic_principles_net_income=financial_asset_income.income_from_islamic_principles_net_income,
+        income_from_islamic_principles_tax_deduction_at_source=financial_asset_income.income_from_islamic_principles_tax_deduction_at_source,
+        income_from_islamic_principles_interest_on_loans=financial_asset_income.income_from_islamic_principles_interest_on_loans,
+        income_from_islamic_principles_allowable_expenditure=financial_asset_income.income_from_islamic_principles_allowable_expenditure,
+        income_from_islamic_principles_taxable=financial_asset_income.income_from_islamic_principles_taxable,
+        income_from_islamic_principles_description=financial_asset_income.income_from_islamic_principles_description,
+        
+        # Bank Interest Savings Deposits
+        bank_interest_savings_deposits_net_income=financial_asset_income.bank_interest_savings_deposits_net_income,
+        bank_interest_savings_deposits_tax_deduction_at_source=financial_asset_income.bank_interest_savings_deposits_tax_deduction_at_source,
+        bank_interest_savings_deposits_interest_on_loans=financial_asset_income.bank_interest_savings_deposits_interest_on_loans,
+        bank_interest_savings_deposits_allowable_expenditure=financial_asset_income.bank_interest_savings_deposits_allowable_expenditure,
+        bank_interest_savings_deposits_taxable=financial_asset_income.bank_interest_savings_deposits_taxable,
+        bank_interest_savings_deposits_description=financial_asset_income.bank_interest_savings_deposits_description,
+        
+        # FDR Interest Income
+        fdr_interest_income_net_income=financial_asset_income.fdr_interest_income_net_income,
+        fdr_interest_income_tax_deduction_at_source=financial_asset_income.fdr_interest_income_tax_deduction_at_source,
+        fdr_interest_income_interest_on_loans=financial_asset_income.fdr_interest_income_interest_on_loans,
+        fdr_interest_income_allowable_expenditure=financial_asset_income.fdr_interest_income_allowable_expenditure,
+        fdr_interest_income_taxable=financial_asset_income.fdr_interest_income_taxable,
+        fdr_interest_income_description=financial_asset_income.fdr_interest_income_description,
+        
+        # Dividend Income
+        dividend_income_net_income=financial_asset_income.dividend_income_net_income,
+        dividend_income_tax_deduction_at_source=financial_asset_income.dividend_income_tax_deduction_at_source,
+        dividend_income_interest_on_loans=financial_asset_income.dividend_income_interest_on_loans,
+        dividend_income_allowable_expenditure=financial_asset_income.dividend_income_allowable_expenditure,
+        dividend_income_taxable=financial_asset_income.dividend_income_taxable,
+        dividend_income_description=financial_asset_income.dividend_income_description,
+
+        # Reduced Tax Rate Securities
+        reduced_tax_rate_securities_net_income=financial_asset_income.reduced_tax_rate_securities_net_income,
+        reduced_tax_rate_securities_tax_deduction_at_source=financial_asset_income.reduced_tax_rate_securities_tax_deduction_at_source,
+        reduced_tax_rate_securities_interest_on_loans=financial_asset_income.reduced_tax_rate_securities_interest_on_loans,
+        reduced_tax_rate_securities_allowable_expenditure=financial_asset_income.reduced_tax_rate_securities_allowable_expenditure,
+        reduced_tax_rate_securities_taxable=financial_asset_income.reduced_tax_rate_securities_taxable,
+        reduced_tax_rate_securities_description=financial_asset_income.reduced_tax_rate_securities_description,
+
+        # Income from Other Resources
+        income_other_resources_net_income=financial_asset_income.income_other_resources_net_income,
+        income_other_resources_tax_deduction_at_source=financial_asset_income.income_other_resources_tax_deduction_at_source,
+        income_other_resources_interest_on_loans=financial_asset_income.income_other_resources_interest_on_loans,
+        income_other_resources_allowable_expenditure=financial_asset_income.income_other_resources_allowable_expenditure,
+        income_other_resources_taxable=financial_asset_income.income_other_resources_taxable,
+        income_other_resources_description=financial_asset_income.income_other_resources_description,
+
+        # US Dollar Investment Bonds
+        us_dollar_investment_bonds_net_income=financial_asset_income.us_dollar_investment_bonds_net_income,
+        us_dollar_investment_bonds_tax_deduction_at_source=financial_asset_income.us_dollar_investment_bonds_tax_deduction_at_source,
+        us_dollar_investment_bonds_interest_on_loans=financial_asset_income.us_dollar_investment_bonds_interest_on_loans,
+        us_dollar_investment_bonds_allowable_expenditure=financial_asset_income.us_dollar_investment_bonds_allowable_expenditure,
+        us_dollar_investment_bonds_taxable=financial_asset_income.us_dollar_investment_bonds_taxable,
+        us_dollar_investment_bonds_description=financial_asset_income.us_dollar_investment_bonds_description,
+
+        # Euro Premium Bonds
+        euro_premium_bonds_net_income=financial_asset_income.euro_premium_bonds_net_income,
+        euro_premium_bonds_tax_deduction_at_source=financial_asset_income.euro_premium_bonds_tax_deduction_at_source,
+        euro_premium_bonds_interest_on_loans=financial_asset_income.euro_premium_bonds_interest_on_loans,
+        euro_premium_bonds_allowable_expenditure=financial_asset_income.euro_premium_bonds_allowable_expenditure,
+        euro_premium_bonds_taxable=financial_asset_income.euro_premium_bonds_taxable,
+        euro_premium_bonds_description=financial_asset_income.euro_premium_bonds_description,
+
+        # Pound Sterling Premium Bonds
+        pound_sterling_premium_bonds_net_income=financial_asset_income.pound_sterling_premium_bonds_net_income,
+        pound_sterling_premium_bonds_tax_deduction_at_source=financial_asset_income.pound_sterling_premium_bonds_tax_deduction_at_source,
+        pound_sterling_premium_bonds_interest_on_loans=financial_asset_income.pound_sterling_premium_bonds_interest_on_loans,
+        pound_sterling_premium_bonds_allowable_expenditure=financial_asset_income.pound_sterling_premium_bonds_allowable_expenditure,
+        pound_sterling_premium_bonds_taxable=financial_asset_income.pound_sterling_premium_bonds_taxable,
+        pound_sterling_premium_bonds_description=financial_asset_income.pound_sterling_premium_bonds_description,
+
+        # US Dollar Premium Bonds
+        us_dollar_premium_bonds_net_income=financial_asset_income.us_dollar_premium_bonds_net_income,
+        us_dollar_premium_bonds_tax_deduction_at_source=financial_asset_income.us_dollar_premium_bonds_tax_deduction_at_source,
+        us_dollar_premium_bonds_interest_on_loans=financial_asset_income.us_dollar_premium_bonds_interest_on_loans,
+        us_dollar_premium_bonds_allowable_expenditure=financial_asset_income.us_dollar_premium_bonds_allowable_expenditure,
+        us_dollar_premium_bonds_taxable=financial_asset_income.us_dollar_premium_bonds_taxable,
+        us_dollar_premium_bonds_description=financial_asset_income.us_dollar_premium_bonds_description,
+
+        # Wage Earners Development Bonds
+        wage_earners_development_bonds_net_income=financial_asset_income.wage_earners_development_bonds_net_income,
+        wage_earners_development_bonds_tax_deduction_at_source=financial_asset_income.wage_earners_development_bonds_tax_deduction_at_source,
+        wage_earners_development_bonds_interest_on_loans=financial_asset_income.wage_earners_development_bonds_interest_on_loans,
+        wage_earners_development_bonds_allowable_expenditure=financial_asset_income.wage_earners_development_bonds_allowable_expenditure,
+        wage_earners_development_bonds_taxable=financial_asset_income.wage_earners_development_bonds_taxable,
+        wage_earners_development_bonds_description=financial_asset_income.wage_earners_development_bonds_description,
+
+        # Euro Investment Bonds
+        euro_investment_bonds_net_income=financial_asset_income.euro_investment_bonds_net_income,
+        euro_investment_bonds_tax_deduction_at_source=financial_asset_income.euro_investment_bonds_tax_deduction_at_source,
+        euro_investment_bonds_interest_on_loans=financial_asset_income.euro_investment_bonds_interest_on_loans,
+        euro_investment_bonds_allowable_expenditure=financial_asset_income.euro_investment_bonds_allowable_expenditure,
+        euro_investment_bonds_taxable=financial_asset_income.euro_investment_bonds_taxable,
+        euro_investment_bonds_description=financial_asset_income.euro_investment_bonds_description
+    )
+    
+    db.add(financial_asset_income)
+    db.commit()
+    db.refresh(financial_asset_income)
+    return financial_asset_income
+
+
+
+def update_financial_asset_income(db: Session, financial_asset_income: schemas.Financial_Asset_Income, petin: str):
+    # Fetch the existing record by ETIN (or another unique identifier)
+    existing_record = db.query(models.FinancialAssetIncome).filter(models.FinancialAssetIncome.etin == petin).first()
+    
+    if existing_record is None:
+        raise ValueError(f"Record with ETIN {petin} not found")
+
+    # Update the fields with new values from the provided financial_asset_income
+    existing_record.savings_ban_interest_net_income = financial_asset_income.savings_ban_interest_net_income
+    existing_record.savings_ban_interest_tax_deduction_at_source = financial_asset_income.savings_ban_interest_tax_deduction_at_source
+    existing_record.savings_ban_interest_interest_on_loans = financial_asset_income.savings_ban_interest_interest_on_loans
+    existing_record.savings_ban_interest_allowable_expenditure = financial_asset_income.savings_ban_interest_allowable_expenditure
+    existing_record.savings_ban_interest_taxable = financial_asset_income.savings_ban_interest_taxable
+    existing_record.savings_ban_interest_description = financial_asset_income.savings_ban_interest_description
+
+    existing_record.other_securities_net_income = financial_asset_income.other_securities_net_income
+    existing_record.other_securities_tax_deduction_at_source = financial_asset_income.other_securities_tax_deduction_at_source
+    existing_record.other_securities_interest_on_loans = financial_asset_income.other_securities_interest_on_loans
+    existing_record.other_securities_allowable_expenditure = financial_asset_income.other_securities_allowable_expenditure
+    existing_record.other_securities_taxable = financial_asset_income.other_securities_taxable
+    existing_record.other_securities_description = financial_asset_income.other_securities_description
+
+    existing_record.income_from_islamic_principles_net_income = financial_asset_income.income_from_islamic_principles_net_income
+    existing_record.income_from_islamic_principles_tax_deduction_at_source = financial_asset_income.income_from_islamic_principles_tax_deduction_at_source
+    existing_record.income_from_islamic_principles_interest_on_loans = financial_asset_income.income_from_islamic_principles_interest_on_loans
+    existing_record.income_from_islamic_principles_allowable_expenditure = financial_asset_income.income_from_islamic_principles_allowable_expenditure
+    existing_record.income_from_islamic_principles_taxable = financial_asset_income.income_from_islamic_principles_taxable
+    existing_record.income_from_islamic_principles_description = financial_asset_income.income_from_islamic_principles_description
+
+    existing_record.bank_interest_savings_deposits_net_income = financial_asset_income.bank_interest_savings_deposits_net_income
+    existing_record.bank_interest_savings_deposits_tax_deduction_at_source = financial_asset_income.bank_interest_savings_deposits_tax_deduction_at_source
+    existing_record.bank_interest_savings_deposits_interest_on_loans = financial_asset_income.bank_interest_savings_deposits_interest_on_loans
+    existing_record.bank_interest_savings_deposits_allowable_expenditure = financial_asset_income.bank_interest_savings_deposits_allowable_expenditure
+    existing_record.bank_interest_savings_deposits_taxable = financial_asset_income.bank_interest_savings_deposits_taxable
+    existing_record.bank_interest_savings_deposits_description = financial_asset_income.bank_interest_savings_deposits_description
+
+    existing_record.fdr_interest_income_net_income = financial_asset_income.fdr_interest_income_net_income
+    existing_record.fdr_interest_income_tax_deduction_at_source = financial_asset_income.fdr_interest_income_tax_deduction_at_source
+    existing_record.fdr_interest_income_interest_on_loans = financial_asset_income.fdr_interest_income_interest_on_loans
+    existing_record.fdr_interest_income_allowable_expenditure = financial_asset_income.fdr_interest_income_allowable_expenditure
+    existing_record.fdr_interest_income_taxable = financial_asset_income.fdr_interest_income_taxable
+    existing_record.fdr_interest_income_description = financial_asset_income.fdr_interest_income_description
+
+    existing_record.dividend_income_net_income = financial_asset_income.dividend_income_net_income
+    existing_record.dividend_income_tax_deduction_at_source = financial_asset_income.dividend_income_tax_deduction_at_source
+    existing_record.dividend_income_interest_on_loans = financial_asset_income.dividend_income_interest_on_loans
+    existing_record.dividend_income_allowable_expenditure = financial_asset_income.dividend_income_allowable_expenditure
+    existing_record.dividend_income_taxable = financial_asset_income.dividend_income_taxable
+    existing_record.dividend_income_description = financial_asset_income.dividend_income_description
+
+    existing_record.reduced_tax_rate_securities_net_income = financial_asset_income.reduced_tax_rate_securities_net_income
+    existing_record.reduced_tax_rate_securities_tax_deduction_at_source = financial_asset_income.reduced_tax_rate_securities_tax_deduction_at_source
+    existing_record.reduced_tax_rate_securities_interest_on_loans = financial_asset_income.reduced_tax_rate_securities_interest_on_loans
+    existing_record.reduced_tax_rate_securities_allowable_expenditure = financial_asset_income.reduced_tax_rate_securities_allowable_expenditure
+    existing_record.reduced_tax_rate_securities_taxable = financial_asset_income.reduced_tax_rate_securities_taxable
+    existing_record.reduced_tax_rate_securities_description = financial_asset_income.reduced_tax_rate_securities_description
+
+    existing_record.income_other_resources_net_income = financial_asset_income.income_other_resources_net_income
+    existing_record.income_other_resources_tax_deduction_at_source = financial_asset_income.income_other_resources_tax_deduction_at_source
+    existing_record.income_other_resources_interest_on_loans = financial_asset_income.income_other_resources_interest_on_loans
+    existing_record.income_other_resources_allowable_expenditure = financial_asset_income.income_other_resources_allowable_expenditure
+    existing_record.income_other_resources_taxable = financial_asset_income.income_other_resources_taxable
+    existing_record.income_other_resources_description = financial_asset_income.income_other_resources_description
+
+    existing_record.us_dollar_investment_bonds_net_income = financial_asset_income.us_dollar_investment_bonds_net_income
+    existing_record.us_dollar_investment_bonds_tax_deduction_at_source = financial_asset_income.us_dollar_investment_bonds_tax_deduction_at_source
+    existing_record.us_dollar_investment_bonds_interest_on_loans = financial_asset_income.us_dollar_investment_bonds_interest_on_loans
+    existing_record.us_dollar_investment_bonds_allowable_expenditure = financial_asset_income.us_dollar_investment_bonds_allowable_expenditure
+    existing_record.us_dollar_investment_bonds_taxable = financial_asset_income.us_dollar_investment_bonds_taxable
+    existing_record.us_dollar_investment_bonds_description = financial_asset_income.us_dollar_investment_bonds_description
+
+    existing_record.euro_premium_bonds_net_income = financial_asset_income.euro_premium_bonds_net_income
+    existing_record.euro_premium_bonds_tax_deduction_at_source = financial_asset_income.euro_premium_bonds_tax_deduction_at_source
+    existing_record.euro_premium_bonds_interest_on_loans = financial_asset_income.euro_premium_bonds_interest_on_loans
+    existing_record.euro_premium_bonds_allowable_expenditure = financial_asset_income.euro_premium_bonds_allowable_expenditure
+    existing_record.euro_premium_bonds_taxable = financial_asset_income.euro_premium_bonds_taxable
+    existing_record.euro_premium_bonds_description = financial_asset_income.euro_premium_bonds_description
+
+    existing_record.pound_sterling_premium_bonds_net_income = financial_asset_income.pound_sterling_premium_bonds_net_income
+    existing_record.pound_sterling_premium_bonds_tax_deduction_at_source = financial_asset_income.pound_sterling_premium_bonds_tax_deduction_at_source
+    existing_record.pound_sterling_premium_bonds_interest_on_loans = financial_asset_income.pound_sterling_premium_bonds_interest_on_loans
+    existing_record.pound_sterling_premium_bonds_allowable_expenditure = financial_asset_income.pound_sterling_premium_bonds_allowable_expenditure
+    existing_record.pound_sterling_premium_bonds_taxable = financial_asset_income.pound_sterling_premium_bonds_taxable
+    existing_record.pound_sterling_premium_bonds_description = financial_asset_income.pound_sterling_premium_bonds_description
+
+    existing_record.us_dollar_premium_bonds_net_income = financial_asset_income.us_dollar_premium_bonds_net_income
+    existing_record.us_dollar_premium_bonds_tax_deduction_at_source = financial_asset_income.us_dollar_premium_bonds_tax_deduction_at_source
+    existing_record.us_dollar_premium_bonds_interest_on_loans = financial_asset_income.us_dollar_premium_bonds_interest_on_loans
+    existing_record.us_dollar_premium_bonds_allowable_expenditure = financial_asset_income.us_dollar_premium_bonds_allowable_expenditure
+    existing_record.us_dollar_premium_bonds_taxable = financial_asset_income.us_dollar_premium_bonds_taxable
+    existing_record.us_dollar_premium_bonds_description = financial_asset_income.us_dollar_premium_bonds_description
+
+    existing_record.wage_earners_development_bonds_net_income = financial_asset_income.wage_earners_development_bonds_net_income
+    existing_record.wage_earners_development_bonds_tax_deduction_at_source = financial_asset_income.wage_earners_development_bonds_tax_deduction_at_source
+    existing_record.wage_earners_development_bonds_interest_on_loans = financial_asset_income.wage_earners_development_bonds_interest_on_loans
+    existing_record.wage_earners_development_bonds_allowable_expenditure = financial_asset_income.wage_earners_development_bonds_allowable_expenditure
+    existing_record.wage_earners_development_bonds_taxable = financial_asset_income.wage_earners_development_bonds_taxable
+    existing_record.wage_earners_development_bonds_description = financial_asset_income.wage_earners_development_bonds_description
+
+    existing_record.euro_investment_bonds_net_income = financial_asset_income.euro_investment_bonds_net_income
+    existing_record.euro_investment_bonds_tax_deduction_at_source = financial_asset_income.euro_investment_bonds_tax_deduction_at_source
+    existing_record.euro_investment_bonds_interest_on_loans = financial_asset_income.euro_investment_bonds_interest_on_loans
+    existing_record.euro_investment_bonds_allowable_expenditure = financial_asset_income.euro_investment_bonds_allowable_expenditure
+    existing_record.euro_investment_bonds_taxable = financial_asset_income.euro_investment_bonds_taxable
+    existing_record.euro_investment_bonds_description = financial_asset_income.euro_investment_bonds_description
+
+    # Commit the changes to the database
+    db.commit()
+    db.refresh(existing_record)
+    return existing_record
+
+
+
+
 
 def get_rebate_record(db: Session, etin: str):
     return db.query(models.RebateRecord).filter(models.RebateRecord.etin == etin).first()
