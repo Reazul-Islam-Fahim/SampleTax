@@ -1325,40 +1325,44 @@ def create_financial_asset_income(db: Session, financial_asset_income: schemas.F
         euro_investment_bonds_taxable=0,
         euro_investment_bonds_description=financial_asset_income.euro_investment_bonds_description,
         
+        total_gross_income=financial_asset_income.total_gross_income,
+        total_gross_expense=financial_asset_income.total_gross_expense,
+        total_gross_exampted=financial_asset_income.total_gross_exampted,
+        total_gross_taxable=financial_asset_income.total_gross_taxable
         
         # total gross calculation
-        total_gross_income =  (
-            financial_asset_income.total_net_income + 
-            financial_asset_income.total_tax_deduction_at_source + 
-            financial_asset_income.reduced_tax_rate_securities_net_income + 
-            financial_asset_income.reduced_tax_rate_securities_tax_deduction_at_source + 
-            financial_asset_income.income_other_resources_net_income + 
-            financial_asset_income.income_other_resources_tax_deduction_at_source
-            ),
+        # total_gross_income =  (
+        #     financial_asset_income.total_net_income + 
+        #     financial_asset_income.total_tax_deduction_at_source + 
+        #     financial_asset_income.reduced_tax_rate_securities_net_income + 
+        #     financial_asset_income.reduced_tax_rate_securities_tax_deduction_at_source + 
+        #     financial_asset_income.income_other_resources_net_income + 
+        #     financial_asset_income.income_other_resources_tax_deduction_at_source
+        #     ),
         
-        total_gross_expense = (
-            financial_asset_income.total_interest_on_loans + 
-            financial_asset_income.total_allowable_expenditure + 
-            financial_asset_income.reduced_tax_rate_securities_interest_on_loans + 
-            financial_asset_income.reduced_tax_rate_securities_allowable_expenditure + 
-            financial_asset_income.income_other_resources_interest_on_loans + 
-            financial_asset_income.income_other_resources_allowable_expenditure
-            ),
+        # total_gross_expense = (
+        #     financial_asset_income.total_interest_on_loans + 
+        #     financial_asset_income.total_allowable_expenditure + 
+        #     financial_asset_income.reduced_tax_rate_securities_interest_on_loans + 
+        #     financial_asset_income.reduced_tax_rate_securities_allowable_expenditure + 
+        #     financial_asset_income.income_other_resources_interest_on_loans + 
+        #     financial_asset_income.income_other_resources_allowable_expenditure
+        #     ),
         
-        total_gross_exampted = (
-            financial_asset_income.us_dollar_investment_bonds_net_income + 
-            financial_asset_income.euro_premium_bonds_net_income + 
-            financial_asset_income.pound_sterling_premium_bonds_net_income + 
-            financial_asset_income.us_dollar_premium_bonds_net_income + 
-            financial_asset_income.wage_earners_development_bonds_net_income + 
-            financial_asset_income.euro_investment_bonds_net_income
-            ),
+        # total_gross_exampted = (
+        #     financial_asset_income.us_dollar_investment_bonds_net_income + 
+        #     financial_asset_income.euro_premium_bonds_net_income + 
+        #     financial_asset_income.pound_sterling_premium_bonds_net_income + 
+        #     financial_asset_income.us_dollar_premium_bonds_net_income + 
+        #     financial_asset_income.wage_earners_development_bonds_net_income + 
+        #     financial_asset_income.euro_investment_bonds_net_income
+        #     ),
         
-        total_gross_taxable = (
-            financial_asset_income.total_taxable + 
-            financial_asset_income.reduced_tax_rate_securities_taxable + 
-            financial_asset_income.income_other_resources_taxable
-        )
+        # total_gross_taxable = (
+        #     financial_asset_income.total_taxable + 
+        #     financial_asset_income.reduced_tax_rate_securities_taxable + 
+        #     financial_asset_income.income_other_resources_taxable
+        # )
     )
     
     db.add(financial_asset_income)
