@@ -681,7 +681,8 @@ class FinancialAssetIncome(Base):
     
     total_gross_income = Column(Integer, default=0) 
     total_gross_expense = Column(Integer, default=0) 
-    
+    total_gross_exampted = Column(Integer, default=0) 
+    total_gross_taxable = Column(Integer, default=0) 
     
     etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
     

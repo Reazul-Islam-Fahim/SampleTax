@@ -587,6 +587,8 @@ class Financial_Asset_Income(BaseModel):
     
     total_gross_income : int = 0
     total_gross_expense : int = 0
+    total_gross_exampted : int = 0
+    total_gross_taxable : int = 0
 
     
     class Config:
