@@ -1182,7 +1182,15 @@ def create_financial_asste_income(db: Session, financial_asset_income: schemas.F
         dividend_income_allowable_expenditure=financial_asset_income.dividend_income_allowable_expenditure,
         dividend_income_taxable=((financial_asset_income.dividend_income_net_income + financial_asset_income.dividend_income_tax_deduction_at_source) - (financial_asset_income.dividend_income_interest_on_loans + financial_asset_income.dividend_income_allowable_expenditure)),
         dividend_income_description=financial_asset_income.dividend_income_description,
-
+        
+        
+        # total calculation
+        total_net_income = financial_asset_income.total_net_income,
+        total_tax_deduction_at_source = financial_asset_income.total_tax_deduction_at_source,
+        total_interest_on_loans = financial_asset_income.total_interest_on_loans,
+        total_allowable_expenditure = financial_asset_income.total_allowable_expenditure,
+        total_taxable = financial_asset_income.total_taxable,
+ 
         # Reduced Tax Rate Securities
         reduced_tax_rate_securities_net_income=financial_asset_income.reduced_tax_rate_securities_net_income,
         reduced_tax_rate_securities_tax_deduction_at_source=financial_asset_income.reduced_tax_rate_securities_tax_deduction_at_source,
@@ -1251,7 +1259,13 @@ def create_financial_asste_income(db: Session, financial_asset_income: schemas.F
         euro_investment_bonds_exampted_amount=financial_asset_income.euro_investment_bonds_net_income,
         euro_investment_bonds_allowable_expenditure=financial_asset_income.euro_investment_bonds_allowable_expenditure,
         euro_investment_bonds_taxable=0,
-        euro_investment_bonds_description=financial_asset_income.euro_investment_bonds_description
+        euro_investment_bonds_description=financial_asset_income.euro_investment_bonds_description,
+        
+        
+        # total gross calculation
+        total_gross_income =  (financial_asset_income.total_net_income + financial_asset_income.total_tax_deduction_at_source + financial_asset_income.reduced_tax_rate_securities_net_income + financial_asset_income.reduced_tax_rate_securities_tax_deduction_at_source + financial_asset_income.income_other_resources_net_income + financial_asset_income.income_other_resources_tax_deduction_at_source),
+        
+        total_gross_expense = (financial_asset_income.total_interest_on_loans + financial_asset_income.total_allowable_expenditure + financial_asset_income.reduced_tax_rate_securities_interest_on_loans + financial_asset_income.reduced_tax_rate_securities_allowable_expenditure + financial_asset_income.income_other_resources_interest_on_loans + financial_asset_income.income_other_resources_allowable_expenditure)
     )
     
     db.add(financial_asset_income)

@@ -513,6 +513,14 @@ class Financial_Asset_Income(BaseModel):
     dividend_income_allowable_expenditure: int = 0
     dividend_income_taxable: int = 0
     dividend_income_description: Optional[str] = None
+    
+    
+    total_net_income : int = 0
+    total_tax_deduction_at_source : int = 0 
+    total_interest_on_loans : int = 0
+    total_allowable_expenditure : int = 0
+    total_taxable : int = 0
+    
 
     reduced_tax_rate_securities_net_income: int = 0
     reduced_tax_rate_securities_tax_deduction_at_source: int = 0
@@ -575,6 +583,10 @@ class Financial_Asset_Income(BaseModel):
     euro_investment_bonds_allowable_expenditure: int = 0
     euro_investment_bonds_taxable: int = 0
     euro_investment_bonds_description: Optional[str] = None
+    
+    
+    total_gross_income : int = 0
+    total_gross_expense : int = 0
 
     
     class Config:

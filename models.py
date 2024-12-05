@@ -607,6 +607,14 @@ class FinancialAssetIncome(Base):
     dividend_income_allowable_expenditure = Column(Integer, default=0)
     dividend_income_taxable = Column(Integer, default=0)
     dividend_income_description = Column(String, nullable=True)
+    
+    
+    total_net_income = Column(Integer, default=0)
+    total_tax_deduction_at_source = Column(Integer, default=0)
+    total_interest_on_loans = Column(Integer, default=0)
+    total_allowable_expenditure = Column(Integer, default=0)
+    total_taxable = Column(Integer, default=0)
+    
 
     reduced_tax_rate_securities_net_income = Column(Integer, default=0)
     reduced_tax_rate_securities_tax_deduction_at_source = Column(Integer, default=0)
@@ -669,6 +677,11 @@ class FinancialAssetIncome(Base):
     euro_investment_bonds_allowable_expenditure = Column(Integer, default=0)
     euro_investment_bonds_taxable = Column(Integer, default=0)
     euro_investment_bonds_description = Column(String, nullable=True)
+    
+    
+    total_gross_income = Column(Integer, default=0) 
+    total_gross_expense = Column(Integer, default=0) 
+    
     
     etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
     
