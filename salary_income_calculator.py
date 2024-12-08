@@ -4,10 +4,8 @@ from typing import Dict
 from db import get_db
 import logging
 from fastapi.middleware.cors import CORSMiddleware
-import schemas
-from sqlalchemy.orm import Session
-import schemas 
-import crud,models
+import schemas, crud, models
+from sqlalchemy.orm import Session 
 from age import calculate_age
 from tax_slab import _calculate_tax_liability
 

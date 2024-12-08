@@ -77,7 +77,7 @@ def create_tax_payer(db: Session, tax_payer: schemas.TaxPayerCreate, user_id : i
         marital_status = tax_payer.marital_status,
         spouse_name=tax_payer.spouse_name,
         spouse_tin=tax_payer.spouse_tin,
-        permanant_address=tax_payer.permanant_address,
+        permanent_address=tax_payer.permanent_address,
         present_address = tax_payer.present_address,
         telephone=tax_payer.telephone,
         mobile=tax_payer.mobile,
