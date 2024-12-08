@@ -1239,13 +1239,22 @@ def create_financial_asset_income(db: Session, financial_asset_income: schemas.F
             financial_asset_income.dividend_income_allowable_expenditure
         ),
 
+        
         total_taxable = (
-            financial_asset_income.savings_ban_interest_taxable +
-            financial_asset_income.other_securities_taxable +
-            financial_asset_income.income_from_islamic_principles_taxable +
-            financial_asset_income.bank_interest_savings_deposits_taxable +
-            financial_asset_income.fdr_interest_income_taxable +
-            financial_asset_income.dividend_income_taxable
+            financial_asset_income.savings_ban_interest_net_income + financial_asset_income.other_securities_net_income +
+            financial_asset_income.income_from_islamic_principles_net_income + financial_asset_income.bank_interest_savings_deposits_net_income + 
+            financial_asset_income.fdr_interest_income_net_income + financial_asset_income.dividend_income_net_income +
+            financial_asset_income.savings_ban_interest_tax_deduction_at_source + financial_asset_income.other_securities_tax_deduction_at_source +
+            financial_asset_income.income_from_islamic_principles_tax_deduction_at_source + financial_asset_income.bank_interest_savings_deposits_tax_deduction_at_source + 
+            financial_asset_income.fdr_interest_income_tax_deduction_at_source + financial_asset_income.dividend_income_tax_deduction_at_source -
+            (
+            financial_asset_income.savings_ban_interest_interest_on_loans + financial_asset_income.other_securities_interest_on_loans +
+            financial_asset_income.income_from_islamic_principles_interest_on_loans + financial_asset_income.bank_interest_savings_deposits_interest_on_loans + 
+            financial_asset_income.fdr_interest_income_interest_on_loans + financial_asset_income.dividend_income_interest_on_loans +
+            financial_asset_income.savings_ban_interest_allowable_expenditure + financial_asset_income.other_securities_allowable_expenditure + 
+            financial_asset_income.income_from_islamic_principles_allowable_expenditure + financial_asset_income.bank_interest_savings_deposits_allowable_expenditure + 
+            financial_asset_income.fdr_interest_income_allowable_expenditure + financial_asset_income.dividend_income_allowable_expenditure
+            )
         ),
         
  
@@ -1325,44 +1334,81 @@ def create_financial_asset_income(db: Session, financial_asset_income: schemas.F
         euro_investment_bonds_taxable=0,
         euro_investment_bonds_description=financial_asset_income.euro_investment_bonds_description,
         
-        total_gross_income=financial_asset_income.total_gross_income,
-        total_gross_expense=financial_asset_income.total_gross_expense,
-        total_gross_exampted=financial_asset_income.total_gross_exampted,
-        total_gross_taxable=financial_asset_income.total_gross_taxable
-        
+
         # total gross calculation
-        # total_gross_income =  (
-        #     financial_asset_income.total_net_income + 
-        #     financial_asset_income.total_tax_deduction_at_source + 
-        #     financial_asset_income.reduced_tax_rate_securities_net_income + 
-        #     financial_asset_income.reduced_tax_rate_securities_tax_deduction_at_source + 
-        #     financial_asset_income.income_other_resources_net_income + 
-        #     financial_asset_income.income_other_resources_tax_deduction_at_source
-        #     ),
+        total_gross_income =  (
+            financial_asset_income.savings_ban_interest_net_income + 
+            financial_asset_income.other_securities_net_income +
+            financial_asset_income.income_from_islamic_principles_net_income + 
+            financial_asset_income.bank_interest_savings_deposits_net_income + 
+            financial_asset_income.fdr_interest_income_net_income + 
+            financial_asset_income.dividend_income_net_income + 
+            financial_asset_income.savings_ban_interest_tax_deduction_at_source +
+            financial_asset_income.other_securities_tax_deduction_at_source +
+            financial_asset_income.income_from_islamic_principles_tax_deduction_at_source +
+            financial_asset_income.bank_interest_savings_deposits_tax_deduction_at_source +
+            financial_asset_income.fdr_interest_income_tax_deduction_at_source +
+            financial_asset_income.dividend_income_tax_deduction_at_source + 
+            financial_asset_income.reduced_tax_rate_securities_net_income + 
+            financial_asset_income.reduced_tax_rate_securities_tax_deduction_at_source + 
+            financial_asset_income.income_other_resources_net_income + 
+            financial_asset_income.income_other_resources_tax_deduction_at_source
+            ),
         
-        # total_gross_expense = (
-        #     financial_asset_income.total_interest_on_loans + 
-        #     financial_asset_income.total_allowable_expenditure + 
-        #     financial_asset_income.reduced_tax_rate_securities_interest_on_loans + 
-        #     financial_asset_income.reduced_tax_rate_securities_allowable_expenditure + 
-        #     financial_asset_income.income_other_resources_interest_on_loans + 
-        #     financial_asset_income.income_other_resources_allowable_expenditure
-        #     ),
+        total_gross_expense = (
+            financial_asset_income.savings_ban_interest_interest_on_loans +
+            financial_asset_income.other_securities_interest_on_loans +
+            financial_asset_income.income_from_islamic_principles_interest_on_loans +
+            financial_asset_income.bank_interest_savings_deposits_interest_on_loans +
+            financial_asset_income.fdr_interest_income_interest_on_loans +
+            financial_asset_income.dividend_income_interest_on_loans + 
+            financial_asset_income.savings_ban_interest_allowable_expenditure +
+            financial_asset_income.other_securities_allowable_expenditure +
+            financial_asset_income.income_from_islamic_principles_allowable_expenditure +
+            financial_asset_income.bank_interest_savings_deposits_allowable_expenditure +
+            financial_asset_income.fdr_interest_income_allowable_expenditure +
+            financial_asset_income.dividend_income_allowable_expenditure + 
+            financial_asset_income.reduced_tax_rate_securities_interest_on_loans + 
+            financial_asset_income.reduced_tax_rate_securities_allowable_expenditure + 
+            financial_asset_income.income_other_resources_interest_on_loans + 
+            financial_asset_income.income_other_resources_allowable_expenditure
+            ),
         
-        # total_gross_exampted = (
-        #     financial_asset_income.us_dollar_investment_bonds_net_income + 
-        #     financial_asset_income.euro_premium_bonds_net_income + 
-        #     financial_asset_income.pound_sterling_premium_bonds_net_income + 
-        #     financial_asset_income.us_dollar_premium_bonds_net_income + 
-        #     financial_asset_income.wage_earners_development_bonds_net_income + 
-        #     financial_asset_income.euro_investment_bonds_net_income
-        #     ),
+        total_gross_exampted = (
+            financial_asset_income.us_dollar_investment_bonds_net_income + 
+            financial_asset_income.euro_premium_bonds_net_income + 
+            financial_asset_income.pound_sterling_premium_bonds_net_income + 
+            financial_asset_income.us_dollar_premium_bonds_net_income + 
+            financial_asset_income.wage_earners_development_bonds_net_income + 
+            financial_asset_income.euro_investment_bonds_net_income
+            ),
         
-        # total_gross_taxable = (
-        #     financial_asset_income.total_taxable + 
-        #     financial_asset_income.reduced_tax_rate_securities_taxable + 
-        #     financial_asset_income.income_other_resources_taxable
-        # )
+        total_gross_taxable = (
+            (
+            financial_asset_income.savings_ban_interest_net_income + financial_asset_income.other_securities_net_income +
+            financial_asset_income.income_from_islamic_principles_net_income + financial_asset_income.bank_interest_savings_deposits_net_income + 
+            financial_asset_income.fdr_interest_income_net_income + financial_asset_income.dividend_income_net_income +
+            financial_asset_income.savings_ban_interest_tax_deduction_at_source + financial_asset_income.other_securities_tax_deduction_at_source +
+            financial_asset_income.income_from_islamic_principles_tax_deduction_at_source + financial_asset_income.bank_interest_savings_deposits_tax_deduction_at_source + 
+            financial_asset_income.fdr_interest_income_tax_deduction_at_source + financial_asset_income.dividend_income_tax_deduction_at_source -
+            (
+            financial_asset_income.savings_ban_interest_interest_on_loans + financial_asset_income.other_securities_interest_on_loans +
+            financial_asset_income.income_from_islamic_principles_interest_on_loans + financial_asset_income.bank_interest_savings_deposits_interest_on_loans + 
+            financial_asset_income.fdr_interest_income_interest_on_loans + financial_asset_income.dividend_income_interest_on_loans +
+            financial_asset_income.savings_ban_interest_allowable_expenditure + financial_asset_income.other_securities_allowable_expenditure + 
+            financial_asset_income.income_from_islamic_principles_allowable_expenditure + financial_asset_income.bank_interest_savings_deposits_allowable_expenditure + 
+            financial_asset_income.fdr_interest_income_allowable_expenditure + financial_asset_income.dividend_income_allowable_expenditure
+            ) 
+            )+ 
+            (
+            (financial_asset_income.reduced_tax_rate_securities_net_income + financial_asset_income.reduced_tax_rate_securities_tax_deduction_at_source) - 
+            (financial_asset_income.reduced_tax_rate_securities_interest_on_loans + financial_asset_income.reduced_tax_rate_securities_allowable_expenditure)
+            ) + 
+            (
+            (financial_asset_income.income_other_resources_net_income + financial_asset_income.income_other_resources_tax_deduction_at_source) - 
+            (financial_asset_income.income_other_resources_interest_on_loans + financial_asset_income.income_other_resources_allowable_expenditure)
+            )
+        )
     )
     
     db.add(financial_asset_income)
@@ -1480,12 +1526,20 @@ def update_financial_asset_income(db: Session, financial_asset_income: schemas.F
     ),
 
     existing_record.total_taxable = (
-        financial_asset_income.savings_ban_interest_taxable +
-        financial_asset_income.other_securities_taxable +
-        financial_asset_income.income_from_islamic_principles_taxable +
-        financial_asset_income.bank_interest_savings_deposits_taxable +
-        financial_asset_income.fdr_interest_income_taxable +
-        financial_asset_income.dividend_income_taxable
+        financial_asset_income.savings_ban_interest_net_income + financial_asset_income.other_securities_net_income +
+        financial_asset_income.income_from_islamic_principles_net_income + financial_asset_income.bank_interest_savings_deposits_net_income + 
+        financial_asset_income.fdr_interest_income_net_income + financial_asset_income.dividend_income_net_income +
+        financial_asset_income.savings_ban_interest_tax_deduction_at_source + financial_asset_income.other_securities_tax_deduction_at_source +
+        financial_asset_income.income_from_islamic_principles_tax_deduction_at_source + financial_asset_income.bank_interest_savings_deposits_tax_deduction_at_source + 
+        financial_asset_income.fdr_interest_income_tax_deduction_at_source + financial_asset_income.dividend_income_tax_deduction_at_source -
+        (
+        financial_asset_income.savings_ban_interest_interest_on_loans + financial_asset_income.other_securities_interest_on_loans +
+        financial_asset_income.income_from_islamic_principles_interest_on_loans + financial_asset_income.bank_interest_savings_deposits_interest_on_loans + 
+        financial_asset_income.fdr_interest_income_interest_on_loans + financial_asset_income.dividend_income_interest_on_loans +
+        financial_asset_income.savings_ban_interest_allowable_expenditure + financial_asset_income.other_securities_allowable_expenditure + 
+        financial_asset_income.income_from_islamic_principles_allowable_expenditure + financial_asset_income.bank_interest_savings_deposits_allowable_expenditure + 
+        financial_asset_income.fdr_interest_income_allowable_expenditure + financial_asset_income.dividend_income_allowable_expenditure
+        )
     ),
         
 
@@ -1554,8 +1608,18 @@ def update_financial_asset_income(db: Session, financial_asset_income: schemas.F
     existing_record.euro_investment_bonds_description = financial_asset_income.euro_investment_bonds_description,
     
     existing_record.total_gross_income =  (
-        financial_asset_income.total_net_income + 
-        financial_asset_income.total_tax_deduction_at_source + 
+        financial_asset_income.savings_ban_interest_net_income + 
+        financial_asset_income.other_securities_net_income +
+        financial_asset_income.income_from_islamic_principles_net_income + 
+        financial_asset_income.bank_interest_savings_deposits_net_income + 
+        financial_asset_income.fdr_interest_income_net_income + 
+        financial_asset_income.dividend_income_net_income + 
+        financial_asset_income.savings_ban_interest_tax_deduction_at_source +
+        financial_asset_income.other_securities_tax_deduction_at_source +
+        financial_asset_income.income_from_islamic_principles_tax_deduction_at_source +
+        financial_asset_income.bank_interest_savings_deposits_tax_deduction_at_source +
+        financial_asset_income.fdr_interest_income_tax_deduction_at_source +
+        financial_asset_income.dividend_income_tax_deduction_at_source + 
         financial_asset_income.reduced_tax_rate_securities_net_income + 
         financial_asset_income.reduced_tax_rate_securities_tax_deduction_at_source + 
         financial_asset_income.income_other_resources_net_income + 
@@ -1563,8 +1627,18 @@ def update_financial_asset_income(db: Session, financial_asset_income: schemas.F
         ),
     
     existing_record.total_gross_expense = (
-        financial_asset_income.total_interest_on_loans + 
-        financial_asset_income.total_allowable_expenditure + 
+        financial_asset_income.savings_ban_interest_interest_on_loans +
+        financial_asset_income.other_securities_interest_on_loans +
+        financial_asset_income.income_from_islamic_principles_interest_on_loans +
+        financial_asset_income.bank_interest_savings_deposits_interest_on_loans +
+        financial_asset_income.fdr_interest_income_interest_on_loans +
+        financial_asset_income.dividend_income_interest_on_loans + 
+        financial_asset_income.savings_ban_interest_allowable_expenditure +
+        financial_asset_income.other_securities_allowable_expenditure +
+        financial_asset_income.income_from_islamic_principles_allowable_expenditure +
+        financial_asset_income.bank_interest_savings_deposits_allowable_expenditure +
+        financial_asset_income.fdr_interest_income_allowable_expenditure +
+        financial_asset_income.dividend_income_allowable_expenditure + 
         financial_asset_income.reduced_tax_rate_securities_interest_on_loans + 
         financial_asset_income.reduced_tax_rate_securities_allowable_expenditure + 
         financial_asset_income.income_other_resources_interest_on_loans + 
@@ -1581,10 +1655,31 @@ def update_financial_asset_income(db: Session, financial_asset_income: schemas.F
         ),
     
     existing_record.total_gross_taxable = (
-            financial_asset_income.total_taxable + 
-            financial_asset_income.reduced_tax_rate_securities_taxable + 
-            financial_asset_income.income_other_resources_taxable
+        (
+        financial_asset_income.savings_ban_interest_net_income + financial_asset_income.other_securities_net_income +
+        financial_asset_income.income_from_islamic_principles_net_income + financial_asset_income.bank_interest_savings_deposits_net_income + 
+        financial_asset_income.fdr_interest_income_net_income + financial_asset_income.dividend_income_net_income +
+        financial_asset_income.savings_ban_interest_tax_deduction_at_source + financial_asset_income.other_securities_tax_deduction_at_source +
+        financial_asset_income.income_from_islamic_principles_tax_deduction_at_source + financial_asset_income.bank_interest_savings_deposits_tax_deduction_at_source + 
+        financial_asset_income.fdr_interest_income_tax_deduction_at_source + financial_asset_income.dividend_income_tax_deduction_at_source -
+        (
+        financial_asset_income.savings_ban_interest_interest_on_loans + financial_asset_income.other_securities_interest_on_loans +
+        financial_asset_income.income_from_islamic_principles_interest_on_loans + financial_asset_income.bank_interest_savings_deposits_interest_on_loans + 
+        financial_asset_income.fdr_interest_income_interest_on_loans + financial_asset_income.dividend_income_interest_on_loans +
+        financial_asset_income.savings_ban_interest_allowable_expenditure + financial_asset_income.other_securities_allowable_expenditure + 
+        financial_asset_income.income_from_islamic_principles_allowable_expenditure + financial_asset_income.bank_interest_savings_deposits_allowable_expenditure + 
+        financial_asset_income.fdr_interest_income_allowable_expenditure + financial_asset_income.dividend_income_allowable_expenditure
+        ) 
+        )+ 
+        (
+        (financial_asset_income.reduced_tax_rate_securities_net_income + financial_asset_income.reduced_tax_rate_securities_tax_deduction_at_source) - 
+        (financial_asset_income.reduced_tax_rate_securities_interest_on_loans + financial_asset_income.reduced_tax_rate_securities_allowable_expenditure)
+        ) + 
+        (
+        (financial_asset_income.income_other_resources_net_income + financial_asset_income.income_other_resources_tax_deduction_at_source) - 
+        (financial_asset_income.income_other_resources_interest_on_loans + financial_asset_income.income_other_resources_allowable_expenditure)
         )
+    )
 
     
 
