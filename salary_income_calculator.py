@@ -9,6 +9,7 @@ from sqlalchemy.orm import Session
 import schemas 
 import crud,models
 from age import calculate_age
+from tax_slab import _calculate_tax_liability
 
 app = FastAPI()
 
@@ -118,27 +119,27 @@ class TaxLiabilityCalculator:
 
     def calculate_taxable_income(self):
         taxable_income_after_exemption = max(0, self.taxable_income - self.exemption_limit)
-        return self._calculate_tax_liability(taxable_income_after_exemption)
+        return _calculate_tax_liability(taxable_income_after_exemption)
 
-    def _calculate_tax_liability(self, taxable_income: float):
-        tax_liability = 0
-        slabs = [
-            (100000, 0.05),
-            (400000, 0.10),
-            (500000, 0.15),
-            (500000, 0.20),
-            (2000000, 0.25),
-            (float('inf'), 0.30)
-        ]
+    # def _calculate_tax_liability(self, taxable_income: float):
+    #     tax_liability = 0
+    #     slabs = [
+    #         (100000, 0.05),
+    #         (400000, 0.10),
+    #         (500000, 0.15),
+    #         (500000, 0.20),
+    #         (2000000, 0.25),
+    #         (float('inf'), 0.30)
+    #     ]
 
-        for limit, rate in slabs:
-            if taxable_income <= 0:
-                break
-            taxable_amount = min(taxable_income, limit)
-            tax_liability += taxable_amount * rate
-            taxable_income -= taxable_amount
+    #     for limit, rate in slabs:
+    #         if taxable_income <= 0:
+    #             break
+    #         taxable_amount = min(taxable_income, limit)
+    #         tax_liability += taxable_amount * rate
+    #         taxable_income -= taxable_amount
 
-        return tax_liability
+    #     return tax_liability
 
 
 

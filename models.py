@@ -89,7 +89,7 @@ class Taxpayer(Base):
     marital_status = Column (senum(MaritalStatus), index= True, nullable= False)
     spouse_name = Column (String(100), index= True, nullable= False)
     spouse_tin = Column(String(12), index= True, nullable= True)
-    address = Column (String(500), index= True, nullable= False)
+    permanant_address = Column (String(500), index= True, nullable= False)
     present_address = Column (String(500), index= True, nullable= False)
     telephone = Column (String(15), index= True, nullable= True)
     mobile = Column (String(20), unique= True, index= True, nullable= False)

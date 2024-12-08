@@ -35,7 +35,7 @@ class TaxPayers(BaseModel):
     marital_status : MaritalStatus
     spouse_name : str
     spouse_tin : str | None = None
-    address : str
+    permanant_address : str
     present_address : str
     telephone : str | None = None
     mobile : str
