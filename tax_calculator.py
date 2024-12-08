@@ -19,18 +19,7 @@ app.add_middleware(
     allow_credentials = True,
     allow_methods = ['*'],
     allow_headers = ['*']
-)
-
-
-# def calculate_min_tax(salary_taxable_income : int, financial_asset_income : int):
-#     total_income = salary_taxable_income + financial_asset_income
-    
-#     tax_liability_total = _calculate_tax_liability(total_income)
-    
-#     tax_liability = _calculate_tax_liability(salary_taxable_income)
-    
-    
-    
+) 
     
 
 
