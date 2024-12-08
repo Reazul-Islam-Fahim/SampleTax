@@ -41,15 +41,10 @@ async def update_salary_income_summary_endpoint(
     return updated_record
 
 
-@app.get("/salary_summary/{tax_payer_id}", response_model=schemas.SalaryIncome_Summary)
+@app.get("/salary_summary/{etin}", response_model=schemas.SalaryIncome_Summary)
 def read_salary_summary(etin: str, db: Session = Depends(get_db)):
-    db_item = crud.get_salary_income_summary(db, etin= etin)
-    if db_item is None:
-        raise HTTPException(status_code=404, detail="Item not found")
+    return crud.get_salary_income_summary(db, etin= etin)
     
-    total = db_item.total_income
-    print(total)
-    return total
 
 @app.get("/salary_summary/", response_model=list[schemas.SalaryIncome_Summary])
 def read_salary_summarys(skip: int = Query(...), limit: int = Query(...), db: Session = Depends(get_db)):

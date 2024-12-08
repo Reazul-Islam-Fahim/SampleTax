@@ -44,16 +44,6 @@ def read_financial_asset_incomes(skip: int = Query(...), limit: int = Query(...)
 def create_financial_asset_income(financial_asset_income: schemas.Financial_Asset_Income = Body(...), etin: str = Body(...), db: Session = Depends(get_db)): 
     return crud.create_financial_asset_income(db=db, financial_asset_income=financial_asset_income, petin=etin)
     
-    # financial_asset = crud.get_financial_asset_income(db, etin)
-        
-    # financial_asset_record = (
-    #         db.query(models.FinancialAssetIncome)
-    #         .filter(models.FinancialAssetIncome.etin == financial_asset.etin)
-    #         .first()
-    #     )
-    
-    # return financial_asset_record
-    
 
 @app.put("/financial_asset_income/{etin}", response_model=schemas.Financial_Asset_Income)
 async def update_financial_asset_income(etin: str, financial_asset_income: schemas.Financial_Asset_Income, db: Session = Depends(get_db)):

@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from db import get_db
 from fastapi.middleware.cors import CORSMiddleware
 import schemas,crud, models, re
+from tax_slab import _calculate_tax_liability
 
 
 app = FastAPI()
@@ -19,6 +20,18 @@ app.add_middleware(
     allow_methods = ['*'],
     allow_headers = ['*']
 )
+
+
+# def calculate_min_tax(salary_taxable_income : int, financial_asset_income : int):
+#     total_income = salary_taxable_income + financial_asset_income
+    
+#     tax_liability_total = _calculate_tax_liability(total_income)
+    
+#     tax_liability = _calculate_tax_liability(salary_taxable_income)
+    
+    
+    
+    
 
 
 def calculate_area_tax(zone):
@@ -39,8 +52,8 @@ def create_tax_record(
     db: Session = Depends(get_db)
     ):
     
-    income_summary = crud.get_salary_income_summary(db, etin)
-    if not income_summary:
+    salary_income_summary = crud.get_salary_income_summary(db, etin)
+    if not salary_income_summary:
         raise HTTPException(status_code=404, detail="income_summary not found")
     
     rebate_record = crud.get_rebate_record(db, etin)
@@ -55,11 +68,29 @@ def create_tax_record(
         raise HTTPException(status_code=400, detail="Taxpayer zone not specified")
     
     
-    net_tax_liability = income_summary.tax_liability - rebate_record.rebate
+    # net_tax_liability = salary_income_summary.tax_liability - rebate_record.rebate
 
     area_tax = calculate_area_tax(taxpayer.zone.upper())
     
-    minimum_tax = area_tax
+    financial_asset_income = crud.get_financial_asset_income(db, etin)
+    
+    total_liability = _calculate_tax_liability(salary_income_summary.taxable_income + financial_asset_income.total_taxable - financial_asset_income.savings_ban_interest_taxable)
+    
+    salary_income_liability = salary_income_summary.tax_liability
+    
+    minimum_tax = total_liability - salary_income_liability
+    
+    ait = financial_asset_income.total_tax_deduction_at_source - financial_asset_income.savings_ban_interest_tax_deduction_at_source
+    
+    minimum_tax = max(minimum_tax, ait)
+    
+    total_tax = salary_income_liability + minimum_tax
+    
+    final_tax = financial_asset_income.savings_ban_interest_tax_deduction_at_source
+    
+    total_tax_liability = total_tax + final_tax
+    
+    net_tax_liability = total_tax_liability - rebate_record.rebate
     
     actual_payable_tax = max(net_tax_liability, minimum_tax, area_tax)
     
