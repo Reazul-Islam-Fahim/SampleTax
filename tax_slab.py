@@ -1,4 +1,4 @@
-def _calculate_tax_liability(self, taxable_income: float):
+def _calculate_tax_liability(taxable_income: float):
         tax_liability = 0
         slabs = [
             (100000, 0.05),
