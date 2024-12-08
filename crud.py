@@ -1734,8 +1734,3 @@ def create_tax_record(db: Session, petin : str, net_tax_liability : int, area_ta
     db.commit()
     db.refresh(tax_record)
     return tax_record
-
-
-
-
-
