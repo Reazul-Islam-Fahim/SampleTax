@@ -22,7 +22,7 @@ app.add_middleware(
 
 
 @app.post("/rebate/", response_model=schemas.Rebate_Record)
-def create_rebate_record(rebate_record: schemas.Rebate_Record = Body(...), etin : str = Body(...), db: Session = Depends(get_db)):
+def create_rebate_record(etin : str = Body(...), db: Session = Depends(get_db)):
     
     try:
         investment_amount_record = (
