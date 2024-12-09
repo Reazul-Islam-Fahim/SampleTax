@@ -308,6 +308,12 @@ def read_salary_summarys(skip: int = Query(...), limit: int = Query(...), db: Se
 
 
 
+@app.get("/tax_slab/")
+def read_tax_slab(etin: str, db: Session = Depends(get_db)):
+    return crud.get_tax_slab(db, etin= etin)
+
+
+
 
 
 

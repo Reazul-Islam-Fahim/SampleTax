@@ -50,7 +50,7 @@ def _calculate_tax_liability_and_create_slab(db: Session, etin: str, taxable_inc
         taxable_income -= taxable_amount
 
     # Pad slab_values to match the number of slab columns
-    while len(slab_values) < 7:
+    while len(slab_values) < 6:
         slab_values.append(0)
 
     # Create a Tax_Slab schema
