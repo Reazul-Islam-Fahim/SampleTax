@@ -71,7 +71,7 @@ def create_rebate_record(rebate_record: schemas.Rebate_Record = Body(...), etin 
 
 
 
-@app.get("/rebate/{tax_payer_id}", response_model=schemas.Rebate_Record)
+@app.get("/rebate/{etin}", response_model=schemas.Rebate_Record)
 def read_rebate_record(etin: str, db: Session = Depends(get_db)):
     db_item = crud.get_tax_record(db, etin= etin)
     if db_item is None:
