@@ -250,18 +250,18 @@ async def update_salary_income_record_endpoint(
     
 @app.get("/salary_income/{etin}/{employer_id}")
 async def get_income_records(etin : str = Path(...), employer_id : int = Path(...),  db: Session = Depends(get_db)):
-    db_item = crud.get_salary_income_record(db, etin = etin, employer_id= employer_id)
+    db_item = crud.get_salary_income_record_with_employer(db, etin = etin, employer_id= employer_id)
     if db_item is None:
         raise HTTPException(status_code=404, detail="Item not found")
     return db_item
 
 
 @app.get("/salary_income/{etin}")
-async def get_income_records(etin : str = Path(...),  db: Session = Depends(get_db)):
-    db_item = crud.get_salary_income_record(db, etin = etin)
-    if db_item is None:
-        raise HTTPException(status_code=404, detail="Item not found")
-    return db_item
+async def get_income_records(etin: str = Path(...), db: Session = Depends(get_db)):
+    db_items = crud.get_salary_income_record(db, etin=etin)  # Change this to get all records
+    if db_items is None or len(db_items) == 0:
+        raise HTTPException(status_code=404, detail="No records found")
+    return db_items
 
     
 

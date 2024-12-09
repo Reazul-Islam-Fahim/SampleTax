@@ -65,6 +65,22 @@ class Employer_info(BaseModel):
 
 
 
+class Tax_Slab(BaseModel):
+    etin : str
+    first : int = 0
+    second : int = 0
+    third : int = 0
+    fourth : int = 0
+    fifth : int = 0
+    sixth : int = 0
+    seventh : int = 0
+    
+    class Config:
+        orm_mode = True
+
+
+
+
 class SalaryIncome_Record(BaseModel):
     etin: str
     employer_info_id : int

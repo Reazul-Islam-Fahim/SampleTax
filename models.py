@@ -107,6 +107,7 @@ class Taxpayer(Base):
     
     
     employer_info = relationship("EmployerInfo", back_populates="taxpayer")
+    tax_slab = relationship("TaxSlab", back_populates="taxpayer")
     salary_income_records = relationship("SalaryIncomeRecord", back_populates="taxpayer")
     allowance_details = relationship("AllowanceDetails", back_populates="taxpayer")
     perquisite_details = relationship("PerquisiteDetails", back_populates="taxpayer")
@@ -136,6 +137,25 @@ class EmployerInfo(Base):
     
     taxpayer = relationship("Taxpayer", back_populates="employer_info")
     salary_income_records = relationship("SalaryIncomeRecord", back_populates="employer_info")
+    
+
+class TaxSlab(Base):
+    __tablename__ = "tax_slab"
+    
+    id = Column(Integer, primary_key=True, index=True, unique=True)
+    first = Column(Integer, default=0)
+    second = Column(Integer, default=0)
+    third = Column(Integer, default=0)
+    fourth = Column(Integer, default=0)
+    fifth = Column(Integer, default=0)
+    sixth = Column(Integer, default=0)
+    seventh = Column(Integer, default=0)
+    
+    etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
+    
+    taxpayer = relationship("Taxpayer", back_populates="tax_slab")
+    
+
     
     
 class SalaryIncomeRecord(Base):

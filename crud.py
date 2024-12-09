@@ -180,10 +180,32 @@ def update_employer_info(db: Session, etin: str, updated_employer_info: schemas.
 
 
 
+def get_tax_slab(db: Session, etin: int):
+    return db.query(models.TaxSlab).filter(models.TaxSlab.etin == etin).first()
+
+def get_tax_slabs(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(models.TaxSlab).offset(skip).limit(limit).all()
+
+def create_tax_slab(db: Session, etin : str, tax_slab_data: schemas.Tax_Slab):
+    tax_slab = models.TaxSlab(                  
+        etin = etin,
+        first = tax_slab_data.first,
+        second = tax_slab_data.second,
+        third = tax_slab_data.third,
+        fourth = tax_slab_data.fourth,
+        fifth = tax_slab_data.fifth,
+        sixth = tax_slab_data.sixth,
+        seventh = tax_slab_data.seventh                     
+    )
+    db.add(tax_slab)
+    db.commit()
+    db.refresh(tax_slab)
+    return tax_slab
 
 
 
-def get_salary_income_record(db: Session, etin: str, employer_id : int):
+
+def get_salary_income_record_with_employer(db: Session, etin: str, employer_id : int):
     return db.query(models.SalaryIncomeRecord).filter(
         models.SalaryIncomeRecord.etin == etin,
         models.SalaryIncomeRecord.employer_info_id == employer_id
@@ -193,7 +215,7 @@ def get_salary_income_record(db: Session, etin: str, employer_id : int):
 def get_salary_income_record(db: Session, etin: str):
     return db.query(models.SalaryIncomeRecord).filter(
         models.SalaryIncomeRecord.etin == etin
-    ).first()
+    ).all()
 
 
 
