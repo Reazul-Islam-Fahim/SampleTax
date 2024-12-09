@@ -123,6 +123,41 @@ class TaxLiabilityCalculator:
 
 
 
+@app.get("/employer_info/{etin}")
+def read_employer_info(etin: str, db: Session = Depends(get_db)):
+    db_item = crud.get_employer_info(db, etin=etin)
+    if db_item is None:
+        raise HTTPException(status_code=404, detail="Employer info not found")
+    return db_item
+
+
+@app.put("/employer_info/{etin}")
+async def update_employer_info_endpoint(
+    etin: str,
+    updated_employer_info: schemas.Employer_info,
+    db: Session = Depends(get_db),
+):
+    updated_record = crud.update_employer_info(db, etin, updated_employer_info)
+    
+    if updated_record is None:
+        raise HTTPException(status_code=404, detail="EmployerInfo record not found")
+    
+    return updated_record
+
+
+@app.get("/employer_info/")
+def read_employer_infos(skip: int = Query(...), limit: int = Query(...), db: Session = Depends(get_db)):
+    items = crud.get_employer_infos(db, skip=skip, limit=limit)
+    return items
+
+@app.post("/employer_info/")
+def create_employer_info_route(employer_info: schemas.Employer_info = Body(...), etin : str = Body(...), db: Session = Depends(get_db)):
+    user = crud.get_tax_payer(db, etin)
+    return crud.create_employer_info(db=db, employer_info=employer_info, petin= user.etin)
+
+
+
+
 @app.post("/salary_income/")
 async def calculate_salary_income(
     salary_data: schemas.SalaryIncome_Record = Body(...),
@@ -164,12 +199,12 @@ async def calculate_salary_income(
     crud.create_salary_income_record(db, salary_data)
     crud.create_allowance(db, allowances, salary_data.etin)
     crud.create_perquisite(db, perquisites, salary_data.etin)
-    crud.create_vehicle_falitiy(db, vehicle_facility, salary_data.etin)
+    crud.create_vehicle_facilitiy(db, vehicle_facility, salary_data.etin)
         
     
     get_allowance = crud.get_allowance(db, salary_data.etin)
     get_perquisite = crud.get_perquisite(db, salary_data.etin)
-    get_vehicle = crud.get_vehicle_falitiy(db, salary_data.etin)
+    get_vehicle = crud.get_vehicle_facilitiy(db, salary_data.etin)
     
     print(get_allowance.total, get_perquisite.total, get_vehicle.total)
     
@@ -185,13 +220,8 @@ async def calculate_salary_income(
     )
     
     crud.create_salary_income_summary(db, salary_income_summary, salary_data.etin)
-
-    return {
-        "total_income": total_income,
-        "exempted_income": exempted_income,
-        "taxable_income": taxable_income,
-        "tax_liability": tax_liability
-    }
+    
+    return crud.get_salary_income_record(db, salary_data.etin)
 
 
 
@@ -217,9 +247,15 @@ async def update_salary_income_record_endpoint(
     return updated_record
 
 
-
-
     
+@app.get("/salary_income/{etin}/{employer_id}")
+async def get_income_records(etin : str = Path(...), employer_id : int = Path(...),  db: Session = Depends(get_db)):
+    db_item = crud.get_salary_income_record(db, etin = etin, employer_id= employer_id)
+    if db_item is None:
+        raise HTTPException(status_code=404, detail="Item not found")
+    return db_item
+
+
 @app.get("/salary_income/{etin}")
 async def get_income_records(etin : str = Path(...),  db: Session = Depends(get_db)):
     db_item = crud.get_salary_income_record(db, etin = etin)
@@ -237,6 +273,41 @@ async def get_income_records(skip : int = Query(...), limit : int = Query(...), 
 @app.get("/")
 async def hi():
     return {"hello": "Welcome to taxdo"}
+
+
+
+
+
+@app.post("/salary_summary/")
+def create_salary_summary(etin: str = Body(...), db: Session = Depends(get_db)): 
+    return crud.create_salary_income_summary(db=db, etin=etin)
+
+@app.put("/salary_summary/{etin}")
+async def update_salary_income_summary_endpoint(
+    etin: str,
+    updated_summary: schemas.SalaryIncome_Summary,
+    db: Session = Depends(get_db),
+):
+    updated_record = crud.update_salary_income_summary(db, etin, updated_summary)
+
+    if updated_record is None:
+        raise HTTPException(status_code=404, detail="SalaryIncomeSummary record not found")
+
+    return updated_record
+
+
+@app.get("/salary_summary/{etin}")
+def read_salary_summary(etin: str, db: Session = Depends(get_db)):
+    return crud.get_salary_income_summary(db, etin= etin)
+    
+
+@app.get("/salary_summary/")
+def read_salary_summarys(skip: int = Query(...), limit: int = Query(...), db: Session = Depends(get_db)):
+    items = crud.get_salary_income_summarys(db, skip=skip, limit=limit)
+    return items
+
+
+
 
 
 

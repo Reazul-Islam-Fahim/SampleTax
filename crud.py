@@ -183,8 +183,19 @@ def update_employer_info(db: Session, etin: str, updated_employer_info: schemas.
 
 
 
+def get_salary_income_record(db: Session, etin: str, employer_id : int):
+    return db.query(models.SalaryIncomeRecord).filter(
+        models.SalaryIncomeRecord.etin == etin,
+        models.SalaryIncomeRecord.employer_info_id == employer_id
+    ).first()
+    
+
 def get_salary_income_record(db: Session, etin: str):
-    return db.query(models.SalaryIncomeRecord).filter(models.SalaryIncomeRecord.etin == etin).first()
+    return db.query(models.SalaryIncomeRecord).filter(
+        models.SalaryIncomeRecord.etin == etin
+    ).first()
+
+
 
 def get_salary_income_records(db: Session, skip: int , limit: int):
     return db.query(models.SalaryIncomeRecord).offset(skip).limit(limit).all()
@@ -583,14 +594,14 @@ def update_perquisite(db: Session, etin: str, perquisite: schemas.Perquisite_Det
 
 
 
-def get_vehicle_falitiy(db: Session, etin: str):
+def get_vehicle_facilitiy(db: Session, etin: str):
     return db.query(models.VehicleFacilityDetails).filter(models.VehicleFacilityDetails.etin == etin).first()
 
-def get_vehicle_falities(db: Session, skip: int , limit: int):
+def get_vehicle_facilities(db: Session, skip: int , limit: int):
     return db.query(models.VehicleFacilityDetails).offset(skip).limit(limit).all()
 
 
-def create_vehicle_falitiy(db: Session, vehicle_facility: schemas.Vehicale_facility_Details, petin : str ):
+def create_vehicle_facilitiy(db: Session, vehicle_facility: schemas.Vehicale_facility_Details, petin : str ):
     vehicle_facility = models.VehicleFacilityDetails(
         etin = petin,
         # salary_income_record_id = vehicle_facility.salary_income_record_id,

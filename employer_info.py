@@ -23,7 +23,7 @@ app.add_middleware(
 
 
 
-@app.get("/employer_info/{employer_info_id}", response_model=schemas.Employer_info)
+@app.get("/employer_info/{etin}", response_model=schemas.Employer_info)
 def read_employer_info(etin: str, db: Session = Depends(get_db)):
     db_item = crud.get_employer_info(db, etin=etin)
     if db_item is None:
