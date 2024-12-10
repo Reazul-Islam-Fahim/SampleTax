@@ -46,6 +46,22 @@ class  AgeAbove65(str, Enum):
 class MaritalStatus(str,Enum):
     married = "Married"
     unmarried = "Unmarried"
+    
+    
+class AreaType(Enum):
+    residential = "Residential"
+    business = "Business"
+    other = "Other"
+    
+    
+class LiveOwnself(Enum):
+    yes = "Yes"
+    no = "No"
+    
+    
+class Months(Enum):
+    yes = "Yes"
+    no = "No"
 
 
 
@@ -119,6 +135,7 @@ class Taxpayer(Base):
     eft = relationship("EFT", back_populates="taxpayer")
     dps = relationship("DPS", back_populates="taxpayer")
     financial_asset_income = relationship("FinancialAssetIncome", back_populates="taxpayer")
+    rent_income = relationship("RentIncome", back_populates="taxpayer")
     rebate_record = relationship("RebateRecord", back_populates="taxpayer")
     tax = relationship("TaxRecord", back_populates="taxpayer")
     
@@ -707,6 +724,67 @@ class FinancialAssetIncome(Base):
     etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
     
     taxpayer = relationship("Taxpayer", back_populates="financial_asset_income")
+    
+    
+    
+    
+class RentIncome(Base):
+    __tablename__ = "rent_income"
+    
+    id = Column(Integer, primary_key=True, index=True, unique= True)
+    area_type = Column(Enum(AreaType), default=None)
+    asset_name = Column(String(100), nullable=False)
+    asset_address = Column(String(100), nullable=False)
+    total_income = Column(Integer, default=0)
+    total_expense = Column(Integer, default=0)
+    special_income = Column(Integer, default=0)
+    net_income = Column(Integer, default=0)
+    rent_taken = Column(Integer, default=0)
+    yearly_value = Column(Integer, default=0)
+    adjusted_advance = Column(Integer, default=0)
+    other_charge = Column(Integer, default=0)
+    other_taken_rent = Column(Integer, default=0)
+    vacancy_allowance = Column(Integer, default=0)
+    insurance_premium_paid_actual = Column(Integer, default=0)
+    insurance_premium_paid_allowable = Column(Integer, default=0)
+    interest_on_repaid_loans_actual = Column(Integer, default=0)
+    interest_on_repaid_loans_allowable = Column(Integer, default=0)
+    land_revenue_actual = Column(Integer, default=0)
+    land_revenue_allowable = Column(Integer, default=0)
+    municipal_or_local_tax_actual = Column(Integer, default=0)
+    municipal_or_local_tax_allowable = Column(Integer, default=0)
+    receipt_of_repairs_actual = Column(Integer, default=0)
+    receipt_of_repairs_allowable = Column(Integer, default=0)
+    space_type = Column(String(100), nullable=False)
+    live_ownself = Column(senum(LiveOwnself), default=None)
+    monthly_rent = Column(Integer, default=0)
+    monthly_service_charge = Column(Integer, default=0)
+    advance = Column(Integer, default=0)
+    adjusted_rent = Column(Integer, default=0)
+    total_rent = Column(Integer, default=0)
+    total_rent_received = Column(Integer, default=0)
+    total_service_charge_received = Column(Integer, default=0)
+    total_vacancy_rent = Column(Integer, default=0)
+    total_vacancy_month = Column(Integer, default=0)
+    january = Column(senum(Months), default=None)
+    february = Column(senum(Months), default=None)
+    march = Column(senum(Months), default=None)
+    april = Column(senum(Months), default=None)
+    may = Column(senum(Months), default=None)
+    june = Column(senum(Months), default=None) 
+    july = Column(senum(Months), default=None)
+    august = Column(senum(Months), default=None)
+    semptember = Column(senum(Months), default=None)
+    october = Column(senum(Months), default=None)
+    november = Column(senum(Months), default=None)
+    december = Column(senum(Months), default=None)
+    gross_total_income = Column(Integer, default=0)
+    gross_total_expense = Column(Integer, default=0)
+    gross_net_income = Column(Integer, default=0)
+    
+    etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
+    
+    taxpayer = relationship("Taxpayer", back_populates="rent_income")
     
     
     

@@ -319,10 +319,197 @@ class SalaryIncome_Summary(BaseModel):
     
     class Config:
         orm_mode = True
+         
+        
+        
+        
+class Financial_Asset_Income(BaseModel):
+    savings_ban_interest_net_income : int = 0
+    savings_ban_interest_tax_deduction_at_source : int = 0
+    savings_ban_interest_interest_on_loans : int = 0
+    savings_ban_interest_allowable_expenditure : int = 0
+    savings_ban_interest_taxable : int = 0
+    savings_ban_interest_description : Optional[str] = None
+    
+    other_securities_net_income: int = 0   
+    other_securities_tax_deduction_at_source: int = 0
+    other_securities_interest_on_loans: int = 0
+    other_securities_allowable_expenditure: int = 0
+    other_securities_taxable: int = 0
+    other_securities_description: Optional[str] = None
+
+    income_from_islamic_principles_net_income: int = 0
+    income_from_islamic_principles_tax_deduction_at_source: int = 0
+    income_from_islamic_principles_interest_on_loans: int = 0
+    income_from_islamic_principles_allowable_expenditure: int = 0
+    income_from_islamic_principles_taxable: int = 0
+    income_from_islamic_principles_description: Optional[str] = None
+
+    bank_interest_savings_deposits_net_income: int = 0
+    bank_interest_savings_deposits_tax_deduction_at_source: int = 0
+    bank_interest_savings_deposits_interest_on_loans: int = 0
+    bank_interest_savings_deposits_allowable_expenditure: int = 0
+    bank_interest_savings_deposits_taxable: int = 0
+    bank_interest_savings_deposits_description: Optional[str] = None
+
+    fdr_interest_income_net_income: int = 0
+    fdr_interest_income_tax_deduction_at_source: int = 0
+    fdr_interest_income_interest_on_loans: int = 0
+    fdr_interest_income_allowable_expenditure: int = 0
+    fdr_interest_income_taxable: int = 0
+    fdr_interest_income_description: Optional[str] = None
+
+    dividend_income_net_income: int = 0
+    dividend_income_tax_deduction_at_source: int = 0
+    dividend_income_interest_on_loans: int = 0
+    dividend_income_allowable_expenditure: int = 0
+    dividend_income_taxable: int = 0
+    dividend_income_description: Optional[str] = None
+    
+    
+    total_net_income : int = 0
+    total_tax_deduction_at_source : int = 0 
+    total_interest_on_loans : int = 0
+    total_allowable_expenditure : int = 0
+    total_taxable : int = 0
+    
+
+    reduced_tax_rate_securities_net_income: int = 0
+    reduced_tax_rate_securities_tax_deduction_at_source: int = 0
+    reduced_tax_rate_securities_interest_on_loans: int = 0
+    reduced_tax_rate_securities_allowable_expenditure: int = 0
+    reduced_tax_rate_securities_taxable: int = 0
+    reduced_tax_rate_securities_description: Optional[str] = None
+
+    income_other_resources_net_income: int = 0
+    income_other_resources_tax_deduction_at_source: int = 0
+    income_other_resources_interest_on_loans: int = 0
+    income_other_resources_allowable_expenditure: int = 0
+    income_other_resources_taxable: int = 0
+    income_other_resources_description: Optional[str] = None
+
+    us_dollar_investment_bonds_net_income: int = 0
+    us_dollar_investment_bonds_tax_deduction_at_source: int = 0
+    us_dollar_investment_bonds_interest_on_loans: int = 0
+    us_dollar_investment_bonds_exampted_amount : int = 0
+    us_dollar_investment_bonds_allowable_expenditure: int = 0
+    us_dollar_investment_bonds_taxable: int = 0
+    us_dollar_investment_bonds_description: Optional[str] = None
+
+    euro_premium_bonds_net_income: int = 0
+    euro_premium_bonds_tax_deduction_at_source: int = 0
+    euro_premium_bonds_interest_on_loans: int = 0
+    euro_premium_bonds_exampted_amount : int = 0
+    euro_premium_bonds_allowable_expenditure: int = 0
+    euro_premium_bonds_taxable: int = 0
+    euro_premium_bonds_description: Optional[str] = None
+
+    pound_sterling_premium_bonds_net_income: int = 0
+    pound_sterling_premium_bonds_tax_deduction_at_source: int = 0
+    pound_sterling_premium_bonds_interest_on_loans: int = 0
+    pound_sterling_premium_bonds_exampted_amount : int = 0
+    pound_sterling_premium_bonds_allowable_expenditure: int = 0
+    pound_sterling_premium_bonds_taxable: int = 0
+    pound_sterling_premium_bonds_description: Optional[str] = None
+
+    us_dollar_premium_bonds_net_income: int = 0
+    us_dollar_premium_bonds_tax_deduction_at_source: int = 0
+    us_dollar_premium_bonds_interest_on_loans: int = 0
+    us_dollar_premium_bonds_exampted_amount : int = 0
+    us_dollar_premium_bonds_allowable_expenditure: int = 0
+    us_dollar_premium_bonds_taxable: int = 0
+    us_dollar_premium_bonds_description: Optional[str] = None
+
+    wage_earners_development_bonds_net_income: int = 0
+    wage_earners_development_bonds_tax_deduction_at_source: int = 0
+    wage_earners_development_bonds_interest_on_loans: int = 0
+    wage_earners_development_bonds_exampted_amount : int = 0
+    wage_earners_development_bonds_allowable_expenditure: int = 0
+    wage_earners_development_bonds_taxable: int = 0
+    wage_earners_development_bonds_description: Optional[str] = None
+
+    euro_investment_bonds_net_income: int = 0
+    euro_investment_bonds_tax_deduction_at_source: int = 0
+    euro_investment_bonds_interest_on_loans: int = 0
+    euro_investment_bonds_exampted_amount : int = 0
+    euro_investment_bonds_allowable_expenditure: int = 0
+    euro_investment_bonds_taxable: int = 0
+    euro_investment_bonds_description: Optional[str] = None
+    
+    
+    total_gross_income : int = 0
+    total_gross_expense : int = 0
+    total_gross_exampted : int = 0
+    total_gross_taxable : int = 0
+
+    
+    class Config:
+        orm_mode = True 
         
         
         
         
+class Rent_income(BaseModel):
+    etin : str
+    area_type : AreaType
+    asset_name : str
+    asset_address : str
+    total_income : int = 0
+    total_expense : int = 0
+    special_income : int = 0
+    net_income : int = 0
+    rent_taken : int  = 0
+    yearly_value : int = 0
+    adjusted_advance : int = 0
+    other_charge : int = 0
+    other_taken_rent : int = 0
+    vacancy_allowance : int = 0
+    insurance_premium_paid_actual : int = 0
+    insurance_premium_paid_allowable : int = 0
+    interest_on_repaid_loans_actual : int = 0
+    interest_on_repaid_loans_allowable : int = 0
+    land_revenue_actual : int = 0
+    land_revenue_allowable : int = 0
+    municipal_or_local_tax_actual : int = 0
+    municipal_or_local_tax_allowable : int = 0
+    receipt_of_repairs_actual : int = 0
+    receipt_of_repairs_allowable : int = 0
+    space_type : str = 0
+    live_ownself : LiveOwnself
+    monthly_rent : int = 0
+    monthly_service_charge : int = 0
+    advance : int = 0
+    adjusted_rent : int = 0
+    total_rent : int = 0
+    total_rent_received : int = 0
+    total_service_charge_received : int = 0
+    total_vacancy_rent : int = 0
+    total_vacancy_month : int = 0
+    january : Months
+    february : Months
+    march : Months
+    april : Months
+    may : Months
+    june : Months
+    july : Months
+    august : Months
+    semptember : Months
+    october : Months
+    november : Months
+    december : Months
+    gross_total_income : int = 0
+    gross_total_expense : int = 0
+    gross_net_income : int = 0
+    
+    
+    class Config:
+        orm_mode = True 
+        
+
+
+
+   
+   
 class Investment_Record(BaseModel):
     gov_securities_actual: int = 0
     gov_securities_allowable: int = 0
@@ -483,134 +670,9 @@ class D_PS(BaseModel):
         self.allowable = min(self.actual, 120000)
     
     class Config:
-        orm_mode = True 
-        
-        
-        
-class Financial_Asset_Income(BaseModel):
-    savings_ban_interest_net_income : int = 0
-    savings_ban_interest_tax_deduction_at_source : int = 0
-    savings_ban_interest_interest_on_loans : int = 0
-    savings_ban_interest_allowable_expenditure : int = 0
-    savings_ban_interest_taxable : int = 0
-    savings_ban_interest_description : Optional[str] = None
-    
-    other_securities_net_income: int = 0   
-    other_securities_tax_deduction_at_source: int = 0
-    other_securities_interest_on_loans: int = 0
-    other_securities_allowable_expenditure: int = 0
-    other_securities_taxable: int = 0
-    other_securities_description: Optional[str] = None
-
-    income_from_islamic_principles_net_income: int = 0
-    income_from_islamic_principles_tax_deduction_at_source: int = 0
-    income_from_islamic_principles_interest_on_loans: int = 0
-    income_from_islamic_principles_allowable_expenditure: int = 0
-    income_from_islamic_principles_taxable: int = 0
-    income_from_islamic_principles_description: Optional[str] = None
-
-    bank_interest_savings_deposits_net_income: int = 0
-    bank_interest_savings_deposits_tax_deduction_at_source: int = 0
-    bank_interest_savings_deposits_interest_on_loans: int = 0
-    bank_interest_savings_deposits_allowable_expenditure: int = 0
-    bank_interest_savings_deposits_taxable: int = 0
-    bank_interest_savings_deposits_description: Optional[str] = None
-
-    fdr_interest_income_net_income: int = 0
-    fdr_interest_income_tax_deduction_at_source: int = 0
-    fdr_interest_income_interest_on_loans: int = 0
-    fdr_interest_income_allowable_expenditure: int = 0
-    fdr_interest_income_taxable: int = 0
-    fdr_interest_income_description: Optional[str] = None
-
-    dividend_income_net_income: int = 0
-    dividend_income_tax_deduction_at_source: int = 0
-    dividend_income_interest_on_loans: int = 0
-    dividend_income_allowable_expenditure: int = 0
-    dividend_income_taxable: int = 0
-    dividend_income_description: Optional[str] = None
-    
-    
-    total_net_income : int = 0
-    total_tax_deduction_at_source : int = 0 
-    total_interest_on_loans : int = 0
-    total_allowable_expenditure : int = 0
-    total_taxable : int = 0
-    
-
-    reduced_tax_rate_securities_net_income: int = 0
-    reduced_tax_rate_securities_tax_deduction_at_source: int = 0
-    reduced_tax_rate_securities_interest_on_loans: int = 0
-    reduced_tax_rate_securities_allowable_expenditure: int = 0
-    reduced_tax_rate_securities_taxable: int = 0
-    reduced_tax_rate_securities_description: Optional[str] = None
-
-    income_other_resources_net_income: int = 0
-    income_other_resources_tax_deduction_at_source: int = 0
-    income_other_resources_interest_on_loans: int = 0
-    income_other_resources_allowable_expenditure: int = 0
-    income_other_resources_taxable: int = 0
-    income_other_resources_description: Optional[str] = None
-
-    us_dollar_investment_bonds_net_income: int = 0
-    us_dollar_investment_bonds_tax_deduction_at_source: int = 0
-    us_dollar_investment_bonds_interest_on_loans: int = 0
-    us_dollar_investment_bonds_exampted_amount : int = 0
-    us_dollar_investment_bonds_allowable_expenditure: int = 0
-    us_dollar_investment_bonds_taxable: int = 0
-    us_dollar_investment_bonds_description: Optional[str] = None
-
-    euro_premium_bonds_net_income: int = 0
-    euro_premium_bonds_tax_deduction_at_source: int = 0
-    euro_premium_bonds_interest_on_loans: int = 0
-    euro_premium_bonds_exampted_amount : int = 0
-    euro_premium_bonds_allowable_expenditure: int = 0
-    euro_premium_bonds_taxable: int = 0
-    euro_premium_bonds_description: Optional[str] = None
-
-    pound_sterling_premium_bonds_net_income: int = 0
-    pound_sterling_premium_bonds_tax_deduction_at_source: int = 0
-    pound_sterling_premium_bonds_interest_on_loans: int = 0
-    pound_sterling_premium_bonds_exampted_amount : int = 0
-    pound_sterling_premium_bonds_allowable_expenditure: int = 0
-    pound_sterling_premium_bonds_taxable: int = 0
-    pound_sterling_premium_bonds_description: Optional[str] = None
-
-    us_dollar_premium_bonds_net_income: int = 0
-    us_dollar_premium_bonds_tax_deduction_at_source: int = 0
-    us_dollar_premium_bonds_interest_on_loans: int = 0
-    us_dollar_premium_bonds_exampted_amount : int = 0
-    us_dollar_premium_bonds_allowable_expenditure: int = 0
-    us_dollar_premium_bonds_taxable: int = 0
-    us_dollar_premium_bonds_description: Optional[str] = None
-
-    wage_earners_development_bonds_net_income: int = 0
-    wage_earners_development_bonds_tax_deduction_at_source: int = 0
-    wage_earners_development_bonds_interest_on_loans: int = 0
-    wage_earners_development_bonds_exampted_amount : int = 0
-    wage_earners_development_bonds_allowable_expenditure: int = 0
-    wage_earners_development_bonds_taxable: int = 0
-    wage_earners_development_bonds_description: Optional[str] = None
-
-    euro_investment_bonds_net_income: int = 0
-    euro_investment_bonds_tax_deduction_at_source: int = 0
-    euro_investment_bonds_interest_on_loans: int = 0
-    euro_investment_bonds_exampted_amount : int = 0
-    euro_investment_bonds_allowable_expenditure: int = 0
-    euro_investment_bonds_taxable: int = 0
-    euro_investment_bonds_description: Optional[str] = None
-    
-    
-    total_gross_income : int = 0
-    total_gross_expense : int = 0
-    total_gross_exampted : int = 0
-    total_gross_taxable : int = 0
-
-    
-    class Config:
-        orm_mode = True 
-
-
+        orm_mode = True   
+   
+   
         
         
 class Rebate_Record(BaseModel):

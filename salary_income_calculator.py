@@ -115,10 +115,9 @@ class TaxLiabilityCalculator:
         }
         self.exemption_limit = exemptions.get(category, 0) + (num_autistic_children * 50000)
 
-    def calculate_taxable_income(self, db : Session, etin : str):
+    def calculate_taxable_income(self):
         taxable_income_after_exemption = max(0, self.taxable_income - self.exemption_limit)
-        return _calculate_tax_liability(db, etin, taxable_income_after_exemption)
-
+        return taxable_income_after_exemption
 
 
 
@@ -190,7 +189,8 @@ async def calculate_salary_income(
     # Calculate tax
     tax_calculator = TaxLiabilityCalculator(taxable_income)
     tax_calculator.set_exemption_limit(category, user.num_autistic_children)
-    tax_liability = tax_calculator.calculate_taxable_income(db, user.etin)
+    taxable_income_after_exemption = tax_calculator.calculate_taxable_income()
+    tax_liability = _calculate_tax_liability(db, user.etin, taxable_income_after_exemption)
     
     salary_data.private_allowances = allowances.total
     salary_data.private_perquisites = perquisites.total

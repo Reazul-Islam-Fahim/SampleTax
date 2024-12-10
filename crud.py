@@ -1724,6 +1724,73 @@ def update_financial_asset_income(db: Session, financial_asset_income: schemas.F
 
 
 
+def get_rent_income(db: Session, etin : str):
+    return db.query(models.RentIncome).filter(models.RentIncome.etin == etin).first()
+
+def get_rent_incomes(db: Session, skip: int , limit: int):
+    return db.query(models.RentIncome).offset(skip).limit(limit).all()
+
+def create_rent_income(db: Session, rent_income : schemas.Rent_income, etin : str):
+    rent_income = models.RentIncome(
+        etin = etin,
+        area_type = rent_income.area_type,
+        asset_name = rent_income.asset_name,
+        asset_address = rent_income.asset_address,
+        total_income = rent_income.
+        total_expense = rent_income.
+        special_income = rent_income.
+        net_income = rent_income.
+        rent_taken = rent_income.
+        yearly_value = (rent_income.monthly_rent * 12),
+        adjusted_advance = (rent_income.advance - rent_income.adjusted_rent),
+        other_charge = (rent_income.monthly_service_charge * 12),
+        other_taken_rent = rent_income.other_taken_rent,
+        vacancy_allowance = rent_income.
+        insurance_premium_paid_actual = rent_income.
+        insurance_premium_paid_allowable = rent_income.
+        interest_on_repaid_loans_actual = rent_income.
+        interest_on_repaid_loans_allowable = rent_income.
+        land_revenue_actual = rent_income.
+        land_revenue_allowable = rent_income.
+        municipal_or_local_tax_actual = rent_income.
+        municipal_or_local_tax_allowable = rent_income.
+        receipt_of_repairs_actual = rent_income.
+        receipt_of_repairs_allowable = rent_income.
+        space_type = rent_income.
+        live_ownself = rent_income.
+        monthly_rent = rent_income.
+        monthly_service_charge = rent_income.
+        advance = rent_income.
+        adjusted_rent = rent_income.
+        total_rent = rent_income.
+        total_rent_received = rent_income.
+        total_service_charge_received = rent_income.
+        total_vacancy_rent = rent_income.
+        total_vacancy_month = rent_income.
+        january = rent_income.
+        february = rent_income.
+        march = rent_income.
+        april = rent_income.
+        may = rent_income.
+        june = rent_income.
+        july = rent_income.
+        august = rent_income.
+        semptember = rent_income.
+        october = rent_income.
+        november = rent_income.
+        december = rent_income.
+        gross_total_income = rent_income.
+        gross_total_expense = rent_income.
+        gross_net_income = rent_income.
+    )
+
+    db.add(rent_income)
+    db.commit()
+    db.refresh(rent_income)
+    return rent_income
+
+
+
 
 def get_rebate_record(db: Session, etin: str):
     return db.query(models.RebateRecord).filter(models.RebateRecord.etin == etin).first()
