@@ -32,3 +32,16 @@ def read_rent_income(etin: str, db: Session = Depends(get_db)):
 def read_rent_incomes(skip: int = Query(...), limit: int = Query(...), db: Session = Depends(get_db)):
     items = crud.get_rent_incomes(db, skip=skip, limit=limit)
     return items
+
+
+@app.post("/rent_income/")
+def create_rent_income(rent_income: schemas.Rent_income = Body(...), etin : str = Body(...), db: Session = Depends(get_db)):
+    crud.create_rent_income(db, rent_income, etin= etin)
+    
+    rent = crud.get_rent_income(db, etin = etin)
+    
+    
+    
+    print(rent.etin)
+    
+    return rent

@@ -23,11 +23,11 @@ app.add_middleware(
     
 
 
-def calculate_area_tax(zone):
+def calculate_area_tax(source_area):
     # Use regular expression to match "Dhaka" in any part of the string
-    if re.search(r"\b(DHAKA|CHITTAGONG)\b", zone, re.IGNORECASE):  
+    if re.search(r"\b(DHAKA|CHITTAGONG)\b", source_area, re.IGNORECASE):  
         area_tax = 5000
-    elif re.search(r"\bCITY\b", zone, re.IGNORECASE):
+    elif re.search(r"\bCITY\b", source_area, re.IGNORECASE):
         area_tax = 4000
     else:
         area_tax = 3000  # Assuming no tax for other zones
@@ -59,7 +59,7 @@ def create_tax_record(
     
     # net_tax_liability = salary_income_summary.tax_liability - rebate_record.rebate
 
-    area_tax = calculate_area_tax(taxpayer.zone.upper())
+    area_tax = calculate_area_tax(taxpayer.source_area.upper())
     
     financial_asset_income = crud.get_financial_asset_income(db, etin)
     

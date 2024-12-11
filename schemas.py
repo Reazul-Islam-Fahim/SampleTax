@@ -17,6 +17,7 @@ class TaxPayers(BaseModel):
     name: str
     nid : str
     etin : str
+    source_area: Optional[SourceArea] = SourceArea.dahaka_chittagong
     circle : str
     zone : str
     assesment_year : str
@@ -43,7 +44,7 @@ class TaxPayers(BaseModel):
     employer_name : str
     name_of_organization : str
     bin_no : str
-    name_tin_partners : str |None = None
+    name_tin_partners : str | None = None
     
     class Config:
         orm_mode = True
@@ -89,7 +90,7 @@ class SalaryIncome_Record(BaseModel):
     basic_salary_exempted: int = 0
     basic_salary_taxable: int = 0
     basic_salary_remarks : Optional[str] = None
-      
+
     
     # Private salary fields
     private_allowances: int = 0
@@ -450,7 +451,6 @@ class Financial_Asset_Income(BaseModel):
         
         
 class Rent_income(BaseModel):
-    etin : str
     area_type : AreaType
     asset_name : str
     asset_address : str

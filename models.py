@@ -4,6 +4,13 @@ from db import Base
 from enum import Enum
 
 
+class SourceArea(str, Enum):
+    dahaka_chittagong = "Dhaka | Chittagong"
+    city = "City"
+    other = "Other"
+
+
+
 class Gender(str, Enum):
     male = "male"
     female = "female"
@@ -48,18 +55,18 @@ class MaritalStatus(str,Enum):
     unmarried = "Unmarried"
     
     
-class AreaType(Enum):
+class AreaType(str, Enum):
     residential = "Residential"
     business = "Business"
     other = "Other"
     
     
-class LiveOwnself(Enum):
+class LiveOwnself(str, Enum):
     yes = "Yes"
     no = "No"
     
     
-class Months(Enum):
+class Months(str, Enum):
     yes = "Yes"
     no = "No"
 
@@ -88,6 +95,7 @@ class Taxpayer(Base):
     nid = Column (String(12), unique= True, index= True, nullable= False)
     name = Column(String(100), index = True, nullable= False)
     gender = Column(senum(Gender), index=True, nullable= False)
+    source_area = Column(senum(SourceArea), index=True, default="Dhaka | Chittagong")
     circle = Column (String(50), index= True, nullable= False)
     zone = Column (String(50), index= True, nullable= False)
     employment_type = Column(senum(EmploymentType), index= True, nullable= False)

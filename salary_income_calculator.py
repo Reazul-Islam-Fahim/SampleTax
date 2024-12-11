@@ -253,6 +253,7 @@ async def get_income_records(etin : str = Path(...), employer_id : int = Path(..
     db_item = crud.get_salary_income_record_with_employer(db, etin = etin, employer_id= employer_id)
     if db_item is None:
         raise HTTPException(status_code=404, detail="Item not found")
+        # return []
     return db_item
 
 
