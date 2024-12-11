@@ -493,7 +493,7 @@ class Rent_income(BaseModel):
     june : Months
     july : Months
     august : Months
-    semptember : Months
+    september : Months
     october : Months
     november : Months
     december : Months

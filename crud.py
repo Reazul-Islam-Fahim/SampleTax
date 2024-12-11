@@ -140,7 +140,7 @@ def update_tax_payer(db: Session, etin: str, updated_tax_payer: schemas.TaxPayer
 
 
 def get_employer_info(db: Session, etin: str):
-    return db.query(models.EmployerInfo).filter(models.EmployerInfo.etin == etin).first()
+    return db.query(models.EmployerInfo).filter(models.EmployerInfo.etin == etin).all()
 
 def get_employer_infos(db: Session, skip: int , limit: int):
     return db.query(models.EmployerInfo).offset(skip).limit(limit).all()
@@ -1736,52 +1736,52 @@ def create_rent_income(db: Session, rent_income : schemas.Rent_income, etin : st
         area_type = rent_income.area_type,
         asset_name = rent_income.asset_name,
         asset_address = rent_income.asset_address,
-        total_income = rent_income.
-        total_expense = rent_income.
-        special_income = rent_income.
-        net_income = rent_income.
-        rent_taken = rent_income.
+        total_income = rent_income.total_income,
+        total_expense = rent_income.total_expense,
+        special_income = rent_income.special_income,
+        net_income = rent_income.net_income,
+        rent_taken = rent_income.rent_taken,
         yearly_value = (rent_income.monthly_rent * 12),
         adjusted_advance = (rent_income.advance - rent_income.adjusted_rent),
         other_charge = (rent_income.monthly_service_charge * 12),
         other_taken_rent = rent_income.other_taken_rent,
-        vacancy_allowance = rent_income.
-        insurance_premium_paid_actual = rent_income.
-        insurance_premium_paid_allowable = rent_income.
-        interest_on_repaid_loans_actual = rent_income.
-        interest_on_repaid_loans_allowable = rent_income.
-        land_revenue_actual = rent_income.
-        land_revenue_allowable = rent_income.
-        municipal_or_local_tax_actual = rent_income.
-        municipal_or_local_tax_allowable = rent_income.
-        receipt_of_repairs_actual = rent_income.
-        receipt_of_repairs_allowable = rent_income.
-        space_type = rent_income.
-        live_ownself = rent_income.
-        monthly_rent = rent_income.
-        monthly_service_charge = rent_income.
-        advance = rent_income.
-        adjusted_rent = rent_income.
-        total_rent = rent_income.
-        total_rent_received = rent_income.
-        total_service_charge_received = rent_income.
-        total_vacancy_rent = rent_income.
-        total_vacancy_month = rent_income.
-        january = rent_income.
-        february = rent_income.
-        march = rent_income.
-        april = rent_income.
-        may = rent_income.
-        june = rent_income.
-        july = rent_income.
-        august = rent_income.
-        semptember = rent_income.
-        october = rent_income.
-        november = rent_income.
-        december = rent_income.
-        gross_total_income = rent_income.
-        gross_total_expense = rent_income.
-        gross_net_income = rent_income.
+        vacancy_allowance = rent_income.vacancy_allowance,
+        insurance_premium_paid_actual = rent_income.insurance_premium_paid_actual,
+        insurance_premium_paid_allowable = rent_income.insurance_premium_paid_allowable,
+        interest_on_repaid_loans_actual = rent_income.interest_on_repaid_loans_actual,
+        interest_on_repaid_loans_allowable = rent_income.interest_on_repaid_loans_allowable,
+        land_revenue_actual = rent_income.land_revenue_actual,
+        land_revenue_allowable = rent_income.land_revenue_allowable,
+        municipal_or_local_tax_actual = rent_income.municipal_or_local_tax_actual,
+        municipal_or_local_tax_allowable = rent_income.municipal_or_local_tax_allowable,
+        receipt_of_repairs_actual = rent_income.receipt_of_repairs_actual,
+        receipt_of_repairs_allowable = rent_income.receipt_of_repairs_allowable,
+        space_type = rent_income.space_type,
+        live_ownself = rent_income.live_ownself,
+        monthly_rent = rent_income.monthly_rent,
+        monthly_service_charge = rent_income.monthly_service_charge,
+        advance = rent_income.advance,
+        adjusted_rent = rent_income.adjusted_rent,
+        total_rent = rent_income.total_rent,
+        total_rent_received = rent_income.total_rent_received,
+        total_service_charge_received = rent_income.total_service_charge_received,
+        total_vacancy_rent = rent_income.total_vacancy_rent,
+        total_vacancy_month = rent_income.total_vacancy_month,
+        january = rent_income.january,
+        february = rent_income.february,
+        march = rent_income.march,
+        april = rent_income.april,
+        may = rent_income.may,
+        june = rent_income.june,
+        july = rent_income.july,
+        august = rent_income.august,
+        september = rent_income.september,
+        october = rent_income.october,
+        november = rent_income.november,
+        december = rent_income.december,
+        gross_total_income = rent_income.gross_total_income,
+        gross_total_expense = rent_income.gross_total_expense,
+        gross_net_income = rent_income.gross_net_income
     )
 
     db.add(rent_income)

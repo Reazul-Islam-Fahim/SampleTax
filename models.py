@@ -732,9 +732,9 @@ class RentIncome(Base):
     __tablename__ = "rent_income"
     
     id = Column(Integer, primary_key=True, index=True, unique= True)
-    area_type = Column(Enum(AreaType), default=None)
+    area_type = Column(senum(AreaType), default=None)
     asset_name = Column(String(100), nullable=False)
-    asset_address = Column(String(100), nullable=False)
+    asset_address = Column(String(500), nullable=False)
     total_income = Column(Integer, default=0)
     total_expense = Column(Integer, default=0)
     special_income = Column(Integer, default=0)
@@ -774,7 +774,7 @@ class RentIncome(Base):
     june = Column(senum(Months), default=None) 
     july = Column(senum(Months), default=None)
     august = Column(senum(Months), default=None)
-    semptember = Column(senum(Months), default=None)
+    september = Column(senum(Months), default=None)
     october = Column(senum(Months), default=None)
     november = Column(senum(Months), default=None)
     december = Column(senum(Months), default=None)
