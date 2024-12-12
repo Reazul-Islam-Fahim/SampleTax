@@ -143,7 +143,8 @@ class Taxpayer(Base):
     eft = relationship("EFT", back_populates="taxpayer")
     dps = relationship("DPS", back_populates="taxpayer")
     financial_asset_income = relationship("FinancialAssetIncome", back_populates="taxpayer")
-    rent_income = relationship("RentIncome", back_populates="taxpayer")
+    rent_income_details = relationship("RentIncomeDetails", back_populates="taxpayer")
+    rent_income_master = relationship("RentIncomeMaster", back_populates="taxpayer")
     rebate_record = relationship("RebateRecord", back_populates="taxpayer")
     tax = relationship("TaxRecord", back_populates="taxpayer")
     
@@ -736,8 +737,8 @@ class FinancialAssetIncome(Base):
     
     
     
-class RentIncome(Base):
-    __tablename__ = "rent_income"
+class RentIncomeDetails(Base):
+    __tablename__ = "rent_income_details"
     
     id = Column(Integer, primary_key=True, index=True, unique= True)
     area_type = Column(senum(AreaType), default=None)
@@ -786,13 +787,28 @@ class RentIncome(Base):
     october = Column(senum(Months), default=None)
     november = Column(senum(Months), default=None)
     december = Column(senum(Months), default=None)
+    
+    etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
+    
+    taxpayer = relationship("Taxpayer", back_populates="rent_income_details")
+    
+    
+class RentIncomeMaster(Base):
+    __tablename__ = "rent_income_master"
+    
+    
+    id = Column(Integer, primary_key=True, index=True, unique= True)
+    area_type = Column(senum(AreaType), default=None)
+    asset_name = Column(String(100), nullable=False)
+    asset_address = Column(String(500), nullable=False)
     gross_total_income = Column(Integer, default=0)
     gross_total_expense = Column(Integer, default=0)
     gross_net_income = Column(Integer, default=0)
     
     etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
     
-    taxpayer = relationship("Taxpayer", back_populates="rent_income")
+    taxpayer = relationship("Taxpayer", back_populates="rent_income_master")
+    
     
     
     

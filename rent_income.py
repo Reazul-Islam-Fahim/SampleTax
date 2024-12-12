@@ -35,12 +35,63 @@ def read_rent_incomes(skip: int = Query(...), limit: int = Query(...), db: Sessi
 
 
 @app.post("/rent_income/")
-def create_rent_income(rent_income: schemas.Rent_income = Body(...), etin : str = Body(...), db: Session = Depends(get_db)):
-    crud.create_rent_income(db, rent_income, etin= etin)
+def create_rent_details_income(rent_income_dtails: schemas.Rent_Income_Details = Body(...), rent_income_master : schemas.Rent_Income_Master = Body(...), etin : str = Body(...), db: Session = Depends(get_db)):
+    crud.create_rent_details_income(db, rent_income_dtails, etin= etin)
+    crud.create_rent_master_income(db, rent_income_master, etin= etin)
     
-    rent = crud.get_rent_income(db, etin = etin)
+    rent = crud.get_rent_details_income(db, etin = etin)
     
+    if(rent.area_type.lower() == "residential"):
+        area_rate = 0.25
+    else:
+        area_rate = 0.3
     
+    total_rent_month = 0
+    if(rent.january.lower() == "yes"):
+        total_rent_month+=1
+    if(rent.february.lower() == "yes"):
+        total_rent_month+=1
+    if(rent.march.lower() == "yes"):
+        total_rent_month+=1
+    if(rent.april.lower() == "yes"):
+        total_rent_month+=1
+    if(rent.may.lower() == "yes"):
+        total_rent_month+=1
+    if(rent.june.lower() == "yes"):
+        total_rent_month+=1
+    if(rent.july.lower() == "yes"):
+        total_rent_month+=1
+    if(rent.august.lower() == "yes"):
+        total_rent_month+=1
+    if(rent.september.lower() == "yes"):
+        total_rent_month+=1
+    if(rent.october.lower() == "yes"):
+        total_rent_month+=1
+    if(rent.november.lower() == "yes"):
+        total_rent_month+=1
+    if(rent.december.lower() == "yes"):
+        total_rent_month+=1  
+        
+    rent.total_vacancy_month = 12 - total_rent_month
+    
+    rent.total_income = (rent.monthly_rent * total_rent_month) + (rent.monthly_service_charge * total_rent_month) + rent.other_taken_rent
+    
+    rent.receipt_of_repairs_allowable = rent.total_income * area_rate
+    
+    if(rent.receipt_of_repairs_actual > rent.receipt_of_repairs_allowable):
+        # rent.special_income = rent.receipt_of_repairs_allowable
+        rent.special_income = 0
+        rent.net_income = rent.total_income - rent.receipt_of_repairs_allowable
+    else:
+        rent.special_income = rent.receipt_of_repairs_allowable - rent.receipt_of_repairs_actual
+        rent.net_income = rent.total_income - rent.receipt_of_repairs_actual
+        
+    
+    rent.total_expense = rent.insurance_premium_paid_allowable + rent.interest_on_repaid_loans_allowable + rent.land_revenue_allowable + rent.municipal_or_local_tax_allowable + rent.receipt_of_repairs_allowable
+    
+    rent.net_income = rent.net_income - (rent.insurance_premium_paid_allowable + rent.interest_on_repaid_loans_allowable + rent.land_revenue_allowable + rent.municipal_or_local_tax_allowable)
+    
+     
     
     print(rent.etin)
     

@@ -450,7 +450,7 @@ class Financial_Asset_Income(BaseModel):
         
         
         
-class Rent_income(BaseModel):
+class Rent_Income_Details(BaseModel):
     area_type : AreaType
     asset_name : str
     asset_address : str
@@ -497,16 +497,23 @@ class Rent_income(BaseModel):
     october : Months
     november : Months
     december : Months
-    gross_total_income : int = 0
-    gross_total_expense : int = 0
-    gross_net_income : int = 0
-    
     
     class Config:
         orm_mode = True 
         
 
-
+class Rent_Income_Master(BaseModel):
+    etin : str
+    area_type : AreaType
+    asset_name : str
+    asset_address : str
+    gross_total_income : int = 0
+    gross_total_expense : int = 0
+    gross_net_income : int = 0
+    
+    class Config:
+        orm_mode = True 
+    
 
    
    
