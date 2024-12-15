@@ -460,6 +460,7 @@ class Rent_Income_Master(BaseModel):
     net_income : int = 0
     rent_taken : int  = 0
     yearly_value : int = 0
+    total_adjusted_advance : int = 0
     other_charge : int = 0
     other_taken_rent : int = 0
     vacancy_allowance : int = 0

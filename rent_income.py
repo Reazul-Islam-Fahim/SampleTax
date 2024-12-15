@@ -73,11 +73,18 @@ def create_rent_details_income(
     elif(rent_income_master.area_type.lower() == "commercial"):
         area_rate = 0.3
         
+    
+    others_count_flat = 0    
+    total_count_flat = 0
+    
+        
     rent_income_details.total_vacancy_month = 0
     total_rent_month = 0
+    rent_income_master.total_adjusted_advance = 0
         
     if(rent_income_details.live_ownself.lower() == "yes"):
         total_rent_month = 12
+        total_count_flat+=1
     else:
         if(rent_income_details.january.lower() == "yes"):
             total_rent_month+=1
@@ -103,6 +110,10 @@ def create_rent_details_income(
             total_rent_month+=1
         if(rent_income_details.december.lower() == "yes"):
             total_rent_month+=1  
+        
+        others_count_flat+=1
+        total_count_flat+=1
+        
         
     rent_income_details.total_vacancy_month = 12 - total_rent_month
     
@@ -131,6 +142,6 @@ def create_rent_details_income(
     
      
     
-    print(rent_income_details.etin)
+    print(etin)
     
     return rent_income_details

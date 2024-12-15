@@ -739,7 +739,7 @@ class FinancialAssetIncome(Base):
     
     
 class RentIncomeMaster(Base):
-    __tablename__ = "rent_income_details"
+    __tablename__ = "rent_income_master"
     
     id = Column(Integer, primary_key=True, index=True, unique= True)
     area_type = Column(senum(AreaType), default=None)
@@ -751,6 +751,7 @@ class RentIncomeMaster(Base):
     net_income = Column(Integer, default=0)
     rent_taken = Column(Integer, default=0)
     yearly_value = Column(Integer, default=0)
+    total_adjusted_advance = Column(Integer, default=0)
     other_charge = Column(Integer, default=0)
     other_taken_rent = Column(Integer, default=0)
     vacancy_allowance = Column(Integer, default=0)
@@ -768,12 +769,12 @@ class RentIncomeMaster(Base):
     
     etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
     
-    taxpayer = relationship("Taxpayer", back_populates="rent_income_details")
+    taxpayer = relationship("Taxpayer", back_populates="rent_income_master")
     
  
  
 class RentIncomeDetails(Base):
-    __tablename__ = "rent_income_master"
+    __tablename__ = "rent_income_details"
  
     
     id = Column(Integer, primary_key=True, index=True, unique= True)
@@ -805,7 +806,7 @@ class RentIncomeDetails(Base):
     
     etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
     
-    taxpayer = relationship("Taxpayer", back_populates="rent_income_master")
+    taxpayer = relationship("Taxpayer", back_populates="rent_income_details")
  
     
 class RentIncomeSummary(Base):

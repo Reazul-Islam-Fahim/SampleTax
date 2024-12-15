@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 import models, schemas
 from fastapi import HTTPException
+from sqlalchemy import desc
 
 
 def get_user_auth(db: Session, id: int):
@@ -671,7 +672,7 @@ def update_vehicle_facility(db: Session, etin: str, vehicle_facility: schemas.Ve
 
 
 def get_salary_income_summary(db: Session, etin: str):
-    return db.query(models.SalaryIncomeSummary).filter(models.SalaryIncomeSummary.etin == etin).first()
+    return db.query(models.SalaryIncomeSummary).filter(models.SalaryIncomeSummary.etin == etin).order_by(desc(models.SalaryIncomeSummary.id)).first()
 
 def get_salary_income_summarys(db: Session, skip: int , limit: int):
     return db.query(models.SalaryIncomeSummary).offset(skip).limit(limit).all()
@@ -1743,6 +1744,7 @@ def create_rent_master_income(db: Session, rent_income_master : schemas.Rent_Inc
         special_income = rent_income_master.special_income,
         net_income = rent_income_master.net_income,
         rent_taken = rent_income_master.rent_taken,
+        total_adjusted_advance = rent_income_master.total_adjusted_advance,
         yearly_value = rent_income_master.yearly_value,
         other_charge = rent_income_master.other_charge,
         other_taken_rent = rent_income_master.other_taken_rent,
@@ -1783,6 +1785,7 @@ def update_rent_master_income(db: Session, etin: str, updated_data: schemas.Rent
     rent_income_master.net_income = updated_data.net_income
     rent_income_master.rent_taken = updated_data.rent_taken
     rent_income_master.yearly_value = updated_data.yearly_value
+    rent_income_master.total_adjusted_advance = updated_data.total_adjusted_advance
     rent_income_master.other_charge = updated_data.other_charge
     rent_income_master.other_taken_rent = updated_data.other_taken_rent
     rent_income_master.vacancy_allowance = updated_data.vacancy_allowance
