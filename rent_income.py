@@ -66,64 +66,64 @@ def create_rent_details_income(
     crud.create_rent_master_income(db, rent_income_master, etin)
     crud.create_rent_summary_income(db, rent_income_summary, etin)
     
-    rent_income_details = crud.get_rent_details_income(db, etin = etin)
+    # rent_income_details = crud.get_rent_details_income(db, etin = etin)
     
-    if(rent_income_details.area_type.lower() == "residential"):
+    if(rent_income_master.area_type.lower() == "residential"):
         area_rate = 0.25
-    elif(rent_income_details.area_type.lower() == "commercial"):
+    elif(rent_income_master.area_type.lower() == "commercial"):
         area_rate = 0.3
         
-    rent_income_master.total_vacancy_month = 0
+    rent_income_details.total_vacancy_month = 0
     total_rent_month = 0
         
-    if(rent_income_master.live_ownself.lower() == "yes"):
+    if(rent_income_details.live_ownself.lower() == "yes"):
         total_rent_month = 12
     else:
-        if(rent_income_master.january.lower() == "yes"):
+        if(rent_income_details.january.lower() == "yes"):
             total_rent_month+=1
-        if(rent_income_master.february.lower() == "yes"):
+        if(rent_income_details.february.lower() == "yes"):
             total_rent_month+=1
-        if(rent_income_master.march.lower() == "yes"):
+        if(rent_income_details.march.lower() == "yes"):
             total_rent_month+=1
-        if(rent_income_master.april.lower() == "yes"):
+        if(rent_income_details.april.lower() == "yes"):
             total_rent_month+=1
-        if(rent_income_master.may.lower() == "yes"):
+        if(rent_income_details.may.lower() == "yes"):
             total_rent_month+=1
-        if(rent_income_master.june.lower() == "yes"):
+        if(rent_income_details.june.lower() == "yes"):
             total_rent_month+=1
-        if(rent_income_master.july.lower() == "yes"):
+        if(rent_income_details.july.lower() == "yes"):
             total_rent_month+=1
-        if(rent_income_master.august.lower() == "yes"):
+        if(rent_income_details.august.lower() == "yes"):
             total_rent_month+=1
-        if(rent_income_master.september.lower() == "yes"):
+        if(rent_income_details.september.lower() == "yes"):
             total_rent_month+=1
-        if(rent_income_master.october.lower() == "yes"):
+        if(rent_income_details.october.lower() == "yes"):
             total_rent_month+=1
-        if(rent_income_master.november.lower() == "yes"):
+        if(rent_income_details.november.lower() == "yes"):
             total_rent_month+=1
-        if(rent_income_master.december.lower() == "yes"):
+        if(rent_income_details.december.lower() == "yes"):
             total_rent_month+=1  
         
-    rent_income_master.total_vacancy_month = 12 - total_rent_month
+    rent_income_details.total_vacancy_month = 12 - total_rent_month
     
-    rent_income_details.total_income = (rent_income_master.monthly_rent * total_rent_month) + (rent_income_master.monthly_service_charge * total_rent_month) + rent_income_details.other_taken_rent
+    rent_income_master.total_income = (rent_income_details.monthly_rent * total_rent_month) + (rent_income_details.monthly_service_charge * total_rent_month) + rent_income_master.other_taken_rent
     
-    rent_income_details.receipt_of_repairs_allowable = rent_income_details.total_income * area_rate
+    rent_income_master.receipt_of_repairs_allowable = rent_income_master.total_income * area_rate
     
-    if(rent_income_details.receipt_of_repairs_actual > rent_income_details.receipt_of_repairs_allowable):
+    if(rent_income_master.receipt_of_repairs_actual > rent_income_master.receipt_of_repairs_allowable):
         # rent.special_income = rent.receipt_of_repairs_allowable
-        rent_income_details.special_income = 0
-        rent_income_details.net_income = rent_income_details.total_income - rent_income_details.receipt_of_repairs_allowable
+        rent_income_master.special_income = 0
+        rent_income_master.net_income = rent_income_master.total_income - rent_income_master.receipt_of_repairs_allowable
     else:
-        rent_income_details.special_income = rent_income_details.receipt_of_repairs_allowable - rent_income_details.receipt_of_repairs_actual
-        rent_income_details.net_income = rent_income_details.total_income - rent_income_details.receipt_of_repairs_actual
+        rent_income_master.special_income = rent_income_master.receipt_of_repairs_allowable - rent_income_master.receipt_of_repairs_actual
+        rent_income_master.net_income = rent_income_master.total_income - rent_income_master.receipt_of_repairs_actual
         
     
-    rent_income_details.total_expense = (rent_income_details.insurance_premium_paid_allowable + rent_income_details.interest_on_repaid_loans_allowable + 
-                                        rent_income_details.land_revenue_allowable + rent_income_details.municipal_or_local_tax_allowable + rent_income_details.receipt_of_repairs_allowable)
+    rent_income_master.total_expense = (rent_income_master.insurance_premium_paid_allowable + rent_income_master.interest_on_repaid_loans_allowable + 
+                                        rent_income_master.land_revenue_allowable + rent_income_master.municipal_or_local_tax_allowable + rent_income_master.receipt_of_repairs_allowable)
     
-    rent_income_details.net_income = rent_income_details.net_income - (rent_income_details.insurance_premium_paid_allowable + rent_income_details.interest_on_repaid_loans_allowable + 
-                                                                       rent_income_details.land_revenue_allowable + rent_income_details.municipal_or_local_tax_allowable)
+    rent_income_master.net_income = rent_income_master.net_income - (rent_income_master.insurance_premium_paid_allowable + rent_income_master.interest_on_repaid_loans_allowable + 
+                                                                       rent_income_master.land_revenue_allowable + rent_income_master.municipal_or_local_tax_allowable)
     
     
     
