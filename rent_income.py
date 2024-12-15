@@ -43,7 +43,7 @@ def create_rent_details_income(rent_income_dtails: schemas.Rent_Income_Details =
     
     if(rent.area_type.lower() == "residential"):
         area_rate = 0.25
-    else:
+    elif(rent.area_type.lower() == "commercial"):
         area_rate = 0.3
     
     total_rent_month = 0

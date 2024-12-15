@@ -57,7 +57,7 @@ class MaritalStatus(str,Enum):
     
 class AreaType(str, Enum):
     residential = "Residential"
-    business = "Business"
+    commercial = "Commercial"
     other = "Other"
     
     
@@ -145,6 +145,7 @@ class Taxpayer(Base):
     financial_asset_income = relationship("FinancialAssetIncome", back_populates="taxpayer")
     rent_income_details = relationship("RentIncomeDetails", back_populates="taxpayer")
     rent_income_master = relationship("RentIncomeMaster", back_populates="taxpayer")
+    rent_income_summary = relationship("RentIncomeSummary", back_populates="taxpayer")
     rebate_record = relationship("RebateRecord", back_populates="taxpayer")
     tax = relationship("TaxRecord", back_populates="taxpayer")
     
@@ -750,7 +751,6 @@ class RentIncomeDetails(Base):
     net_income = Column(Integer, default=0)
     rent_taken = Column(Integer, default=0)
     yearly_value = Column(Integer, default=0)
-    adjusted_advance = Column(Integer, default=0)
     other_charge = Column(Integer, default=0)
     other_taken_rent = Column(Integer, default=0)
     vacancy_allowance = Column(Integer, default=0)
@@ -764,17 +764,26 @@ class RentIncomeDetails(Base):
     municipal_or_local_tax_allowable = Column(Integer, default=0)
     receipt_of_repairs_actual = Column(Integer, default=0)
     receipt_of_repairs_allowable = Column(Integer, default=0)
+     
+    
+    etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
+    
+    taxpayer = relationship("Taxpayer", back_populates="rent_income_details")
+    
+ 
+ 
+class RentIncomeMaster(Base):
+    __tablename__ = "rent_income_master"
+ 
+    
+    id = Column(Integer, primary_key=True, index=True, unique= True)
     space_type = Column(String(100), nullable=False)
-    live_ownself = Column(senum(LiveOwnself), default=None)
+    live_ownself = Column(senum(LiveOwnself), default=None) 
     monthly_rent = Column(Integer, default=0)
-    monthly_service_charge = Column(Integer, default=0)
+    monthly_service_charge = Column(Integer, default=0)  
     advance = Column(Integer, default=0)
     adjusted_rent = Column(Integer, default=0)
-    total_rent = Column(Integer, default=0)
-    total_rent_received = Column(Integer, default=0)
-    total_service_charge_received = Column(Integer, default=0)
-    total_vacancy_rent = Column(Integer, default=0)
-    total_vacancy_month = Column(Integer, default=0)
+    all_month = Column(senum(Months), default=None)
     january = Column(senum(Months), default=None)
     february = Column(senum(Months), default=None)
     march = Column(senum(Months), default=None)
@@ -787,18 +796,24 @@ class RentIncomeDetails(Base):
     october = Column(senum(Months), default=None)
     november = Column(senum(Months), default=None)
     december = Column(senum(Months), default=None)
+    total_rent = Column(Integer, default=0)
+    total_rent_received = Column(Integer, default=0)
+    total_service_charge_received = Column(Integer, default=0)
+    total_vacancy_rent = Column(Integer, default=0)
+    total_vacancy_month = Column(Integer, default=0)
+    adjusted_advance = Column(Integer, default=0)
     
     etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
     
-    taxpayer = relationship("Taxpayer", back_populates="rent_income_details")
+    taxpayer = relationship("Taxpayer", back_populates="rent_income_master")
+ 
     
-    
-class RentIncomeMaster(Base):
-    __tablename__ = "rent_income_master"
+class RentIncomeSummary(Base):
+    __tablename__ = "rent_income_summary"
     
     
     id = Column(Integer, primary_key=True, index=True, unique= True)
-    area_type = Column(senum(AreaType), default=None)
+    area_type = Column(String(20), default=None)
     asset_name = Column(String(100), nullable=False)
     asset_address = Column(String(500), nullable=False)
     gross_total_income = Column(Integer, default=0)
@@ -807,7 +822,7 @@ class RentIncomeMaster(Base):
     
     etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
     
-    taxpayer = relationship("Taxpayer", back_populates="rent_income_master")
+    taxpayer = relationship("Taxpayer", back_populates="rent_income_summary")
     
     
     

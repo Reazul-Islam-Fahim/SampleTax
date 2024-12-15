@@ -460,7 +460,6 @@ class Rent_Income_Details(BaseModel):
     net_income : int = 0
     rent_taken : int  = 0
     yearly_value : int = 0
-    adjusted_advance : int = 0
     other_charge : int = 0
     other_taken_rent : int = 0
     vacancy_allowance : int = 0
@@ -474,17 +473,19 @@ class Rent_Income_Details(BaseModel):
     municipal_or_local_tax_allowable : int = 0
     receipt_of_repairs_actual : int = 0
     receipt_of_repairs_allowable : int = 0
+    
+    class Config:
+        orm_mode = True 
+        
+        
+class Rent_Income_Master(BaseModel):
     space_type : str = 0
     live_ownself : LiveOwnself
     monthly_rent : int = 0
     monthly_service_charge : int = 0
     advance : int = 0
     adjusted_rent : int = 0
-    total_rent : int = 0
-    total_rent_received : int = 0
-    total_service_charge_received : int = 0
-    total_vacancy_rent : int = 0
-    total_vacancy_month : int = 0
+    all_month : Months
     january : Months
     february : Months
     march : Months
@@ -497,12 +498,19 @@ class Rent_Income_Details(BaseModel):
     october : Months
     november : Months
     december : Months
+    total_rent : int = 0
+    total_rent_received : int = 0
+    total_service_charge_received : int = 0
+    total_vacancy_rent : int = 0
+    total_vacancy_month : int = 0
+    adjusted_advance : int = 0
     
     class Config:
         orm_mode = True 
+    
         
 
-class Rent_Income_Master(BaseModel):
+class Rent_Income_Summary(BaseModel):
     etin : str
     area_type : AreaType
     asset_name : str
