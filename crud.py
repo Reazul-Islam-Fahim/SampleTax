@@ -1726,164 +1726,164 @@ def update_financial_asset_income(db: Session, financial_asset_income: schemas.F
 
 
 
-def get_rent_details_income(db: Session, etin : str):
-    return db.query(models.RentIncomeDetails).filter(models.RentIncomeDetails.etin == etin).first()
-
-def get_rent_details_incomes(db: Session, skip: int , limit: int):
-    return db.query(models.RentIncomeDetails).offset(skip).limit(limit).all()
-
-def create_rent_details_income(db: Session, rent_income_details : schemas.Rent_Income_Details, etin : str):
-    rent_income_details = models.RentIncomeDetails(
-        etin = etin,
-        area_type = rent_income_details.area_type,
-        asset_name = rent_income_details.asset_name,
-        asset_address = rent_income_details.asset_address,
-        total_income = rent_income_details.total_income,
-        total_expense = rent_income_details.total_expense,
-        special_income = rent_income_details.special_income,
-        net_income = rent_income_details.net_income,
-        rent_taken = rent_income_details.rent_taken,
-        yearly_value = rent_income_details.yearly_value,
-        other_charge = rent_income_details.other_charge,
-        other_taken_rent = rent_income_details.other_taken_rent,
-        vacancy_allowance = rent_income_details.vacancy_allowance,
-        insurance_premium_paid_actual = rent_income_details.insurance_premium_paid_actual,
-        insurance_premium_paid_allowable = rent_income_details.insurance_premium_paid_actual,
-        interest_on_repaid_loans_actual = rent_income_details.interest_on_repaid_loans_actual,
-        interest_on_repaid_loans_allowable = rent_income_details.interest_on_repaid_loans_actual,
-        land_revenue_actual = rent_income_details.land_revenue_actual,
-        land_revenue_allowable = rent_income_details.land_revenue_actual,
-        municipal_or_local_tax_actual = rent_income_details.municipal_or_local_tax_actual,
-        municipal_or_local_tax_allowable = rent_income_details.municipal_or_local_tax_actual,
-        receipt_of_repairs_actual = rent_income_details.receipt_of_repairs_actual,
-        receipt_of_repairs_allowable = rent_income_details.receipt_of_repairs_allowable,
-        
-        
-    )
-
-    db.add(rent_income_details)
-    db.commit()
-    db.refresh(rent_income_details)
-    return rent_income_details
-
-
-def update_rent_details_income(db: Session, etin: str, updated_data: schemas.Rent_Income_Details):
-    
-    rent_income_details = db.query(models.RentIncomeDetails).filter(models.RentIncomeDetails.etin == etin).first()
-
-    if not rent_income_details:
-        return None
-
-    rent_income_details.area_type = updated_data.area_type
-    rent_income_details.asset_name = updated_data.asset_name
-    rent_income_details.asset_address = updated_data.asset_address
-    rent_income_details.total_income = updated_data.total_income
-    rent_income_details.total_expense = updated_data.total_expense
-    rent_income_details.special_income = updated_data.special_income
-    rent_income_details.net_income = updated_data.net_income
-    rent_income_details.rent_taken = updated_data.rent_taken
-    rent_income_details.yearly_value = updated_data.yearly_value
-    rent_income_details.other_charge = updated_data.other_charge
-    rent_income_details.other_taken_rent = updated_data.other_taken_rent
-    rent_income_details.vacancy_allowance = updated_data.vacancy_allowance
-    rent_income_details.insurance_premium_paid_actual = updated_data.insurance_premium_paid_actual
-    rent_income_details.insurance_premium_paid_allowable = updated_data.insurance_premium_paid_actual
-    rent_income_details.interest_on_repaid_loans_actual = updated_data.interest_on_repaid_loans_actual
-    rent_income_details.interest_on_repaid_loans_allowable = updated_data.interest_on_repaid_loans_actual
-    rent_income_details.land_revenue_actual = updated_data.land_revenue_actual
-    rent_income_details.land_revenue_allowable = updated_data.land_revenue_actual
-    rent_income_details.municipal_or_local_tax_actual = updated_data.municipal_or_local_tax_actual
-    rent_income_details.municipal_or_local_tax_allowable = updated_data.municipal_or_local_tax_actual
-    rent_income_details.receipt_of_repairs_actual = updated_data.receipt_of_repairs_actual
-    rent_income_details.receipt_of_repairs_allowable = updated_data.receipt_of_repairs_allowable
-
-    db.commit()
-    db.refresh(rent_income_details)
-    return rent_income_details
-
-
-
-
 def get_rent_master_income(db: Session, etin : str):
     return db.query(models.RentIncomeMaster).filter(models.RentIncomeMaster.etin == etin).first()
 
 def get_rent_master_incomes(db: Session, skip: int , limit: int):
     return db.query(models.RentIncomeMaster).offset(skip).limit(limit).all()
 
-def create_rent_master_income(db : Session, rent_income_master : schemas.Rent_Income_Master, etin : str):
+def create_rent_master_income(db: Session, rent_income_master : schemas.Rent_Income_Master, etin : str):
     rent_income_master = models.RentIncomeMaster(
         etin = etin,
-        space_type = rent_income_master.space_type,
-        live_ownself = rent_income_master.live_ownself,
-        monthly_rent = rent_income_master.monthly_rent,
-        monthly_service_charge = rent_income_master.monthly_service_charge,
-        advance = rent_income_master.advance,
-        adjusted_rent = rent_income_master.adjusted_rent,
-        all_month = rent_income_master.all_month,
-        january = rent_income_master.january,
-        february = rent_income_master.february,
-        march = rent_income_master.march,
-        april = rent_income_master.april,
-        may = rent_income_master.may,
-        june = rent_income_master.june,
-        july = rent_income_master.july,
-        august = rent_income_master.august,
-        september = rent_income_master.september,
-        october = rent_income_master.october,
-        november = rent_income_master.november,
-        december = rent_income_master.december,
-        total_rent = rent_income_master.total_rent,
-        total_rent_received = rent_income_master.total_rent_received,
-        total_service_charge_received = rent_income_master.total_service_charge_received,
-        total_vacancy_rent = rent_income_master.total_vacancy_rent,
-        total_vacancy_month = rent_income_master.total_vacancy_month,
-        adjusted_advance = rent_income_master.adjusted_advance
+        area_type = rent_income_master.area_type,
+        asset_name = rent_income_master.asset_name,
+        asset_address = rent_income_master.asset_address,
+        total_income = rent_income_master.total_income,
+        total_expense = rent_income_master.total_expense,
+        special_income = rent_income_master.special_income,
+        net_income = rent_income_master.net_income,
+        rent_taken = rent_income_master.rent_taken,
+        yearly_value = rent_income_master.yearly_value,
+        other_charge = rent_income_master.other_charge,
+        other_taken_rent = rent_income_master.other_taken_rent,
+        vacancy_allowance = rent_income_master.vacancy_allowance,
+        insurance_premium_paid_actual = rent_income_master.insurance_premium_paid_actual,
+        insurance_premium_paid_allowable = rent_income_master.insurance_premium_paid_actual,
+        interest_on_repaid_loans_actual = rent_income_master.interest_on_repaid_loans_actual,
+        interest_on_repaid_loans_allowable = rent_income_master.interest_on_repaid_loans_actual,
+        land_revenue_actual = rent_income_master.land_revenue_actual,
+        land_revenue_allowable = rent_income_master.land_revenue_actual,
+        municipal_or_local_tax_actual = rent_income_master.municipal_or_local_tax_actual,
+        municipal_or_local_tax_allowable = rent_income_master.municipal_or_local_tax_actual,
+        receipt_of_repairs_actual = rent_income_master.receipt_of_repairs_actual,
+        receipt_of_repairs_allowable = rent_income_master.receipt_of_repairs_allowable,
+        
+        
+    )
+
+    db.add(rent_income_master)
+    db.commit()
+    db.refresh(rent_income_master)
+    return rent_income_master
+
+
+def update_rent_master_income(db: Session, etin: str, updated_data: schemas.Rent_Income_Master):
+    
+    rent_income_master = db.query(models.RentIncomeMaster).filter(models.RentIncomeMaster.etin == etin).first()
+
+    if not rent_income_master:
+        return None
+
+    rent_income_master.area_type = updated_data.area_type
+    rent_income_master.asset_name = updated_data.asset_name
+    rent_income_master.asset_address = updated_data.asset_address
+    rent_income_master.total_income = updated_data.total_income
+    rent_income_master.total_expense = updated_data.total_expense
+    rent_income_master.special_income = updated_data.special_income
+    rent_income_master.net_income = updated_data.net_income
+    rent_income_master.rent_taken = updated_data.rent_taken
+    rent_income_master.yearly_value = updated_data.yearly_value
+    rent_income_master.other_charge = updated_data.other_charge
+    rent_income_master.other_taken_rent = updated_data.other_taken_rent
+    rent_income_master.vacancy_allowance = updated_data.vacancy_allowance
+    rent_income_master.insurance_premium_paid_actual = updated_data.insurance_premium_paid_actual
+    rent_income_master.insurance_premium_paid_allowable = updated_data.insurance_premium_paid_actual
+    rent_income_master.interest_on_repaid_loans_actual = updated_data.interest_on_repaid_loans_actual
+    rent_income_master.interest_on_repaid_loans_allowable = updated_data.interest_on_repaid_loans_actual
+    rent_income_master.land_revenue_actual = updated_data.land_revenue_actual
+    rent_income_master.land_revenue_allowable = updated_data.land_revenue_actual
+    rent_income_master.municipal_or_local_tax_actual = updated_data.municipal_or_local_tax_actual
+    rent_income_master.municipal_or_local_tax_allowable = updated_data.municipal_or_local_tax_actual
+    rent_income_master.receipt_of_repairs_actual = updated_data.receipt_of_repairs_actual
+    rent_income_master.receipt_of_repairs_allowable = updated_data.receipt_of_repairs_allowable
+
+    db.commit()
+    db.refresh(rent_income_master)
+    return rent_income_master
+
+
+
+
+def get_rent_details_income(db: Session, etin : str):
+    return db.query(models.RentIncomeDetails).filter(models.RentIncomeDetails.etin == etin).first()
+
+def get_rent_details_incomes(db: Session, skip: int , limit: int):
+    return db.query(models.RentIncomeDetails).offset(skip).limit(limit).all()
+
+def create_rent_details_income(db : Session, rent_income_details : schemas.Rent_Income_Details, etin : str):
+    rent_income_details = models.RentIncomeDetails(
+        etin = etin,
+        space_type = rent_income_details.space_type,
+        live_ownself = rent_income_details.live_ownself,
+        monthly_rent = rent_income_details.monthly_rent,
+        monthly_service_charge = rent_income_details.monthly_service_charge,
+        advance = rent_income_details.advance,
+        adjusted_rent = rent_income_details.adjusted_rent,
+        all_month = rent_income_details.all_month,
+        january = rent_income_details.january,
+        february = rent_income_details.february,
+        march = rent_income_details.march,
+        april = rent_income_details.april,
+        may = rent_income_details.may,
+        june = rent_income_details.june,
+        july = rent_income_details.july,
+        august = rent_income_details.august,
+        september = rent_income_details.september,
+        october = rent_income_details.october,
+        november = rent_income_details.november,
+        december = rent_income_details.december,
+        total_rent = rent_income_details.total_rent,
+        total_rent_received = rent_income_details.total_rent_received,
+        total_service_charge_received = rent_income_details.total_service_charge_received,
+        total_vacancy_rent = rent_income_details.total_vacancy_rent,
+        total_vacancy_month = rent_income_details.total_vacancy_month,
+        adjusted_advance = rent_income_details.adjusted_advance
     )
     
 
-def update_rent_master_income(
+def update_rent_details_income(
     db: Session, 
     etin: str, 
-    updated_data: schemas.Rent_Income_Master
+    updated_data: schemas.Rent_Income_Details
 ):
     # Fetch the existing record
-    rent_income_master = db.query(models.RentIncomeMaster).filter(models.RentIncomeMaster.etin == etin).first()
+    rent_income_details = db.query(models.RentIncomeDetails).filter(models.RentIncomeDetails.etin == etin).first()
     
-    if not rent_income_master:
+    if not rent_income_details:
         return None  # Record not found
 
     # Update fields with the new data
-    rent_income_master.space_type = updated_data.space_type
-    rent_income_master.live_ownself = updated_data.live_ownself
-    rent_income_master.monthly_rent = updated_data.monthly_rent
-    rent_income_master.monthly_service_charge = updated_data.monthly_service_charge
-    rent_income_master.advance = updated_data.advance
-    rent_income_master.adjusted_rent = updated_data.adjusted_rent
-    rent_income_master.all_month = updated_data.all_month
-    rent_income_master.january = updated_data.january
-    rent_income_master.february = updated_data.february
-    rent_income_master.march = updated_data.march
-    rent_income_master.april = updated_data.april
-    rent_income_master.may = updated_data.may
-    rent_income_master.june = updated_data.june
-    rent_income_master.july = updated_data.july
-    rent_income_master.august = updated_data.august
-    rent_income_master.september = updated_data.september
-    rent_income_master.october = updated_data.october
-    rent_income_master.november = updated_data.november
-    rent_income_master.december = updated_data.december
-    rent_income_master.total_rent = updated_data.total_rent
-    rent_income_master.total_rent_received = updated_data.total_rent_received
-    rent_income_master.total_service_charge_received = updated_data.total_service_charge_received
-    rent_income_master.total_vacancy_rent = updated_data.total_vacancy_rent
-    rent_income_master.total_vacancy_month = updated_data.total_vacancy_month
-    rent_income_master.adjusted_advance = updated_data.adjusted_advance
+    rent_income_details.space_type = updated_data.space_type
+    rent_income_details.live_ownself = updated_data.live_ownself
+    rent_income_details.monthly_rent = updated_data.monthly_rent
+    rent_income_details.monthly_service_charge = updated_data.monthly_service_charge
+    rent_income_details.advance = updated_data.advance
+    rent_income_details.adjusted_rent = updated_data.adjusted_rent
+    rent_income_details.all_month = updated_data.all_month
+    rent_income_details.january = updated_data.january
+    rent_income_details.february = updated_data.february
+    rent_income_details.march = updated_data.march
+    rent_income_details.april = updated_data.april
+    rent_income_details.may = updated_data.may
+    rent_income_details.june = updated_data.june
+    rent_income_details.july = updated_data.july
+    rent_income_details.august = updated_data.august
+    rent_income_details.september = updated_data.september
+    rent_income_details.october = updated_data.october
+    rent_income_details.november = updated_data.november
+    rent_income_details.december = updated_data.december
+    rent_income_details.total_rent = updated_data.total_rent
+    rent_income_details.total_rent_received = updated_data.total_rent_received
+    rent_income_details.total_service_charge_received = updated_data.total_service_charge_received
+    rent_income_details.total_vacancy_rent = updated_data.total_vacancy_rent
+    rent_income_details.total_vacancy_month = updated_data.total_vacancy_month
+    rent_income_details.adjusted_advance = updated_data.adjusted_advance
 
     # Commit changes to the database
     db.commit()
-    db.refresh(rent_income_master)  # Refresh to reflect the updated state
+    db.refresh(rent_income_details)  # Refresh to reflect the updated state
 
-    return rent_income_master
+    return rent_income_details
 
 
 

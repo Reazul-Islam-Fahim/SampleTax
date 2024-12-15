@@ -738,7 +738,7 @@ class FinancialAssetIncome(Base):
     
     
     
-class RentIncomeDetails(Base):
+class RentIncomeMaster(Base):
     __tablename__ = "rent_income_details"
     
     id = Column(Integer, primary_key=True, index=True, unique= True)
@@ -772,7 +772,7 @@ class RentIncomeDetails(Base):
     
  
  
-class RentIncomeMaster(Base):
+class RentIncomeDetails(Base):
     __tablename__ = "rent_income_master"
  
     

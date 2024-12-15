@@ -450,7 +450,7 @@ class Financial_Asset_Income(BaseModel):
         
         
         
-class Rent_Income_Details(BaseModel):
+class Rent_Income_Master(BaseModel):
     area_type : AreaType
     asset_name : str
     asset_address : str
@@ -478,7 +478,7 @@ class Rent_Income_Details(BaseModel):
         orm_mode = True 
         
         
-class Rent_Income_Master(BaseModel):
+class Rent_Income_Details(BaseModel):
     space_type : str = 0
     live_ownself : LiveOwnself
     monthly_rent : int = 0

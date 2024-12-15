@@ -320,21 +320,6 @@ async def hi():
 
 
 
-
-# @app.post("/salary_summary/")
-# def create_salary_summary(etin: str = Body(...), db: Session = Depends(get_db)): 
-#     return crud.create_salary_income_summary(db=db, etin=etin)
-
-# @app.put("/salary_summary/{etin}")
-# async def update_salary_income_summary_endpoint(
-#     etin: str,
-#     updated_summary: schemas.SalaryIncome_Summary,
-#     db: Session = Depends(get_db),
-# ):
-#     updated_record = crud.update_salary_income_summary(db, etin, updated_summary)
-#     return updated_record
-
-
 @app.get("/salary_summary/{etin}")
 def read_salary_summary(etin: str, db: Session = Depends(get_db)):
     return crud.get_salary_income_summary(db, etin= etin)
