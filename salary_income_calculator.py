@@ -235,14 +235,59 @@ async def update_salary_income_record_endpoint(
     vehicle_facility: schemas.Vehicale_facility_Details = Body(...),
     db: Session = Depends(get_db),
 ):
+    
+    user = crud.get_tax_payer(db, etin=salary_data.etin)
+
+    # Check if user exists and has an employment_type
+    if not user or not user.employment_type:
+        raise HTTPException(status_code=404, detail="User not found or employment type missing.")
+
+    # Retrieve the employment type from the user object
+    employment_type = user.employment_type
+
+    # Calculate age and determine tax category
+    age = calculate_age(user.date_of_birth)
+    category = determine_category(user, age)
+
+    # Calculate income
+    income_calculator = IncomeCalculator(employment_type, salary_data)
+    total_income = income_calculator.calculate_total_income(allowances, perquisites, vehicle_facility)
+
+    # Taxable income
+    taxable_income = total_income - min(total_income / 3, 450000)
+
+    # Calculate tax
+    tax_calculator = TaxLiabilityCalculator(taxable_income)
+    tax_calculator.set_exemption_limit(category, user.num_autistic_children)
+    taxable_income_after_exemption = tax_calculator.calculate_taxable_income()
+    tax_liability = _calculate_tax_liability(db, user.etin, taxable_income_after_exemption)
+    
+    salary_data.private_allowances = allowances.total
+    salary_data.private_perquisites = perquisites.total
+    salary_data.private_vehicle_facility = vehicle_facility.total
+    
+    updated_record = crud.update_salary_income_record(db, etin, salary_data)
     crud.update_allowance(db, etin, allowances)
     crud.update_perquisite(db, etin, perquisites)
     crud.update_vehicle_facility(db, etin, vehicle_facility)
+        
     
-    updated_record = crud.update_salary_income_record(db, etin, salary_data)
+    get_allowance = crud.get_allowance(db, salary_data.etin)
+    get_perquisite = crud.get_perquisite(db, salary_data.etin)
+    get_vehicle = crud.get_vehicle_facilitiy(db, salary_data.etin)
+    
+    print(get_allowance.total, get_perquisite.total, get_vehicle.total)
+    
+    exempted_income = total_income - taxable_income
+    
+    salary_income_summary = schemas.SalaryIncome_Summary(
+        total_income=int(total_income),
+        exempted_income= int(exempted_income),
+        taxable_income=int(taxable_income),
+        tax_liability=int(tax_liability)
+    )
 
-    if updated_record is None:
-        raise HTTPException(status_code=404, detail="SalaryIncomeRecord not found")
+    crud.update_salary_income_summary(db, etin, salary_income_summary)    
     
     return updated_record
 
@@ -251,17 +296,14 @@ async def update_salary_income_record_endpoint(
 @app.get("/salary_income/{etin}/{employer_id}")
 async def get_income_records(etin : str = Path(...), employer_id : int = Path(...),  db: Session = Depends(get_db)):
     db_item = crud.get_salary_income_record_with_employer(db, etin = etin, employer_id= employer_id)
-    if db_item is None:
-        raise HTTPException(status_code=404, detail="Item not found")
-        # return []
+
     return db_item
 
 
 @app.get("/salary_income/{etin}")
 async def get_income_records(etin: str = Path(...), db: Session = Depends(get_db)):
     db_items = crud.get_salary_income_record(db, etin=etin)  # Change this to get all records
-    if db_items is None or len(db_items) == 0:
-        raise HTTPException(status_code=404, detail="No records found")
+    
     return db_items
 
     
@@ -279,22 +321,18 @@ async def hi():
 
 
 
-@app.post("/salary_summary/")
-def create_salary_summary(etin: str = Body(...), db: Session = Depends(get_db)): 
-    return crud.create_salary_income_summary(db=db, etin=etin)
+# @app.post("/salary_summary/")
+# def create_salary_summary(etin: str = Body(...), db: Session = Depends(get_db)): 
+#     return crud.create_salary_income_summary(db=db, etin=etin)
 
-@app.put("/salary_summary/{etin}")
-async def update_salary_income_summary_endpoint(
-    etin: str,
-    updated_summary: schemas.SalaryIncome_Summary,
-    db: Session = Depends(get_db),
-):
-    updated_record = crud.update_salary_income_summary(db, etin, updated_summary)
-
-    if updated_record is None:
-        raise HTTPException(status_code=404, detail="SalaryIncomeSummary record not found")
-
-    return updated_record
+# @app.put("/salary_summary/{etin}")
+# async def update_salary_income_summary_endpoint(
+#     etin: str,
+#     updated_summary: schemas.SalaryIncome_Summary,
+#     db: Session = Depends(get_db),
+# ):
+#     updated_record = crud.update_salary_income_summary(db, etin, updated_summary)
+#     return updated_record
 
 
 @app.get("/salary_summary/{etin}")
