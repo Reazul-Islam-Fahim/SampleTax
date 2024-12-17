@@ -454,6 +454,8 @@ class Rent_Income_Master(BaseModel):
     area_type : AreaType
     asset_name : str
     asset_address : str
+    total_flats : int
+    total_flats_on_rent : int
     total_income : int = 0
     total_expense : int = 0
     special_income : int = 0
@@ -480,7 +482,7 @@ class Rent_Income_Master(BaseModel):
         
         
 class Rent_Income_Details(BaseModel):
-    space_type : str = 0
+    space_type : str 
     live_ownself : LiveOwnself
     monthly_rent : int = 0
     monthly_service_charge : int = 0

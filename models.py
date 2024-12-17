@@ -745,6 +745,8 @@ class RentIncomeMaster(Base):
     area_type = Column(senum(AreaType), default=None)
     asset_name = Column(String(100), nullable=False)
     asset_address = Column(String(500), nullable=False)
+    total_flats = Column(Integer, default=0)
+    total_flats_on_rent = Column(Integer, default=0)
     total_income = Column(Integer, default=0)
     total_expense = Column(Integer, default=0)
     special_income = Column(Integer, default=0)
