@@ -172,11 +172,13 @@ def create_rent_details_income(
         master.net_income = master.total_income - master.receipt_of_repairs_actual
 
     # Total expense calculation
-    master.total_expense = (master.insurance_premium_paid_allowable +
-                            master.interest_on_repaid_loans_allowable +
-                            master.land_revenue_allowable +
-                            master.municipal_or_local_tax_allowable +
-                            master.receipt_of_repairs_allowable)
+    master.total_expense = (
+        master.insurance_premium_paid_allowable +
+        master.interest_on_repaid_loans_allowable +
+        master.land_revenue_allowable +
+        master.municipal_or_local_tax_allowable +
+        master.receipt_of_repairs_allowable
+    )
 
     master.net_income = master.total_income - master.total_expense + master.special_income
 
