@@ -149,7 +149,7 @@ async def update_employer_info_endpoint(
 
 
 @app.get("/employer_info/")
-def read_employer_infos(skip: int = Query(...), limit: int = Query(...), db: Session = Depends(get_db)):
+def read_employer_infos(skip : int = Query(...), limit : int = Query(...), db: Session = Depends(get_db)):
     items = crud.get_employer_infos(db, skip=skip, limit=limit)
     return items
 
@@ -161,168 +161,171 @@ def create_employer_info_route(employer_info: schemas.Employer_info = Body(...),
 
 
 
+# @app.post("/salary_income/")
+# async def calculate_salary_income(
+#     salary_data: schemas.SalaryIncome_Record = Body(...),
+#     allowances: schemas.Allowance_Details = Body(...),
+#     perquisites: schemas.Perquisite_Details = Body(...),
+#     vehicle_facility: schemas.Vehicale_facility_Details = Body(...),
+#     db: Session = Depends(get_db)
+# ):
+#     # Retrieve user details using the ETIN from the salary_data
+#     user = crud.get_tax_payer(db, etin=salary_data.etin)
+
+#     # Check if user exists and has an employment_type
+#     if not user or not user.employment_type:
+#         raise HTTPException(status_code=404, detail="User not found or employment type missing.")
+
+#     # Retrieve the employment type from the user object
+#     employment_type = user.employment_type
+
+#     # Calculate age and determine tax category
+#     age = calculate_age(user.date_of_birth)
+#     category = determine_category(user, age)
+
+#     # Calculate income
+#     income_calculator = IncomeCalculator(employment_type, salary_data)
+#     total_income = income_calculator.calculate_total_income(allowances, perquisites, vehicle_facility)
+
+#     # Taxable income
+#     taxable_income = total_income - min(total_income / 3, 450000)
+
+#     # Calculate tax
+#     tax_calculator = TaxLiabilityCalculator(taxable_income)
+#     tax_calculator.set_exemption_limit(category, user.num_autistic_children)
+#     taxable_income_after_exemption = tax_calculator.calculate_taxable_income()
+#     tax_liability = _calculate_tax_liability(db, user.etin, taxable_income_after_exemption)
+    
+#     salary_data.private_allowances = allowances.total
+#     salary_data.private_perquisites = perquisites.total
+#     salary_data.private_vehicle_facility = vehicle_facility.total
+    
+#     crud.create_salary_income_record(db, salary_data)
+#     crud.create_allowance(db, allowances, salary_data.etin)
+#     crud.create_perquisite(db, perquisites, salary_data.etin)
+#     crud.create_vehicle_facilitiy(db, vehicle_facility, salary_data.etin)
+        
+    
+#     get_allowance = crud.get_allowance(db, salary_data.etin)
+#     get_perquisite = crud.get_perquisite(db, salary_data.etin)
+#     get_vehicle = crud.get_vehicle_facilitiy(db, salary_data.etin)
+    
+#     print(get_allowance.total, get_perquisite.total, get_vehicle.total)
+    
+
+#     # # Save the salary income summary
+#     exempted_income = total_income - taxable_income
+   
+#     salary_income_summary = schemas.SalaryIncome_Summary(
+#         total_income=int(total_income),
+#         exempted_income= int(exempted_income),
+#         taxable_income=int(taxable_income),
+#         tax_liability=int(tax_liability)
+#     )
+    
+#     crud.create_salary_income_summary(db, salary_income_summary, salary_data.etin)
+    
+#     # return crud.get_salary_income_record(db, salary_data.etin)
+#     return {
+#         "salary_data": crud.get_salary_income_record(db, salary_data.etin),
+#         "allowances": get_allowance,
+#         "perquisites": get_perquisite,
+#         "vehicle_facility": get_vehicle
+#     }
+
+
+
+
 @app.post("/salary_income/")
-async def calculate_salary_income(
+async def update_salary_income(
     salary_data: schemas.SalaryIncome_Record = Body(...),
     allowances: schemas.Allowance_Details = Body(...),
     perquisites: schemas.Perquisite_Details = Body(...),
     vehicle_facility: schemas.Vehicale_facility_Details = Body(...),
     db: Session = Depends(get_db)
 ):
-    # Retrieve user details using the ETIN from the salary_data
-    user = crud.get_tax_payer(db, etin=salary_data.etin)
-
-    # Check if user exists and has an employment_type
-    if not user or not user.employment_type:
-        raise HTTPException(status_code=404, detail="User not found or employment type missing.")
-
-    # Retrieve the employment type from the user object
-    employment_type = user.employment_type
-
-    # Calculate age and determine tax category
-    age = calculate_age(user.date_of_birth)
-    category = determine_category(user, age)
-
-    # Calculate income
-    income_calculator = IncomeCalculator(employment_type, salary_data)
-    total_income = income_calculator.calculate_total_income(allowances, perquisites, vehicle_facility)
-
-    # Taxable income
-    taxable_income = total_income - min(total_income / 3, 450000)
-
-    # Calculate tax
-    tax_calculator = TaxLiabilityCalculator(taxable_income)
-    tax_calculator.set_exemption_limit(category, user.num_autistic_children)
-    taxable_income_after_exemption = tax_calculator.calculate_taxable_income()
-    tax_liability = _calculate_tax_liability(db, user.etin, taxable_income_after_exemption)
     
-    salary_data.private_allowances = allowances.total
-    salary_data.private_perquisites = perquisites.total
-    salary_data.private_vehicle_facility = vehicle_facility.total
     
-    crud.create_salary_income_record(db, salary_data)
-    crud.create_allowance(db, allowances, salary_data.etin)
-    crud.create_perquisite(db, perquisites, salary_data.etin)
-    crud.create_vehicle_facilitiy(db, vehicle_facility, salary_data.etin)
+    return 0
+    
+    
+    # user = crud.get_tax_payer(db, etin=salary_data.etin)
+
+    # # Check if user exists and has an employment_type
+    # if not user or not user.employment_type:
+    #     raise HTTPException(status_code=404, detail="User not found or employment type missing.")
+
+    # # Retrieve the employment type from the user object
+    # employment_type = user.employment_type
+
+    # # Calculate age and determine tax category
+    # age = calculate_age(user.date_of_birth)
+    # category = determine_category(user, age)
+
+    # # Calculate income
+    # income_calculator = IncomeCalculator(employment_type, salary_data)
+    # total_income = income_calculator.calculate_total_income(allowances, perquisites, vehicle_facility)
+
+    # # Taxable income
+    # taxable_income = total_income - min(total_income / 3, 450000)
+
+    # # Calculate tax
+    # tax_calculator = TaxLiabilityCalculator(taxable_income)
+    # tax_calculator.set_exemption_limit(category, user.num_autistic_children)
+    # taxable_income_after_exemption = tax_calculator.calculate_taxable_income()
+    # tax_liability = _calculate_tax_liability(db, user.etin, taxable_income_after_exemption)
+    
+    # salary_data.private_allowances = allowances.total
+    # salary_data.private_perquisites = perquisites.total
+    # salary_data.private_vehicle_facility = vehicle_facility.total
+    
+    # updated_record = crud.update_salary_income_record(db, salary_data.etin, salary_data)
+    
+    # get_allowance = crud.get_allowance(db, salary_data.etin)
+    # get_perquisite = crud.get_perquisite(db, salary_data.etin)
+    # get_vehicle = crud.get_vehicle_facilitiy(db, salary_data.etin)
+    
+    
+    
+    # if get_allowance is None:
+    #     crud.create_allowance(db, allowances, salary_data.etin)
+    # else:
+    #     crud.update_allowance(db, salary_data.etin, allowances)
+        
+    # if get_perquisite is None:
+    #     crud.create_perquisite(db, perquisites, salary_data.etin)
+    # else:
+    #     crud.update_perquisite(db, salary_data.etin, perquisites)
+        
+    # if get_vehicle is None:
+    #     crud.create_vehicle_facilitiy(db, vehicle_facility, salary_data.etin)
+    # else:
+    #     crud.update_vehicle_facility(db, salary_data.etin, vehicle_facility)
         
     
-    get_allowance = crud.get_allowance(db, salary_data.etin)
-    get_perquisite = crud.get_perquisite(db, salary_data.etin)
-    get_vehicle = crud.get_vehicle_facilitiy(db, salary_data.etin)
+    # get_allowance = crud.get_allowance(db, salary_data.etin)
+    # get_perquisite = crud.get_perquisite(db, salary_data.etin)
+    # get_vehicle = crud.get_vehicle_facilitiy(db, salary_data.etin)
     
-    print(get_allowance.total, get_perquisite.total, get_vehicle.total)
+    # print(get_allowance.total, get_perquisite.total, get_vehicle.total)
     
+    # exempted_income = total_income - taxable_income
+    
+    # salary_income_summary = schemas.SalaryIncome_Summary(
+    #     total_income=int(total_income),
+    #     exempted_income= int(exempted_income),
+    #     taxable_income=int(taxable_income),
+    #     tax_liability=int(tax_liability)
+    # )
 
-    # # Save the salary income summary
-    exempted_income = total_income - taxable_income
-   
-    salary_income_summary = schemas.SalaryIncome_Summary(
-        total_income=int(total_income),
-        exempted_income= int(exempted_income),
-        taxable_income=int(taxable_income),
-        tax_liability=int(tax_liability)
-    )
+    # crud.update_salary_income_summary(db, salary_data.etin, salary_income_summary)    
     
-    crud.create_salary_income_summary(db, salary_income_summary, salary_data.etin)
-    
-    # return crud.get_salary_income_record(db, salary_data.etin)
-    return {
-        "salary_data": crud.get_salary_income_record(db, salary_data.etin),
-        "allowances": get_allowance,
-        "perquisites": get_perquisite,
-        "vehicle_facility": get_vehicle
-    }
-
-
-
-
-@app.put("/salary_income/{etin}", response_model=schemas.SalaryIncome_Record)
-async def update_salary_income_record_endpoint(
-    # etin: str,
-    salary_data: schemas.SalaryIncome_Record = Body(...),
-    allowances: schemas.Allowance_Details = Body(...),
-    perquisites: schemas.Perquisite_Details = Body(...),
-    vehicle_facility: schemas.Vehicale_facility_Details = Body(...),
-    db: Session = Depends(get_db),
-):
-    
-    user = crud.get_tax_payer(db, etin=salary_data.etin)
-
-    # Check if user exists and has an employment_type
-    if not user or not user.employment_type:
-        raise HTTPException(status_code=404, detail="User not found or employment type missing.")
-
-    # Retrieve the employment type from the user object
-    employment_type = user.employment_type
-
-    # Calculate age and determine tax category
-    age = calculate_age(user.date_of_birth)
-    category = determine_category(user, age)
-
-    # Calculate income
-    income_calculator = IncomeCalculator(employment_type, salary_data)
-    total_income = income_calculator.calculate_total_income(allowances, perquisites, vehicle_facility)
-
-    # Taxable income
-    taxable_income = total_income - min(total_income / 3, 450000)
-
-    # Calculate tax
-    tax_calculator = TaxLiabilityCalculator(taxable_income)
-    tax_calculator.set_exemption_limit(category, user.num_autistic_children)
-    taxable_income_after_exemption = tax_calculator.calculate_taxable_income()
-    tax_liability = _calculate_tax_liability(db, user.etin, taxable_income_after_exemption)
-    
-    salary_data.private_allowances = allowances.total
-    salary_data.private_perquisites = perquisites.total
-    salary_data.private_vehicle_facility = vehicle_facility.total
-    
-    updated_record = crud.update_salary_income_record(db, salary_data.etin, salary_data)
-    
-    get_allowance = crud.get_allowance(db, salary_data.etin)
-    get_perquisite = crud.get_perquisite(db, salary_data.etin)
-    get_vehicle = crud.get_vehicle_facilitiy(db, salary_data.etin)
-    
-    
-    
-    if get_allowance is None:
-        crud.create_allowance(db, allowances, salary_data.etin)
-    else:
-        crud.update_allowance(db, salary_data.etin, allowances)
-        
-    if get_perquisite is None:
-        crud.create_perquisite(db, perquisites, salary_data.etin)
-    else:
-        crud.update_perquisite(db, salary_data.etin, perquisites)
-        
-    if get_vehicle is None:
-        crud.create_vehicle_facilitiy(db, vehicle_facility, salary_data.etin)
-    else:
-        crud.update_vehicle_facility(db, salary_data.etin, vehicle_facility)
-        
-    
-    get_allowance = crud.get_allowance(db, salary_data.etin)
-    get_perquisite = crud.get_perquisite(db, salary_data.etin)
-    get_vehicle = crud.get_vehicle_facilitiy(db, salary_data.etin)
-    
-    print(get_allowance.total, get_perquisite.total, get_vehicle.total)
-    
-    exempted_income = total_income - taxable_income
-    
-    salary_income_summary = schemas.SalaryIncome_Summary(
-        total_income=int(total_income),
-        exempted_income= int(exempted_income),
-        taxable_income=int(taxable_income),
-        tax_liability=int(tax_liability)
-    )
-
-    crud.update_salary_income_summary(db, salary_data.etin, salary_income_summary)    
-    
-    return {
-        "salary_data": crud.get_salary_income_record(db, salary_data.etin),
-        "allowances": get_allowance,
-        "perquisites": get_perquisite,
-        "vehicle_facility": get_vehicle
-    }
+    # return {
+    #     "salary_data": crud.get_salary_income_record(db, salary_data.etin),
+    #     "allowances": get_allowance,
+    #     "perquisites": get_perquisite,
+    #     "vehicle_facility": get_vehicle
+    # }
 
 
     
@@ -344,9 +347,9 @@ async def get_income_records(etin : str = Path(...), employer_id : int = Path(..
 @app.get("/salary_income/{etin}")
 async def get_income_records(etin: str = Path(...), db: Session = Depends(get_db)):
     db_items = crud.get_salary_income_record(db, etin=etin)  # Change this to get all records
-    perquisites = crud.get_perquisites(db, etin)
-    allowances = crud.get_allowances(db, etin)
-    vehicle = crud.get_vehicle_facilities(db, etin)
+    perquisites = crud.get_perquisite(db, etin)
+    allowances = crud.get_allowance(db, etin)
+    vehicle = crud.get_vehicle_facilitiy(db, etin)
 
     return {
         "salary_data": db_items,
@@ -359,8 +362,18 @@ async def get_income_records(etin: str = Path(...), db: Session = Depends(get_db
     
 
 @app.get("/salary_income/")
-async def get_income_records(skip : int = Query(...), limit : int = Query(...),  db: Session = Depends(get_db)):
-    return crud.get_salary_income_records(db, skip=skip, limit=limit)
+async def get_income_records(skip : int = Query(...), limit : int = Query(...), db: Session = Depends(get_db)):
+    db_items = crud.get_salary_income_records(db, skip=skip, limit=limit)  # Change this to get all records
+    perquisites = crud.get_perquisites(db, skip=skip, limit=limit)
+    allowances = crud.get_allowances(db, skip=skip, limit=limit)
+    vehicle = crud.get_vehicle_facilities(db, skip=skip, limit=limit)
+
+    return {
+        "salary_data": db_items,
+        "allowances": allowances,
+        "perquisites": perquisites,
+        "vehicle_facility": vehicle
+    }
 
 
 @app.get("/")
@@ -376,7 +389,7 @@ def read_salary_summary(etin: str, db: Session = Depends(get_db)):
     
 
 @app.get("/salary_summary/")
-def read_salary_summarys(skip: int = Query(...), limit: int = Query(...), db: Session = Depends(get_db)):
+def read_salary_summarys(skip : int = Query(...), limit : int = Query(...), db: Session = Depends(get_db)):
     items = crud.get_salary_income_summarys(db, skip=skip, limit=limit)
     return items
 
@@ -385,10 +398,4 @@ def read_salary_summarys(skip: int = Query(...), limit: int = Query(...), db: Se
 @app.get("/tax_slab/")
 def read_tax_slab(etin: str, db: Session = Depends(get_db)):
     return crud.get_tax_slab(db, etin= etin)
-
-
-
-
-
-
 

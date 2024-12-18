@@ -45,8 +45,8 @@ def read_tax_payer(etin: str, db: Session = Depends(get_db)):
     return db_item
 
 @app.get("/tax_payer/", response_model=list[schemas.TaxPayers])
-def read_tax_payers(db: Session = Depends(get_db)):
-    items = crud.get_tax_payers(db, skip=0, limit=5)
+def read_tax_payers(skip : int = Query(...), limit : int = Query(...), db: Session = Depends(get_db)):
+    items = crud.get_tax_payers(db, skip=skip, limit=limit)
     return items
 
 

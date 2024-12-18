@@ -288,6 +288,7 @@ class Perquisite_Details(BaseModel):
             self.housing_allowance +
             self.house_rent_allowance +
             self.entertainment_allowance +
+            self.transportation_allowance +
             self.passage_leave +
             self.medical_allowance +
             self.any_other_obligations_of_the_employee +

@@ -147,6 +147,7 @@ def create_rent_details_income(
         land_revenue_actual_monthly = master.land_revenue_actual  / (master.total_flats * 12)
         municipal_or_local_tax_actual_monthly = master.municipal_or_local_tax_actual / (master.total_flats * 12)
         receipt_of_repairs_allowable_monthly = (master.total_income * area_rate) / (master.total_flats * 12)
+        
 
     master.vacancy_allowance = gross_total_vacancy_month * details.monthly_rent
     master.insurance_premium_paid_allowable = (ratio * master.insurance_premium_paid_actual) - (insurance_premium_paid_allowable_monthly * gross_total_vacancy_month)
@@ -183,6 +184,6 @@ def create_rent_details_income(
     db.commit()
 
     return {
-        'details' : crud.get_rent_detail_income(db, etin),   
-        'master' : crud.get_rent_master_income(db, etin)
+        'master' : crud.get_rent_master_income(db, etin),
+        'details' : crud.get_rent_detail_income(db, etin)
     }
