@@ -9,7 +9,8 @@ class User_Auth(BaseModel):
     password : str
     
     class Config:
-        orm_mode = True
+        orm_mode = True  # Enables from_orm()
+        from_attributes = True
 
 
 class TaxPayers(BaseModel): 
@@ -47,7 +48,8 @@ class TaxPayers(BaseModel):
     name_tin_partners : str | None = None
     
     class Config:
-        orm_mode = True
+        orm_mode = True  # Enables from_orm()
+        from_attributes = True
     
 
 class TaxPayerCreate(TaxPayers):
@@ -62,7 +64,8 @@ class Employer_info(BaseModel):
     end_date : str
 
     class Config:
-        orm_mode = True
+        orm_mode = True  # Enables from_orm()
+        from_attributes = True
 
 
 
@@ -77,7 +80,8 @@ class Tax_Slab(BaseModel):
     seventh : int = 0
     
     class Config:
-        orm_mode = True
+        orm_mode = True  # Enables from_orm()
+        from_attributes = True
 
 
 
@@ -208,7 +212,8 @@ class SalaryIncome_Record(BaseModel):
     gov_others_remarks: Optional[str]
 
     class Config:
-        orm_mode = True
+        orm_mode = True  # Enables from_orm()
+        from_attributes = True
 
 
 
@@ -247,6 +252,7 @@ class Allowance_Details(BaseModel):
         
     class Config:
             orm_mode = True
+            from_attributes = True
 
 
 
@@ -290,6 +296,7 @@ class Perquisite_Details(BaseModel):
     
     class Config:
             orm_mode = True
+            from_attributes = True
             
             
 
@@ -309,7 +316,8 @@ class Vehicale_facility_Details(BaseModel):
         ) * self.no_of_months
     
     class Config:
-        orm_mode = True
+        orm_mode = True  # Enables from_orm()
+        from_attributes = True
 
     
     
@@ -321,7 +329,8 @@ class SalaryIncome_Summary(BaseModel):
     tax_liability : int
     
     class Config:
-        orm_mode = True
+        orm_mode = True  # Enables from_orm()
+        from_attributes = True
          
         
         
@@ -447,7 +456,8 @@ class Financial_Asset_Income(BaseModel):
 
     
     class Config:
-        orm_mode = True 
+        orm_mode = True  # Enables from_orm()
+        from_attributes = True  # Enables from_orm()
         
         
         
@@ -480,7 +490,8 @@ class Rent_Income_Master(BaseModel):
     receipt_of_repairs_allowable : int = 0
     
     class Config:
-        orm_mode = True 
+        orm_mode = True  # Enables from_orm()
+        from_attributes = True  
         
         
 class Rent_Income_Details(BaseModel):
@@ -511,7 +522,8 @@ class Rent_Income_Details(BaseModel):
     adjusted_advance : int = 0
     
     class Config:
-        orm_mode = True 
+        orm_mode = True  # Enables from_orm()
+        from_attributes = True  
     
         
 
@@ -525,7 +537,8 @@ class Rent_Income_Summary(BaseModel):
     gross_net_income : int = 0
     
     class Config:
-        orm_mode = True 
+        orm_mode = True  # Enables from_orm()
+        from_attributes = True  
     
 
    
@@ -624,7 +637,8 @@ class Investment_Record(BaseModel):
     
 
     class Config:
-        orm_mode = True
+        orm_mode = True  # Enables from_orm()
+        from_attributes = True
         
         
         
@@ -643,7 +657,8 @@ class Given_Premium(BaseModel):
         self.allowable = min(self.given_premium * 0.1, self.policy_value)
     
     class Config:
-        orm_mode = True
+        orm_mode = True  # Enables from_orm()
+        from_attributes = True
         
         
         
@@ -659,7 +674,8 @@ class Gov_Securities(BaseModel):
         self.allowable = min(self.actual, 500000)
     
     class Config:
-        orm_mode = True   
+        orm_mode = True  # Enables from_orm()
+        from_attributes = True  
         
         
         
@@ -676,7 +692,8 @@ class E_FT(BaseModel):
     
     
     class Config:
-        orm_mode = True
+        orm_mode = True  # Enables from_orm()
+        from_attributes = True
         
         
 class D_PS(BaseModel):
@@ -690,7 +707,8 @@ class D_PS(BaseModel):
         self.allowable = min(self.actual, 120000)
     
     class Config:
-        orm_mode = True   
+        orm_mode = True  # Enables from_orm()
+        from_attributes = True    
    
    
         
@@ -701,7 +719,8 @@ class Rebate_Record(BaseModel):
     rebate : int = 0
     
     class Config:
-        orm_mode = True
+        orm_mode = True  # Enables from_orm()
+        from_attributes = True
         
         
 class Tax_Record(BaseModel):
@@ -711,7 +730,8 @@ class Tax_Record(BaseModel):
     actual_payable_tax : int = 0
     
     class Config:
-        orm_mode = True
+        orm_mode = True  # Enables from_orm()
+        from_attributes = True
         
         
         

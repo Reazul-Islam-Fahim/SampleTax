@@ -8,11 +8,15 @@ import schemas, crud, models
 from sqlalchemy.orm import Session 
 from age import calculate_age
 from tax_slab import _calculate_tax_liability
+import logging
+
+logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
 origins = [
     "http://192.168.2.33:5173",
+    "http://192.168.2.48",
     # "https://yourfrontenddomain.com",
 ]
 
@@ -235,18 +239,12 @@ async def calculate_salary_income(
 @app.put("/salary_income/{etin}", response_model=schemas.SalaryIncome_Record)
 async def update_salary_income_record_endpoint(
     # etin: str,
-    salary_data: schemas.SalaryIncome_Record,
+    salary_data: schemas.SalaryIncome_Record = Body(...),
     allowances: schemas.Allowance_Details = Body(...),
     perquisites: schemas.Perquisite_Details = Body(...),
     vehicle_facility: schemas.Vehicale_facility_Details = Body(...),
     db: Session = Depends(get_db),
 ):
-    
-    print(f"Received data: {salary_data}, {allowances}, {perquisites}, {vehicle_facility}")
-    
-    print(f"Allowances object: {allowances}")
-    print(f"Allowances total: {allowances.total}")
-
     
     user = crud.get_tax_payer(db, etin=salary_data.etin)
 
@@ -285,22 +283,19 @@ async def update_salary_income_record_endpoint(
     get_vehicle = crud.get_vehicle_facilitiy(db, salary_data.etin)
     
     
-    # crud.update_allowance(db, etin, allowances)
-    # crud.update_perquisite(db, etin, perquisites)
-    # crud.update_vehicle_facility(db, etin, vehicle_facility)
     
     if get_allowance is None:
-        crud.create_allowance(db, salary_data.etin, allowances)
+        crud.create_allowance(db, allowances, salary_data.etin)
     else:
         crud.update_allowance(db, salary_data.etin, allowances)
         
     if get_perquisite is None:
-        crud.create_perquisite(db, salary_data.etin, perquisites)
+        crud.create_perquisite(db, perquisites, salary_data.etin)
     else:
         crud.update_perquisite(db, salary_data.etin, perquisites)
         
     if get_vehicle is None:
-        crud.create_vehicle_facilitiy(db, salary_data.etin, vehicle_facility)
+        crud.create_vehicle_facilitiy(db, vehicle_facility, salary_data.etin)
     else:
         crud.update_vehicle_facility(db, salary_data.etin, vehicle_facility)
         
