@@ -244,6 +244,10 @@ async def update_salary_income_record_endpoint(
     
     print(f"Received data: {salary_data}, {allowances}, {perquisites}, {vehicle_facility}")
     
+    print(f"Allowances object: {allowances}")
+    print(f"Allowances total: {allowances.total}")
+
+    
     user = crud.get_tax_payer(db, etin=salary_data.etin)
 
     # Check if user exists and has an employment_type

@@ -369,6 +369,8 @@ class PerquisiteDetails(Base):
     house_rent_allowance_remarks = Column(String(100), nullable=True)
     entertainment_allowance = Column(Integer, default=0)
     entertainment_allowance_remarks = Column(String(100), nullable=True)
+    transportation_allowance = Column(Integer, default=0)
+    transportation_allowance_remarks = Column(String(100), nullable=True)
     passage_leave = Column(Integer, default=0)
     passage_leave_remarks = Column(String(100), nullable=True)
     medical_allowance = Column(Integer, default=0)

@@ -262,6 +262,8 @@ class Perquisite_Details(BaseModel):
     house_rent_allowance_remarks: Optional[str] = None
     entertainment_allowance: int = 0
     entertainment_allowance_remarks: Optional[str] = None
+    transportation_allowance : int = 0
+    transportation_allowance_remarks: Optional[str] = None
     passage_leave: int = 0
     passage_leave_remarks: Optional[str] = None
     medical_allowance: int = 0

@@ -478,7 +478,7 @@ def get_allowances(db: Session, skip: int , limit: int):
 
 
 def create_allowance(db: Session, allowances: schemas.Allowance_Details, petin : str ):
-    allowances = models.AllowanceDetails(
+    allowance_instance  = models.AllowanceDetails(
         etin = petin,
         any_allowance = allowances.any_allowance,
         any_allowance_remarks = allowances.any_allowance_remarks,
@@ -499,10 +499,10 @@ def create_allowance(db: Session, allowances: schemas.Allowance_Details, petin :
         total = allowances.total
     )
     
-    db.add(allowances)
+    db.add(allowance_instance )
     db.commit()
-    db.refresh(allowances)
-    return allowances
+    db.refresh(allowance_instance )
+    return allowance_instance 
 
 
 def update_allowance(db: Session, etin: str, allowances: schemas.Allowance_Details):
@@ -550,7 +550,7 @@ def get_perquisites(db: Session, skip: int , limit: int):
 
 
 def create_perquisite(db: Session, perquisite: schemas.Perquisite_Details, petin : str ):
-    perquisite = models.PerquisiteDetails(
+    perquisite_instance = models.PerquisiteDetails(
         etin = petin,
         # salary_income_record_id = perquisite.salary_income_record_id,
         mohargha_allowance = perquisite.mohargha_allowance,
@@ -563,6 +563,8 @@ def create_perquisite(db: Session, perquisite: schemas.Perquisite_Details, petin
         house_rent_allowance_remarks = perquisite.house_rent_allowance_remarks,
         entertainment_allowance = perquisite.entertainment_allowance,
         entertainment_allowance_remarks = perquisite.entertainment_allowance_remarks,
+        transportation_allowance = perquisite.transportation_allowance,
+        transportation_allowance_remarks = perquisite.transportation_allowance_remarks,
         passage_leave = perquisite.passage_leave,
         passage_leave_remarks = perquisite.passage_leave_remarks,
         medical_allowance = perquisite.medical_allowance,
@@ -575,10 +577,10 @@ def create_perquisite(db: Session, perquisite: schemas.Perquisite_Details, petin
 
     )
     
-    db.add(perquisite)
+    db.add(perquisite_instance)
     db.commit()
-    db.refresh(perquisite)
-    return perquisite
+    db.refresh(perquisite_instance)
+    return perquisite_instance
 
 
 def update_perquisite(db: Session, etin: str, perquisite: schemas.Perquisite_Details):
@@ -600,6 +602,8 @@ def update_perquisite(db: Session, etin: str, perquisite: schemas.Perquisite_Det
     existing_record.house_rent_allowance_remarks = perquisite.house_rent_allowance_remarks,
     existing_record.entertainment_allowance = perquisite.entertainment_allowance,
     existing_record.entertainment_allowance_remarks = perquisite.entertainment_allowance_remarks,
+    existing_record.transportation_allowance = perquisite.transportation_allowance,
+    existing_record.transportation_allowance_remarks = perquisite.transportation_allowance_remarks,
     existing_record.passage_leave = perquisite.passage_leave,
     existing_record.passage_leave_remarks = perquisite.passage_leave_remarks,
     existing_record.medical_allowance = perquisite.medical_allowance,
@@ -627,7 +631,7 @@ def get_vehicle_facilities(db: Session, skip: int , limit: int):
 
 
 def create_vehicle_facilitiy(db: Session, vehicle_facility: schemas.Vehicale_facility_Details, petin : str ):
-    vehicle_facility = models.VehicleFacilityDetails(
+    vehicle_facility_instance = models.VehicleFacilityDetails(
         etin = petin,
         # salary_income_record_id = vehicle_facility.salary_income_record_id,
         upto_2500CC = vehicle_facility.upto_2500CC,
@@ -638,10 +642,10 @@ def create_vehicle_facilitiy(db: Session, vehicle_facility: schemas.Vehicale_fac
         total = vehicle_facility.total
     )
     
-    db.add(vehicle_facility)
+    db.add(vehicle_facility_instance)
     db.commit()
-    db.refresh(vehicle_facility)
-    return vehicle_facility
+    db.refresh(vehicle_facility_instance)
+    return vehicle_facility_instance
 
 
 def update_vehicle_facility(db: Session, etin: str, vehicle_facility: schemas.Vehicale_facility_Details):
