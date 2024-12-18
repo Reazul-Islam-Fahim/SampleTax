@@ -77,7 +77,7 @@ def create_rent_details_income(
     # Determine the area rate based on area type
     if rent_income_master.area_type.lower() == "residential":
         area_rate = 0.25
-    elif rent_income_master.area_type.lower() == "commercial":
+    elif rent_income_master.area_type.lower() == "business":
         area_rate = 0.3
     else:
         area_rate = 0  # Default case if the area type is not recognized

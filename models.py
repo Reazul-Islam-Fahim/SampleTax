@@ -56,8 +56,8 @@ class MaritalStatus(str,Enum):
     
     
 class AreaType(str, Enum):
-    residential = "Residential"
-    commercial = "Commercial"
+    residential = "residential"
+    business = "business"
     other = "Other"
     
     
