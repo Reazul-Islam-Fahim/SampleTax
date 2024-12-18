@@ -56,133 +56,6 @@ def read_rent_summary_incomes(skip: int = Query(...), limit: int = Query(...), d
     return items
 
 
-# @app.post("/rent_income/")
-# def create_rent_details_income(
-#     rent_income_master : schemas.Rent_Income_Master = Body(...),
-#     rent_income_details: schemas.Rent_Income_Details = Body(...), 
-#     # rent_income_summary : schemas.Rent_Income_Summary = Body(...),
-#     etin : str = Body(...), db: Session = Depends(get_db)
-#     ):
-    
-#     # crud.create_rent_details_income(db, rent_income_details, etin)
-#     crud.create_rent_master_income(db, rent_income_master, etin)
-#     # crud.create_rent_summary_income(db, rent_income_summary, etin)
-    
-#     # details = crud.get_rent_details_income(db, etin)
-#     master = crud.get_rent_master_income(db, etin)
-#     # summary = crud.get_rent_summary_income(db, etin)
-
-    
-#     if(rent_income_master.area_type.lower() == "residential"):
-#         area_rate = 0.25
-#     elif(rent_income_master.area_type.lower() == "commercial"):
-#         area_rate = 0.3
-
-#     total_rent_month = 0
-#     gross_total_vacancy_month = 0
-#     gross_total_rent_month = 0
-        
-#     for m in range(master.total_flats_on_rent):
-        
-#         rent_details = crud.create_rent_details_income(db, rent_income_details, etin)
-        
-#         if rent_details is None:
-#             # Log the error or return a message indicating that the details were not created
-#             print(f"Error: Rent details for etin {etin} were not created.")
-#             return {"error": "Rent details could not be created."}
-        
-#         details = crud.get_rent_details_income(db, etin, rent_details.id)
-            
-#         if(details.live_ownself.lower() == "yes" or details.all_month.lower() == "yes"):
-#             total_rent_month += 12
-        
-#         else:
-#             months = [
-#             details.january,
-#             details.february,
-#             details.march,
-#             details.april,
-#             details.may,
-#             details.june,
-#             details.july,
-#             details.august,
-#             details.september,
-#             details.october,
-#             details.november,
-#             details.december
-#         ]
-        
-#             # Count rented months where the month value is 'yes'
-#             total_rent_month = sum(1 for month in months if month.lower() == "yes") 
-            
-            
-#         details.total_rent = details.monthly_rent * 12
-        
-#         details.total_rent_received = details.monthly_rent * total_rent_month
-        
-#         details.total_vacancy_month = 12 - total_rent_month
-        
-#         gross_total_rent_month += total_rent_month
-        
-#         gross_total_vacancy_month += details.total_vacancy_month
-        
-#         master.rent_taken += details.monthly_rent * 12
-        
-#         master.total_income += (details.monthly_rent * total_rent_month) + (details.monthly_service_charge * total_rent_month) + master.other_taken_rent
-        
-#         master.yearly_value += details.monthly_rent * 12
-        
-#         details.adjusted_advance = details.advance - details.adjusted_rent
-        
-#         master.total_adjusted_advance += details.adjusted_advance 
-        
-    
-    
-    
-    
-#     master.vacancy_allowance = gross_total_vacancy_month * details.monthly_rent
-    
-#     ratio = (master.total_flats_on_rent / master.total_flats)
-    
-#     master.insurance_premium_paid_allowable = ratio * master.insurance_premium_paid_actual
-#     master.interest_on_repaid_loans_allowable = ratio * master.interest_on_repaid_loans_actual
-#     master.land_revenue_allowable = ratio * master.land_revenue_actual
-#     master.municipal_or_local_tax_allowable = ratio * master. municipal_or_local_tax_actual
-#     master.receipt_of_repairs_allowable = ratio * master.total_income * area_rate
-        
-        
-#     if(master.receipt_of_repairs_actual > master.receipt_of_repairs_allowable):
-#         # rent.special_income = rent.receipt_of_repairs_allowable
-#         master.special_income = 0
-#         master.net_income = master.total_income - master.receipt_of_repairs_allowable
-#     else:
-#         master.special_income = master.receipt_of_repairs_allowable - master.receipt_of_repairs_actual
-#         master.net_income = master.total_income - master.receipt_of_repairs_actual
-        
-    
-    
-        
-    
-#     master.total_expense = (master.insurance_premium_paid_allowable + master.interest_on_repaid_loans_allowable + 
-#                             master.land_revenue_allowable + master.municipal_or_local_tax_allowable + master.receipt_of_repairs_allowable)
-    
-#     master.net_income = master.total_income - master.total_expense + master.special_income
-    
-    
-        
-        
-#     db.commit()
-        
-        
-        
-    
-#     print(etin)
-    
-#     return master
-
-
-
-
 
 @app.post("/rent_income/")
 def create_rent_details_income(
@@ -261,12 +134,19 @@ def create_rent_details_income(
     master.receipt_of_repairs_allowable = (ratio * master.total_income * area_rate)
     print(f"receipt_of_repairs_allowable: {master.receipt_of_repairs_allowable}")
     
+    insurance_premium_paid_allowable_monthly =0
+    interest_on_repaid_loans_actual_monthly =0
+    land_revenue_actual_monthly =0
+    municipal_or_local_tax_actual_monthly =0
+    receipt_of_repairs_allowable_monthly =0
+    
+    
     if (gross_total_vacancy_month != 0):
         insurance_premium_paid_allowable_monthly = master.insurance_premium_paid_actual / (master.total_flats * 12)
         interest_on_repaid_loans_actual_monthly = master.interest_on_repaid_loans_actual / (master.total_flats * 12)
         land_revenue_actual_monthly = master.land_revenue_actual  / (master.total_flats * 12)
         municipal_or_local_tax_actual_monthly = master.municipal_or_local_tax_actual / (master.total_flats * 12)
-        receipt_of_repairs_allowable_monthly = master.receipt_of_repairs_allowable / (master.total_flats * 12)
+        receipt_of_repairs_allowable_monthly = (master.total_income * area_rate) / (master.total_flats * 12)
 
     master.vacancy_allowance = gross_total_vacancy_month * details.monthly_rent
     master.insurance_premium_paid_allowable = (ratio * master.insurance_premium_paid_actual) - (insurance_premium_paid_allowable_monthly * gross_total_vacancy_month)

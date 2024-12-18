@@ -234,13 +234,15 @@ async def calculate_salary_income(
 
 @app.put("/salary_income/{etin}", response_model=schemas.SalaryIncome_Record)
 async def update_salary_income_record_endpoint(
-    etin: str,
+    # etin: str,
     salary_data: schemas.SalaryIncome_Record,
     allowances: schemas.Allowance_Details = Body(...),
     perquisites: schemas.Perquisite_Details = Body(...),
     vehicle_facility: schemas.Vehicale_facility_Details = Body(...),
     db: Session = Depends(get_db),
 ):
+    
+    print(f"Received data: {salary_data}, {allowances}, {perquisites}, {vehicle_facility}")
     
     user = crud.get_tax_payer(db, etin=salary_data.etin)
 
@@ -272,7 +274,7 @@ async def update_salary_income_record_endpoint(
     salary_data.private_perquisites = perquisites.total
     salary_data.private_vehicle_facility = vehicle_facility.total
     
-    updated_record = crud.update_salary_income_record(db, etin, salary_data)
+    updated_record = crud.update_salary_income_record(db, salary_data.etin, salary_data)
     
     get_allowance = crud.get_allowance(db, salary_data.etin)
     get_perquisite = crud.get_perquisite(db, salary_data.etin)
@@ -284,19 +286,19 @@ async def update_salary_income_record_endpoint(
     # crud.update_vehicle_facility(db, etin, vehicle_facility)
     
     if get_allowance is None:
-        crud.create_allowance(db, etin, allowances)
+        crud.create_allowance(db, salary_data.etin, allowances)
     else:
-        crud.update_allowance(db, etin, allowances)
+        crud.update_allowance(db, salary_data.etin, allowances)
         
     if get_perquisite is None:
-        crud.get_perquisite(db, etin, perquisites)
+        crud.create_perquisite(db, salary_data.etin, perquisites)
     else:
-        crud.update_perquisite(db, etin, perquisites)
+        crud.update_perquisite(db, salary_data.etin, perquisites)
         
     if get_vehicle is None:
-        crud.update_vehicle_facility(db, etin, vehicle_facility)
+        crud.create_vehicle_facilitiy(db, salary_data.etin, vehicle_facility)
     else:
-        crud.update_vehicle_facility(db, etin, vehicle_facility)
+        crud.update_vehicle_facility(db, salary_data.etin, vehicle_facility)
         
     
     get_allowance = crud.get_allowance(db, salary_data.etin)
@@ -314,7 +316,7 @@ async def update_salary_income_record_endpoint(
         tax_liability=int(tax_liability)
     )
 
-    crud.update_salary_income_summary(db, etin, salary_income_summary)    
+    crud.update_salary_income_summary(db, salary_data.etin, salary_income_summary)    
     
     return {
         "salary_data": crud.get_salary_income_record(db, salary_data.etin),
