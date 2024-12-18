@@ -1818,6 +1818,13 @@ def get_rent_details_income(db: Session, etin : str, id = int):
         
     return rent_details
 
+def get_rent_detail_income(db: Session, etin : str):
+    rent_details = db.query(models.RentIncomeDetails).filter(models.RentIncomeDetails.etin == etin).all()
+    if rent_details is None:
+        print(f"No rent details found for etin {etin} and rent_details_id {id}")
+        
+    return rent_details
+
 
 def get_rent_details_incomes(db: Session, skip: int , limit: int):
     return db.query(models.RentIncomeDetails).offset(skip).limit(limit).all()

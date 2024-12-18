@@ -255,23 +255,32 @@ def create_rent_details_income(
         details.adjusted_advance = details.advance - details.adjusted_rent
         master.total_adjusted_advance += details.adjusted_advance
 
-
     # Calculate ratio for allowances
     ratio = (master.total_flats_on_rent / master.total_flats)
+    
+    master.receipt_of_repairs_allowable = (ratio * master.total_income * area_rate)
+    print(f"receipt_of_repairs_allowable: {master.receipt_of_repairs_allowable}")
     
     if (gross_total_vacancy_month != 0):
         insurance_premium_paid_allowable_monthly = master.insurance_premium_paid_actual / (master.total_flats * 12)
         interest_on_repaid_loans_actual_monthly = master.interest_on_repaid_loans_actual / (master.total_flats * 12)
         land_revenue_actual_monthly = master.land_revenue_actual  / (master.total_flats * 12)
         municipal_or_local_tax_actual_monthly = master.municipal_or_local_tax_actual / (master.total_flats * 12)
-        receipt_of_repairs_actual_monthly = master.receipt_of_repairs_allowable / (master.total_flats * 12)
+        receipt_of_repairs_allowable_monthly = master.receipt_of_repairs_allowable / (master.total_flats * 12)
 
     master.vacancy_allowance = gross_total_vacancy_month * details.monthly_rent
     master.insurance_premium_paid_allowable = (ratio * master.insurance_premium_paid_actual) - (insurance_premium_paid_allowable_monthly * gross_total_vacancy_month)
     master.interest_on_repaid_loans_allowable = (ratio * master.interest_on_repaid_loans_actual) - (interest_on_repaid_loans_actual_monthly * gross_total_vacancy_month)
     master.land_revenue_allowable = (ratio * master.land_revenue_actual) - (land_revenue_actual_monthly * gross_total_vacancy_month)
     master.municipal_or_local_tax_allowable = (ratio * master.municipal_or_local_tax_actual) - (municipal_or_local_tax_actual_monthly * gross_total_vacancy_month)
-    master.receipt_of_repairs_allowable = (ratio * master.total_income * area_rate) - (receipt_of_repairs_actual_monthly * gross_total_vacancy_month)
+    master.receipt_of_repairs_allowable = master.receipt_of_repairs_allowable - (receipt_of_repairs_allowable_monthly * gross_total_vacancy_month)
+    
+    print(f"total_income: {master.total_income}")
+    print(f"area_rate: {area_rate}")
+    print(f"ratio: {ratio}")
+    print(f"receipt_of_repairs_actual_monthly: {receipt_of_repairs_allowable_monthly}")
+    print(f"gross_total_vacancy_month: {gross_total_vacancy_month}")
+    print(f"receipt_of_repairs_allowable: {master.receipt_of_repairs_allowable}")
 
     # Special income and net income calculations
     if master.receipt_of_repairs_actual > master.receipt_of_repairs_allowable:
@@ -293,4 +302,7 @@ def create_rent_details_income(
     # Commit all changes to the database
     db.commit()
 
-    return master
+    return {
+        'details' : crud.get_rent_detail_income(db, etin),   
+        'master' : crud.get_rent_master_income(db, etin)
+    }
