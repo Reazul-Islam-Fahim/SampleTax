@@ -68,11 +68,58 @@ def create_rent_details_income(
     if len(rent_income_details) != rent_income_master.total_flats:
         return {"error": f"Expected {rent_income_master.total_flats} rent income details, but received {len(rent_income_details)}."}
 
-    # Create Rent_Income_Master entry in the database
-    crud.create_rent_master_income(db, rent_income_master, etin)
+    master = db.query(models.RentIncomeMaster).filter(
+        models.RentIncomeMaster.etin == etin,
+        models.RentIncomeMaster.asset_address == rent_income_master.asset_address,
+        models.RentIncomeMaster.area_type == rent_income_master.area_type
+    ).first()
 
-    # Get the created master record
-    master = crud.get_rent_master_income(db, etin)
+    if master:
+        # Update the master record
+        master.asset_name = rent_income_master.asset_name
+        master.total_flats = rent_income_master.total_flats
+        master.total_flats_on_rent = rent_income_master.total_flats_on_rent
+        master.area_type = rent_income_master.area_type
+        master.asset_address = rent_income_master.asset_address
+        master.other_taken_rent = rent_income_master.other_taken_rent
+        master.insurance_premium_paid_actual = rent_income_master.insurance_premium_paid_actual
+        master.interest_on_repaid_loans_actual = rent_income_master.interest_on_repaid_loans_actual
+        master.land_revenue_actual = rent_income_master.land_revenue_actual
+        master.municipal_or_local_tax_actual = rent_income_master.municipal_or_local_tax_actual
+        # Update any other fields in the master record as needed
+    else:
+        # Create a new RentIncomeMaster entry
+        master = models.RentIncomeMaster(
+            etin=etin,
+            asset_name=rent_income_master.asset_name,
+            total_flats=rent_income_master.total_flats,
+            total_flats_on_rent=rent_income_master.total_flats_on_rent,
+            area_type=rent_income_master.area_type,
+            asset_address=rent_income_master.asset_address,
+            other_taken_rent=rent_income_master.other_taken_rent,
+            insurance_premium_paid_actual=rent_income_master.insurance_premium_paid_actual,
+            interest_on_repaid_loans_actual=rent_income_master.interest_on_repaid_loans_actual,
+            land_revenue_actual=rent_income_master.land_revenue_actual,
+            municipal_or_local_tax_actual=rent_income_master.municipal_or_local_tax_actual
+        )
+        db.add(master)
+
+    # Now handle RentIncomeDetails
+    # total_rent_month = 0
+    # gross_total_vacancy_month = 0
+    # gross_total_rent_month = 0
+    for details in rent_income_details:
+        # Check if RentIncomeDetails entry exists for given space_type
+        rent_details = db.query(models.RentIncomeDetails).filter(
+            models.RentIncomeDetails.etin == etin,
+            models.RentIncomeDetails.space_type == details.space_type
+        ).first()
+
+        if rent_details:
+            master = crud.update_rent_details_income(db, details, etin)
+        else:
+            master = crud.create_rent_master_income(db, etin, details)
+
 
     # Determine the area rate based on area type
     if rent_income_master.area_type.lower() == "residential":

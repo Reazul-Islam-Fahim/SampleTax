@@ -203,31 +203,31 @@ async def update_salary_income(
     
     updated_record = crud.update_salary_income_record(db, salary_data.etin, salary_data)
     
-    get_allowance = crud.get_allowance(db, salary_data.etin)
-    get_perquisite = crud.get_perquisite(db, salary_data.etin)
-    get_vehicle = crud.get_vehicle_facilitiy(db, salary_data.etin)
+    get_allowance = crud.get_allowance(db, salary_data.etin, salary_data.employer_info_id)
+    get_perquisite = crud.get_perquisite(db, salary_data.etin, salary_data.employer_info_id)
+    get_vehicle = crud.get_vehicle_facilitiy(db, salary_data.etin, salary_data.employer_info_id)
     
     
     
     if get_allowance is None:
-        crud.create_allowance(db, allowances, salary_data.etin)
+        crud.create_allowance(db, allowances, salary_data.etin, salary_data.employer_info_id)
     else:
-        crud.update_allowance(db, salary_data.etin, allowances)
+        crud.update_allowance(db, salary_data.etin, allowances, salary_data.employer_info_id)
         
     if get_perquisite is None:
-        crud.create_perquisite(db, perquisites, salary_data.etin)
+        crud.create_perquisite(db, perquisites, salary_data.etin, salary_data.employer_info_id)
     else:
-        crud.update_perquisite(db, salary_data.etin, perquisites)
+        crud.update_perquisite(db, salary_data.etin, perquisites, salary_data.employer_info_id)
         
     if get_vehicle is None:
-        crud.create_vehicle_facilitiy(db, vehicle_facility, salary_data.etin)
+        crud.create_vehicle_facilitiy(db, vehicle_facility, salary_data.etin, salary_data.employer_info_id)
     else:
-        crud.update_vehicle_facility(db, salary_data.etin, vehicle_facility)
+        crud.update_vehicle_facility(db, salary_data.etin, vehicle_facility, salary_data.employer_info_id)
         
     
-    get_allowance = crud.get_allowance(db, salary_data.etin)
-    get_perquisite = crud.get_perquisite(db, salary_data.etin)
-    get_vehicle = crud.get_vehicle_facilitiy(db, salary_data.etin)
+    get_allowance = crud.get_allowance(db, salary_data.etin, salary_data.employer_info_id)
+    get_perquisite = crud.get_perquisite(db, salary_data.etin, salary_data.employer_info_id)
+    get_vehicle = crud.get_vehicle_facilitiy(db, salary_data.etin, salary_data.employer_info_id)
     
     print(get_allowance.total, get_perquisite.total, get_vehicle.total)
     
@@ -254,9 +254,9 @@ async def update_salary_income(
 @app.get("/salary_income/{etin}/{employer_id}")
 async def get_income_records(etin : str = Path(...), employer_id : int = Path(...),  db: Session = Depends(get_db)):
     db_item = crud.get_salary_income_record_with_employer(db, etin = etin, employer_id= employer_id)
-    perquisite = crud.get_perquisite(db, etin)
-    allowance = crud.get_allowance(db, etin)
-    vehicle = crud.get_vehicle_facilitiy(db, etin)
+    perquisite = crud.get_perquisite(db, etin, employer_id)
+    allowance = crud.get_allowance(db, etin, employer_id)
+    vehicle = crud.get_vehicle_facilitiy(db, etin, employer_id)
 
     return {
         "salary_data": db_item,

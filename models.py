@@ -164,6 +164,9 @@ class EmployerInfo(Base):
     
     taxpayer = relationship("Taxpayer", back_populates="employer_info")
     salary_income_records = relationship("SalaryIncomeRecord", back_populates="employer_info")
+    allowance_details = relationship("AllowanceDetails", back_populates="employer_info")
+    perquisite_details = relationship("PerquisiteDetails", back_populates="employer_info")
+    vehicle_facility_details = relationship("VehicleFacilityDetails", back_populates="employer_info")
     
 
 class TaxSlab(Base):
@@ -346,11 +349,11 @@ class AllowanceDetails(Base):
     total = Column(Integer, default=0 )
     
     etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
-    # salary_income_record_id = Column(Integer, ForeignKey('salary_income_records.id'), nullable=False)
+    employer_info_id = Column(Integer, ForeignKey('employer_info.id'), nullable=False)
     
     
     taxpayer = relationship("Taxpayer", back_populates="allowance_details")
-    # salary_income_records = relationship("SalaryIncomeRecord", back_populates="allowance_details")
+    employer_info = relationship("EmployerInfo", back_populates="allowance_details")
     
     
     
@@ -382,10 +385,10 @@ class PerquisiteDetails(Base):
     total = Column(Integer, default=0)
     
     etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
-    # salary_income_record_id = Column(Integer, ForeignKey('salary_income_records.id'), nullable=False)
+    employer_info_id = Column(Integer, ForeignKey('employer_info.id'), nullable=False)
     
     taxpayer = relationship("Taxpayer", back_populates="perquisite_details")
-    # salary_income_records = relationship("SalaryIncomeRecord", back_populates="perquisite_details")
+    employer_info = relationship("EmployerInfo", back_populates="perquisite_details")
     
     
     
@@ -402,10 +405,10 @@ class VehicleFacilityDetails(Base):
     total = Column(Integer, default=0)  # Default value as 0
     
     etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
-    # salary_income_record_id = Column(Integer, ForeignKey('salary_income_records.id'), nullable=False)
+    employer_info_id = Column(Integer, ForeignKey('employer_info.id'), nullable=False)
     
     taxpayer = relationship("Taxpayer", back_populates="vehicle_facility_details")
-    # salary_income_records = relationship("SalaryIncomeRecord", back_populates="vehicle_facility_details")
+    employer_info = relationship("EmployerInfo", back_populates="vehicle_facility_details")
     
     
     

@@ -470,14 +470,14 @@ def update_salary_income_record(db: Session, etin: str, updated_salary: schemas.
 
 
 
-def get_allowance(db: Session, etin: str):
-    return db.query(models.AllowanceDetails).filter(models.AllowanceDetails.etin == etin).first()
+def get_allowance(db: Session, etin: str, employer_info_id : int):
+    return db.query(models.AllowanceDetails).filter(models.AllowanceDetails.etin == etin, models.AllowanceDetails.employer_info_id == employer_info_id).first()
 
 def get_allowances(db: Session, skip: int , limit: int):
     return db.query(models.AllowanceDetails).offset(skip).limit(limit).all()
 
 
-def create_allowance(db: Session, allowances: schemas.Allowance_Details, petin : str ):
+def create_allowance(db: Session, allowances: schemas.Allowance_Details, petin : str, employer_info_id : int):
     allowance_instance  = models.AllowanceDetails(
         etin = petin,
         any_allowance = allowances.any_allowance,
@@ -496,7 +496,8 @@ def create_allowance(db: Session, allowances: schemas.Allowance_Details, petin :
         overtime_remarks = allowances.overtime_remarks,
         other = allowances.other,
         other_details = allowances.other_details,
-        total = allowances.total
+        total = allowances.total,
+        employer_info_id = employer_info_id
     )
     
     db.add(allowance_instance )
@@ -505,13 +506,13 @@ def create_allowance(db: Session, allowances: schemas.Allowance_Details, petin :
     return allowance_instance 
 
 
-def update_allowance(db: Session, etin: str, allowances: schemas.Allowance_Details):
+def update_allowance(db: Session, etin: str, allowances: schemas.Allowance_Details, employer_info_id : int):
     # Find the existing record by ETIN
-    existing_record = db.query(models.AllowanceDetails).filter(models.AllowanceDetails.etin == etin).first()
+    existing_record = db.query(models.AllowanceDetails).filter(models.AllowanceDetails.etin == etin, models.AllowanceDetails.employer_info_id == employer_info_id).first()
     
     if not existing_record:
         # If the record doesn't exist, return None or raise an exception
-        raise HTTPException(status_code=404, detail="Allowance record not found")
+        raise None
     
     # Update the fields with the new data
     existing_record.any_allowance = allowances.any_allowance,
@@ -531,6 +532,7 @@ def update_allowance(db: Session, etin: str, allowances: schemas.Allowance_Detai
     existing_record.other = allowances.other,
     existing_record.other_details = allowances.other_details,
     existing_record.total = allowances.total,
+    existing_record.employer_info_id = employer_info_id
 
     # Commit the changes to the database
     db.commit()
@@ -542,14 +544,14 @@ def update_allowance(db: Session, etin: str, allowances: schemas.Allowance_Detai
 
 
 
-def get_perquisite(db: Session, etin: str):
-    return db.query(models.PerquisiteDetails).filter(models.PerquisiteDetails.etin == etin).first()
+def get_perquisite(db: Session, etin: str, employer_info_id : int):
+    return db.query(models.PerquisiteDetails).filter(models.PerquisiteDetails.etin == etin, models.PerquisiteDetails.employer_info_id == employer_info_id).first()
 
 def get_perquisites(db: Session, skip: int , limit: int):
     return db.query(models.PerquisiteDetails).offset(skip).limit(limit).all()
 
 
-def create_perquisite(db: Session, perquisite: schemas.Perquisite_Details, petin : str ):
+def create_perquisite(db: Session, perquisite: schemas.Perquisite_Details, petin : str , employer_info_id : int):
     perquisite_instance = models.PerquisiteDetails(
         etin = petin,
         # salary_income_record_id = perquisite.salary_income_record_id,
@@ -573,7 +575,8 @@ def create_perquisite(db: Session, perquisite: schemas.Perquisite_Details, petin
         any_other_obligations_of_the_employee_remarks = perquisite.any_other_obligations_of_the_employee_remarks,
         other = perquisite.other,
         other_remarks = perquisite.other_remarks,
-        total = perquisite.total
+        total = perquisite.total,
+        employer_info_id = employer_info_id
 
     )
     
@@ -583,13 +586,13 @@ def create_perquisite(db: Session, perquisite: schemas.Perquisite_Details, petin
     return perquisite_instance
 
 
-def update_perquisite(db: Session, etin: str, perquisite: schemas.Perquisite_Details):
+def update_perquisite(db: Session, etin: str, perquisite: schemas.Perquisite_Details, employer_info_id : int):
     # Fetch the existing record by ETIN
-    existing_record = db.query(models.PerquisiteDetails).filter(models.PerquisiteDetails.etin == etin).first()
+    existing_record = db.query(models.PerquisiteDetails).filter(models.PerquisiteDetails.etin == etin, models.PerquisiteDetails.employer_info_id == employer_info_id).first()
     
     if not existing_record:
         # If the record doesn't exist, return None or raise an exception
-        raise HTTPException(status_code=404, detail="Perquisite record not found")
+        raise None
     
     # Update the fields with the new data
     existing_record.mohargha_allowance = perquisite.mohargha_allowance,
@@ -613,6 +616,7 @@ def update_perquisite(db: Session, etin: str, perquisite: schemas.Perquisite_Det
     existing_record.other = perquisite.other,
     existing_record.other_remarks = perquisite.other_remarks,
     existing_record.total = perquisite.total,
+    existing_record.employer_info_id = employer_info_id,
 
     # Commit the changes to the database
     db.commit()
@@ -623,14 +627,14 @@ def update_perquisite(db: Session, etin: str, perquisite: schemas.Perquisite_Det
 
 
 
-def get_vehicle_facilitiy(db: Session, etin: str):
-    return db.query(models.VehicleFacilityDetails).filter(models.VehicleFacilityDetails.etin == etin).first()
+def get_vehicle_facilitiy(db: Session, etin: str, employer_info_id : int):
+    return db.query(models.VehicleFacilityDetails).filter(models.VehicleFacilityDetails.etin == etin, models.VehicleFacilityDetails.employer_info_id == employer_info_id).first()
 
 def get_vehicle_facilities(db: Session, skip: int , limit: int):
     return db.query(models.VehicleFacilityDetails).offset(skip).limit(limit).all()
 
 
-def create_vehicle_facilitiy(db: Session, vehicle_facility: schemas.Vehicale_facility_Details, petin : str ):
+def create_vehicle_facilitiy(db: Session, vehicle_facility: schemas.Vehicale_facility_Details, petin : str, employer_info_id : int):
     vehicle_facility_instance = models.VehicleFacilityDetails(
         etin = petin,
         # salary_income_record_id = vehicle_facility.salary_income_record_id,
@@ -639,7 +643,8 @@ def create_vehicle_facilitiy(db: Session, vehicle_facility: schemas.Vehicale_fac
         greater_than_2500cc = vehicle_facility.greater_than_2500cc,
         cost_for_more_than_2500 = vehicle_facility.cost_for_more_than_2500,
         no_of_months = vehicle_facility.no_of_months,
-        total = vehicle_facility.total
+        total = vehicle_facility.total,
+        employer_info_id = employer_info_id
     )
     
     db.add(vehicle_facility_instance)
@@ -648,13 +653,13 @@ def create_vehicle_facilitiy(db: Session, vehicle_facility: schemas.Vehicale_fac
     return vehicle_facility_instance
 
 
-def update_vehicle_facility(db: Session, etin: str, vehicle_facility: schemas.Vehicale_facility_Details):
+def update_vehicle_facility(db: Session, etin: str, vehicle_facility: schemas.Vehicale_facility_Details, employer_info_id : int):
     # Find the existing record by ETIN
-    existing_record = db.query(models.VehicleFacilityDetails).filter(models.VehicleFacilityDetails.etin == etin).first()
+    existing_record = db.query(models.VehicleFacilityDetails).filter(models.VehicleFacilityDetails.etin == etin, models.AllowanceDetails.employer_info_id == employer_info_id).first()
     
     if not existing_record:
         # If the record doesn't exist, return None or raise an exception
-        raise HTTPException(status_code=404, detail="Vehicle facility record not found")
+        raise None
     
     # Update the fields with the new data
     existing_record.upto_2500CC = vehicle_facility.upto_2500CC,
@@ -663,6 +668,7 @@ def update_vehicle_facility(db: Session, etin: str, vehicle_facility: schemas.Ve
     existing_record.cost_for_more_than_2500 = vehicle_facility.cost_for_more_than_2500,
     existing_record.no_of_months = vehicle_facility.no_of_months,
     existing_record.total = vehicle_facility.total,
+    existing_record.employer_info_id = employer_info_id
 
     # Commit the changes to the database
     db.commit()
