@@ -655,7 +655,7 @@ def create_vehicle_facilitiy(db: Session, vehicle_facility: schemas.Vehicale_fac
 
 def update_vehicle_facility(db: Session, etin: str, vehicle_facility: schemas.Vehicale_facility_Details, employer_info_id : int):
     # Find the existing record by ETIN
-    existing_record = db.query(models.VehicleFacilityDetails).filter(models.VehicleFacilityDetails.etin == etin, models.AllowanceDetails.employer_info_id == employer_info_id).first()
+    existing_record = db.query(models.VehicleFacilityDetails).filter(models.VehicleFacilityDetails.etin == etin, models.VehicleFacilityDetails.employer_info_id == employer_info_id).first()
     
     if not existing_record:
         # If the record doesn't exist, return None or raise an exception

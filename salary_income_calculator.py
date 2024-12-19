@@ -201,7 +201,7 @@ async def update_salary_income(
     salary_data.private_perquisites = perquisites.total
     salary_data.private_vehicle_facility = vehicle_facility.total
     
-    updated_record = crud.update_salary_income_record(db, salary_data.etin, salary_data)
+    
     
     get_allowance = crud.get_allowance(db, salary_data.etin, salary_data.employer_info_id)
     get_perquisite = crud.get_perquisite(db, salary_data.etin, salary_data.employer_info_id)
@@ -223,15 +223,24 @@ async def update_salary_income(
         crud.create_vehicle_facilitiy(db, vehicle_facility, salary_data.etin, salary_data.employer_info_id)
     else:
         crud.update_vehicle_facility(db, salary_data.etin, vehicle_facility, salary_data.employer_info_id)
-        
     
-    get_allowance = crud.get_allowance(db, salary_data.etin, salary_data.employer_info_id)
-    get_perquisite = crud.get_perquisite(db, salary_data.etin, salary_data.employer_info_id)
-    get_vehicle = crud.get_vehicle_facilitiy(db, salary_data.etin, salary_data.employer_info_id)
     
-    print(get_allowance.total, get_perquisite.total, get_vehicle.total)
+    salary = crud.get_salary_income_record_with_employer(db, salary_data.etin, salary_data.employer_info_id)
+    
+    if salary: 
+        crud.update_salary_income_record(db, salary_data.etin, salary_data)
+    else:   
+        crud.create_salary_income_record(db, salary_data)
+    
+    
     
     exempted_income = total_income - taxable_income
+    
+    print(exempted_income)
+    print(total_income)
+    print(taxable_income)
+    print(salary_data.employer_info_id)
+    print(salary_data.basic_salary)
     
     salary_income_summary = schemas.SalaryIncome_Summary(
         total_income=int(total_income),
@@ -239,14 +248,19 @@ async def update_salary_income(
         taxable_income=int(taxable_income),
         tax_liability=int(tax_liability)
     )
-
-    crud.update_salary_income_summary(db, salary_data.etin, salary_income_summary)    
+    
+    summary = crud.get_salary_income_summary(db, salary_data.etin)
+    
+    if summary:
+        crud.update_salary_income_summary(db, salary_data.etin, salary_income_summary)
+    else: 
+        crud.create_salary_income_summary(db, salary_income_summary, salary_data.etin)    
     
     return {
-        "salary_data": crud.get_salary_income_record(db, salary_data.etin),
-        "allowances": get_allowance,
-        "perquisites": get_perquisite,
-        "vehicle_facility": get_vehicle
+        "salary_data": crud.get_salary_income_record_with_employer(db, salary_data.etin, salary_data.employer_info_id),
+        "allowances": crud.get_allowance(db, salary_data.etin, salary_data.employer_info_id),
+        "perquisites": crud.get_perquisite(db, salary_data.etin, salary_data.employer_info_id),
+        "vehicle_facility": crud.get_vehicle_facilitiy(db, salary_data.etin, salary_data.employer_info_id)
     }
 
 
@@ -266,41 +280,26 @@ async def get_income_records(etin : str = Path(...), employer_id : int = Path(..
     }
 
 
-@app.get("/salary_income/{etin}")
-async def get_income_records(etin: str = Path(...), db: Session = Depends(get_db)):
-    db_items = crud.get_salary_income_record(db, etin=etin)  # Change this to get all records
-    perquisites = crud.get_perquisite(db, etin)
-    allowances = crud.get_allowance(db, etin)
-    vehicle = crud.get_vehicle_facilitiy(db, etin)
-
-    return {
-        "salary_data": db_items,
-        "allowances": allowances,
-        "perquisites": perquisites,
-        "vehicle_facility": vehicle
-    }
-
-
     
 
-@app.get("/salary_income/")
-async def get_income_records(skip : int = Query(...), limit : int = Query(...), db: Session = Depends(get_db)):
-    db_items = crud.get_salary_income_records(db, skip=skip, limit=limit)  # Change this to get all records
-    perquisites = crud.get_perquisites(db, skip=skip, limit=limit)
-    allowances = crud.get_allowances(db, skip=skip, limit=limit)
-    vehicle = crud.get_vehicle_facilities(db, skip=skip, limit=limit)
+# @app.get("/salary_income/")
+# async def get_income_records(skip : int = Query(...), limit : int = Query(...), db: Session = Depends(get_db)):
+#     db_items = crud.get_salary_income_records(db, skip=skip, limit=limit)  # Change this to get all records
+#     perquisites = crud.get_perquisites(db, skip=skip, limit=limit)
+#     allowances = crud.get_allowances(db, skip=skip, limit=limit)
+#     vehicle = crud.get_vehicle_facilities(db, skip=skip, limit=limit)
 
-    return {
-        "salary_data": db_items,
-        "allowances": allowances,
-        "perquisites": perquisites,
-        "vehicle_facility": vehicle
-    }
+#     return {
+#         "salary_data": db_items,
+#         "allowances": allowances,
+#         "perquisites": perquisites,
+#         "vehicle_facility": vehicle
+#     }
 
 
-@app.get("/")
-async def hi():
-    return {"hello": "Welcome to taxdo"}
+# @app.get("/")
+# async def hi():
+#     return {"hello": "Welcome to taxdo"}
 
 
 
@@ -310,10 +309,10 @@ def read_salary_summary(etin: str, db: Session = Depends(get_db)):
     return crud.get_salary_income_summary(db, etin= etin)
     
 
-@app.get("/salary_summary/")
-def read_salary_summarys(skip : int = Query(...), limit : int = Query(...), db: Session = Depends(get_db)):
-    items = crud.get_salary_income_summarys(db, skip=skip, limit=limit)
-    return items
+# @app.get("/salary_summary/")
+# def read_salary_summarys(skip : int = Query(...), limit : int = Query(...), db: Session = Depends(get_db)):
+#     items = crud.get_salary_income_summarys(db, skip=skip, limit=limit)
+#     return items
 
 
 
