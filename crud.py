@@ -1738,7 +1738,7 @@ def update_financial_asset_income(db: Session, financial_asset_income: schemas.F
 
 
 def get_rent_master_income(db: Session, etin : str):
-    return db.query(models.RentIncomeMaster).filter(models.RentIncomeMaster.etin == etin).first()
+    return db.query(models.RentIncomeMaster).filter(models.RentIncomeMaster.etin == etin).all()
 
 def get_rent_master_incomes(db: Session, skip: int , limit: int):
     return db.query(models.RentIncomeMaster).offset(skip).limit(limit).all()
@@ -1837,7 +1837,7 @@ def get_rent_detail_income(db: Session, etin : str):
 def get_rent_details_incomes(db: Session, skip: int , limit: int):
     return db.query(models.RentIncomeDetails).offset(skip).limit(limit).all()
 
-def create_rent_details_income(db : Session, rent_income_details : schemas.Rent_Income_Details, etin : str):
+def create_rent_details_income(db : Session, rent_income_details : schemas.Rent_Income_Details, etin : str, master_id : int):
     try:
         rent_income_details = models.RentIncomeDetails(
             etin = etin,
@@ -1865,7 +1865,8 @@ def create_rent_details_income(db : Session, rent_income_details : schemas.Rent_
             total_service_charge_received = rent_income_details.total_service_charge_received,
             total_vacancy_rent = rent_income_details.total_vacancy_rent,
             total_vacancy_month = rent_income_details.total_vacancy_month,
-            adjusted_advance = rent_income_details.adjusted_advance
+            adjusted_advance = rent_income_details.adjusted_advance,
+            master_id = master_id
         )
         db.add(rent_income_details)
         db.commit()  # Make sure to commit the transaction

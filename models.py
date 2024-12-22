@@ -776,6 +776,7 @@ class RentIncomeMaster(Base):
     etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
     
     taxpayer = relationship("Taxpayer", back_populates="rent_income_master")
+    rent_income_details = relationship("RentIncomeDetails", back_populates="rent_income_master")
     
  
  
@@ -810,9 +811,11 @@ class RentIncomeDetails(Base):
     total_vacancy_month = Column(Integer, default=0)
     adjusted_advance = Column(Integer, default=0)
     
+    master_id = Column(Integer, ForeignKey('rent_income_master.id'), nullable=False)
     etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
     
     taxpayer = relationship("Taxpayer", back_populates="rent_income_details")
+    rent_income_master = relationship("RentIncomeMaster", back_populates="rent_income_details")
  
     
 class RentIncomeSummary(Base):
