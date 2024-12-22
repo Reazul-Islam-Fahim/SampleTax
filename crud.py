@@ -1750,7 +1750,6 @@ def create_rent_master_income(db: Session, rent_income_master : schemas.Rent_Inc
         asset_name = rent_income_master.asset_name,
         asset_address = rent_income_master.asset_address,
         total_flats = rent_income_master.total_flats,
-        total_flats_on_rent = rent_income_master.total_flats_on_rent,
         total_income = rent_income_master.total_income,
         total_expense = rent_income_master.total_expense,
         special_income = rent_income_master.special_income,
@@ -1792,7 +1791,6 @@ def update_rent_master_income(db: Session, etin: str, updated_data: schemas.Rent
     rent_income_master.asset_name = updated_data.asset_name
     rent_income_master.asset_address = updated_data.asset_address
     rent_income_master.total_flats = updated_data.total_flats
-    rent_income_master.total_flats_on_rent = updated_data.total_flats_on_rent
     rent_income_master.total_income = updated_data.total_income
     rent_income_master.total_expense = updated_data.total_expense
     rent_income_master.special_income = updated_data.special_income

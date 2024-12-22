@@ -468,7 +468,6 @@ class Rent_Income_Master(BaseModel):
     asset_name : str
     asset_address : str
     total_flats : int
-    total_flats_on_rent : int
     total_income : int = 0
     total_expense : int = 0
     special_income : int = 0
