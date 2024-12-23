@@ -73,7 +73,7 @@ def create_rent_details_income(
     # Check for existing master
     master = db.query(models.RentIncomeMaster).filter(
         models.RentIncomeMaster.etin == etin,
-        models.RentIncomeMaster.asset_address == rent_income_master.asset_address,
+        # models.RentIncomeMaster.asset_address == rent_income_master.asset_address,
         models.RentIncomeMaster.area_type == rent_income_master.area_type
     ).first()
 
