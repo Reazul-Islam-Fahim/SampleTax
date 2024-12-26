@@ -428,190 +428,8 @@ class SalaryIncomeSummary(Base):
     taxpayer = relationship("Taxpayer", back_populates="salary_income_summary")
     # rebate_record = relationship("RebateRecord", back_populates="salary_income_summary")
     
-    
-    
-    
-class InvestmentRecord(Base):
-    __tablename__ = "investment_record"
-    
-    
-    id = Column(Integer, primary_key=True, index=True, unique= True)
-    gov_securities_actual = Column(Integer, default=0)
-    gov_securities_allowable = Column(Integer, default=0)
-    gov_securities_remarks = Column(String, nullable=True)
-
-    eft_actual = Column(Integer, default=0)
-    eft_allowable = Column(Integer, default=0)
-    eft_remarks = Column(String, nullable=True)
-    
-    life_insurance_given_premium_actual = Column(Integer, default=0)
-    life_insurance_given_premium_allowable = Column(Integer, default=0)
-    life_insurance_given_premium_remarks = Column(String, nullable=True)
-
-    contribution_paid_to_deposit_pension_actual = Column(Integer, default=0)
-    contribution_paid_to_deposit_pension_allowable = Column(Integer, default=0)
-    contribution_paid_to_deposit_pension_remarks = Column(String, nullable=True)
-
-    investment_in_any_securities_actual = Column(Integer, default=0)
-    investment_in_any_securities_allowable = Column(Integer, default=0)
-    investment_in_any_securities_remarks = Column(String, nullable=True)
-
-    provisions_of_pf_act_1925_actual = Column(Integer, default=0)
-    provisions_of_pf_act_1925_allowable = Column(Integer, default=0)
-    provisions_of_pf_act_1925_remarks = Column(String, nullable=True)
-
-    contributions_to_approved_provident_fund_actual = Column(Integer, default=0)
-    contributions_to_approved_provident_fund_allowable = Column(Integer, default=0)
-    contributions_to_approved_provident_fund_remarks = Column(String, nullable=True)
-
-    contributions_to_superannuation_funds_actual = Column(Integer, default=0)
-    contributions_to_superannuation_funds_allowable = Column(Integer, default=0)
-    contributions_to_superannuation_funds_remarks = Column(String, nullable=True)
-
-    contribution_to_welfare_fund_actual = Column(Integer, default=0)
-    contribution_to_welfare_fund_allowable = Column(Integer, default=0)
-    contribution_to_welfare_fund_remarks = Column(String, nullable=True)
-
-    contribution_to_zakat_fund_actual = Column(Integer, default=0)
-    contribution_to_zakat_fund_allowable = Column(Integer, default=0)
-    contribution_to_zakat_fund_remarks = Column(String, nullable=True)
-
-    donation_to_liberation_war_memory_actual = Column(Integer, default=0)
-    donation_to_liberation_war_memory_allowable = Column(Integer, default=0)
-    donation_to_liberation_war_memory_remarks = Column(String, nullable=True)
-
-    donations_to_father_of_nation_memory_actual = Column(Integer, default=0)
-    donations_to_father_of_nation_memory_allowable = Column(Integer, default=0)
-    donations_to_father_of_nation_memory_remarks = Column(String, nullable=True)
-
-    donation_to_disabled_organizations_actual = Column(Integer, default=0)
-    donation_to_disabled_organizations_allowable = Column(Integer, default=0)
-    donation_to_disabled_organizations_remarks = Column(String, nullable=True)
-
-    donations_to_liberation_war_museum_actual = Column(Integer, default=0)
-    donations_to_liberation_war_museum_allowable = Column(Integer, default=0)
-    donations_to_liberation_war_museum_remarks = Column(String, nullable=True)
-
-    donation_to_ahsania_cancer_hospital_actual = Column(Integer, default=0)
-    donation_to_ahsania_cancer_hospital_allowable = Column(Integer, default=0)
-    donation_to_ahsania_cancer_hospital_remarks = Column(String, nullable=True)
-
-    donations_to_icddrb_actual = Column(Integer, default=0)
-    donations_to_icddrb_allowable = Column(Integer, default=0)
-    donations_to_icddrb_remarks = Column(String, nullable=True)
-
-    donation_to_crp_savar_actual = Column(Integer, default=0)
-    donation_to_crp_savar_allowable = Column(Integer, default=0)
-    donation_to_crp_savar_remarks = Column(String, nullable=True)
-
-    donations_to_charitable_educational_institutions_actual = Column(Integer, default=0)
-    donations_to_charitable_educational_institutions_allowable = Column(Integer, default=0)
-    donations_to_charitable_educational_institutions_remarks = Column(String, nullable=True)
-
-    donation_to_asiatic_society_actual = Column(Integer, default=0)
-    donation_to_asiatic_society_allowable = Column(Integer, default=0)
-    donation_to_asiatic_society_remarks = Column(String, nullable=True)
-
-    donation_to_dhaka_ahsania_mission_actual = Column(Integer, default=0)
-    donation_to_dhaka_ahsania_mission_allowable = Column(Integer, default=0)
-    donation_to_dhaka_ahsania_mission_remarks = Column(String, nullable=True)
-
-    contribution_to_super_annuity_fund_actual = Column(Integer, default=0)
-    contribution_to_super_annuity_fund_allowable = Column(Integer, default=0)
-    contribution_to_super_annuity_fund_remarks = Column(String, nullable=True)
-
-    other_actual = Column(Integer, default=0)
-    other_allowable = Column(Integer, default=0)
-    other_remarks = Column(String, nullable=True)
-    
-    total_investment = Column(Integer, default=0)
-    allowable_investment = Column(Integer, default=0)
-    
-    
-    etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
-    
-    taxpayer = relationship("Taxpayer", back_populates="investment_record")
-    # rebate_record = relationship("RebateRecord", back_populates="investment_record")
-    
-    
-class GivenPremium(Base):
-    __tablename__ = "given_premium"
-    
-    
-    
-    id = Column(Integer, primary_key=True, index=True, unique= True)
-    policy_no = Column(String(100), index= True, nullable= True)
-    company = Column(String(100), index= True, nullable= True)
-    policy_value = Column(Integer, index= True, default= 0)
-    given_premium = Column(Integer, index= True, default= 0)
-    allowable = Column(Integer, index= True, default= 0)
-    remarks = Column(String(100), index= True, nullable= True)
-    
-    etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
-    
-    taxpayer = relationship("Taxpayer", back_populates="given_premium")
-    
-    # investment_id = Column(Integer, ForeignKey('investment_record.id'), nullable=False)
-
-    # investment_record = relationship("InvestmentRecord", back_populates="given_premium")
-    
-    
-class GovSecurities(Base):
-    __tablename__ = "gov_securities"
-    
-    
-    id = Column(Integer, primary_key=True, index=True, unique= True)
-    description = Column(String(100), index= True, nullable= True)
-    actual = Column(Integer, index= True, default= 0)
-    allowable = Column(Integer, index= True, default= 0)
-    
-    etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
-    
-    taxpayer = relationship("Taxpayer", back_populates="gov_securities")
-    
-    # investment_id = Column(Integer, ForeignKey('investment_record.id'), nullable=False)
-
-    # investment_record = relationship("InvestmentRecord", back_populates="gov_securities")    
-    
-    
-    
-class EFT(Base):
-    __tablename__ = "eft"
-    
-    
-    id = Column(Integer, primary_key=True, index=True, unique= True)
-    description = Column(String(100), index= True, nullable= True)
-    actual = Column(Integer, index= True, default= 0)
-    allowable = Column(Integer, index= True, default= 0)
-    
-    etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
-    
-    taxpayer = relationship("Taxpayer", back_populates="eft")
-    
-    # investment_id = Column(Integer, ForeignKey('investment_record.id'), nullable=False)
-
-    # investment_record = relationship("InvestmentRecord", back_populates="eft")    
-    
-    
-    
-    
-class DPS(Base):
-    __tablename__ = "dps"
-    
-    
-    id = Column(Integer, primary_key=True, index=True, unique= True)
-    description = Column(String(100), index= True, nullable= True)
-    actual = Column(Integer, index= True, default= 0)
-    allowable = Column(Integer, index= True, default= 0)
-    
-    etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
-    
-    taxpayer = relationship("Taxpayer", back_populates="dps")
-    
-    # investment_id = Column(Integer, ForeignKey('investment_record.id'), nullable=False)
-
-    # investment_record = relationship("InvestmentRecord", back_populates="dps")    
-    
+  
+  
     
     
 class FinancialAssetIncome(Base):
@@ -835,6 +653,191 @@ class RentIncomeSummary(Base):
     taxpayer = relationship("Taxpayer", back_populates="rent_income_summary")
     
     
+    
+    
+    
+class InvestmentRecord(Base):
+    __tablename__ = "investment_record"
+    
+    
+    id = Column(Integer, primary_key=True, index=True, unique= True)
+    gov_securities_actual = Column(Integer, default=0)
+    gov_securities_allowable = Column(Integer, default=0)
+    gov_securities_remarks = Column(String, nullable=True)
+
+    eft_actual = Column(Integer, default=0)
+    eft_allowable = Column(Integer, default=0)
+    eft_remarks = Column(String, nullable=True)
+    
+    life_insurance_given_premium_actual = Column(Integer, default=0)
+    life_insurance_given_premium_allowable = Column(Integer, default=0)
+    life_insurance_given_premium_remarks = Column(String, nullable=True)
+
+    contribution_paid_to_deposit_pension_actual = Column(Integer, default=0)
+    contribution_paid_to_deposit_pension_allowable = Column(Integer, default=0)
+    contribution_paid_to_deposit_pension_remarks = Column(String, nullable=True)
+
+    investment_in_any_securities_actual = Column(Integer, default=0)
+    investment_in_any_securities_allowable = Column(Integer, default=0)
+    investment_in_any_securities_remarks = Column(String, nullable=True)
+
+    provisions_of_pf_act_1925_actual = Column(Integer, default=0)
+    provisions_of_pf_act_1925_allowable = Column(Integer, default=0)
+    provisions_of_pf_act_1925_remarks = Column(String, nullable=True)
+
+    contributions_to_approved_provident_fund_actual = Column(Integer, default=0)
+    contributions_to_approved_provident_fund_allowable = Column(Integer, default=0)
+    contributions_to_approved_provident_fund_remarks = Column(String, nullable=True)
+
+    contributions_to_superannuation_funds_actual = Column(Integer, default=0)
+    contributions_to_superannuation_funds_allowable = Column(Integer, default=0)
+    contributions_to_superannuation_funds_remarks = Column(String, nullable=True)
+
+    contribution_to_welfare_fund_actual = Column(Integer, default=0)
+    contribution_to_welfare_fund_allowable = Column(Integer, default=0)
+    contribution_to_welfare_fund_remarks = Column(String, nullable=True)
+
+    contribution_to_zakat_fund_actual = Column(Integer, default=0)
+    contribution_to_zakat_fund_allowable = Column(Integer, default=0)
+    contribution_to_zakat_fund_remarks = Column(String, nullable=True)
+
+    donation_to_liberation_war_memory_actual = Column(Integer, default=0)
+    donation_to_liberation_war_memory_allowable = Column(Integer, default=0)
+    donation_to_liberation_war_memory_remarks = Column(String, nullable=True)
+
+    donations_to_father_of_nation_memory_actual = Column(Integer, default=0)
+    donations_to_father_of_nation_memory_allowable = Column(Integer, default=0)
+    donations_to_father_of_nation_memory_remarks = Column(String, nullable=True)
+
+    donation_to_disabled_organizations_actual = Column(Integer, default=0)
+    donation_to_disabled_organizations_allowable = Column(Integer, default=0)
+    donation_to_disabled_organizations_remarks = Column(String, nullable=True)
+
+    donations_to_liberation_war_museum_actual = Column(Integer, default=0)
+    donations_to_liberation_war_museum_allowable = Column(Integer, default=0)
+    donations_to_liberation_war_museum_remarks = Column(String, nullable=True)
+
+    donation_to_ahsania_cancer_hospital_actual = Column(Integer, default=0)
+    donation_to_ahsania_cancer_hospital_allowable = Column(Integer, default=0)
+    donation_to_ahsania_cancer_hospital_remarks = Column(String, nullable=True)
+
+    donations_to_icddrb_actual = Column(Integer, default=0)
+    donations_to_icddrb_allowable = Column(Integer, default=0)
+    donations_to_icddrb_remarks = Column(String, nullable=True)
+
+    donation_to_crp_savar_actual = Column(Integer, default=0)
+    donation_to_crp_savar_allowable = Column(Integer, default=0)
+    donation_to_crp_savar_remarks = Column(String, nullable=True)
+
+    donations_to_charitable_educational_institutions_actual = Column(Integer, default=0)
+    donations_to_charitable_educational_institutions_allowable = Column(Integer, default=0)
+    donations_to_charitable_educational_institutions_remarks = Column(String, nullable=True)
+
+    donation_to_asiatic_society_actual = Column(Integer, default=0)
+    donation_to_asiatic_society_allowable = Column(Integer, default=0)
+    donation_to_asiatic_society_remarks = Column(String, nullable=True)
+
+    donation_to_dhaka_ahsania_mission_actual = Column(Integer, default=0)
+    donation_to_dhaka_ahsania_mission_allowable = Column(Integer, default=0)
+    donation_to_dhaka_ahsania_mission_remarks = Column(String, nullable=True)
+
+    contribution_to_super_annuity_fund_actual = Column(Integer, default=0)
+    contribution_to_super_annuity_fund_allowable = Column(Integer, default=0)
+    contribution_to_super_annuity_fund_remarks = Column(String, nullable=True)
+
+    other_actual = Column(Integer, default=0)
+    other_allowable = Column(Integer, default=0)
+    other_remarks = Column(String, nullable=True)
+    
+    total_investment = Column(Integer, default=0)
+    allowable_investment = Column(Integer, default=0)
+    
+    
+    etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
+    
+    taxpayer = relationship("Taxpayer", back_populates="investment_record")
+    # rebate_record = relationship("RebateRecord", back_populates="investment_record")
+    
+    
+class GivenPremium(Base):
+    __tablename__ = "given_premium"
+    
+    
+    
+    id = Column(Integer, primary_key=True, index=True, unique= True)
+    policy_no = Column(String(100), index= True, nullable= True)
+    company = Column(String(100), index= True, nullable= True)
+    policy_value = Column(Integer, index= True, default= 0)
+    given_premium = Column(Integer, index= True, default= 0)
+    allowable = Column(Integer, index= True, default= 0)
+    remarks = Column(String(100), index= True, nullable= True)
+    
+    etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
+    
+    taxpayer = relationship("Taxpayer", back_populates="given_premium")
+    
+    # investment_id = Column(Integer, ForeignKey('investment_record.id'), nullable=False)
+
+    # investment_record = relationship("InvestmentRecord", back_populates="given_premium")
+    
+    
+class GovSecurities(Base):
+    __tablename__ = "gov_securities"
+    
+    
+    id = Column(Integer, primary_key=True, index=True, unique= True)
+    description = Column(String(100), index= True, nullable= True)
+    actual = Column(Integer, index= True, default= 0)
+    allowable = Column(Integer, index= True, default= 0)
+    
+    etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
+    
+    taxpayer = relationship("Taxpayer", back_populates="gov_securities")
+    
+    # investment_id = Column(Integer, ForeignKey('investment_record.id'), nullable=False)
+
+    # investment_record = relationship("InvestmentRecord", back_populates="gov_securities")    
+    
+    
+    
+class EFT(Base):
+    __tablename__ = "eft"
+    
+    
+    id = Column(Integer, primary_key=True, index=True, unique= True)
+    description = Column(String(100), index= True, nullable= True)
+    actual = Column(Integer, index= True, default= 0)
+    allowable = Column(Integer, index= True, default= 0)
+    
+    etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
+    
+    taxpayer = relationship("Taxpayer", back_populates="eft")
+    
+    # investment_id = Column(Integer, ForeignKey('investment_record.id'), nullable=False)
+
+    # investment_record = relationship("InvestmentRecord", back_populates="eft")    
+    
+    
+    
+    
+class DPS(Base):
+    __tablename__ = "dps"
+    
+    
+    id = Column(Integer, primary_key=True, index=True, unique= True)
+    description = Column(String(100), index= True, nullable= True)
+    actual = Column(Integer, index= True, default= 0)
+    allowable = Column(Integer, index= True, default= 0)
+    
+    etin = Column(String(12), ForeignKey('taxpayer.etin'), nullable=False)
+    
+    taxpayer = relationship("Taxpayer", back_populates="dps")
+    
+    # investment_id = Column(Integer, ForeignKey('investment_record.id'), nullable=False)
+
+    # investment_record = relationship("InvestmentRecord", back_populates="dps")    
+    
+
     
     
 class RebateRecord(Base):

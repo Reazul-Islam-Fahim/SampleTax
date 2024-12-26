@@ -14,7 +14,7 @@ class User_Auth(BaseModel):
 
 
 class TaxPayers(BaseModel): 
-    # user_id : int
+    user_id : int
     name: str
     nid : str
     etin : str
@@ -464,11 +464,11 @@ class Financial_Asset_Income(BaseModel):
         
         
 class Rent_Income_Master(BaseModel):
-    id : int
+    id : Optional[int] = None
     area_type : AreaType
     asset_name : str
     asset_address : str
-    total_flats : int
+    # total_flats : int
     total_income : int = 0
     total_expense : int = 0
     special_income : int = 0
@@ -496,7 +496,7 @@ class Rent_Income_Master(BaseModel):
         
         
 class Rent_Income_Details(BaseModel):
-    id : int
+    id : Optional[int] = None
     space_type : str 
     live_ownself : LiveOwnself
     monthly_rent : int = 0

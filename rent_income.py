@@ -25,6 +25,10 @@ app.add_middleware(
     allow_headers = ['*']
 )
 
+@app.get("/rent_income/{etin}/{master_id}")
+def read_rent_master_details_income(etin: str, id: int, db: Session = Depends(get_db)):
+    return crud.get_rent_master_details_income(db, etin= etin, id = id)
+
 
 @app.get("/rent_income_details/{etin}/{id}")
 def read_rent_details_income(etin: str, id : int, db: Session = Depends(get_db)):
@@ -66,39 +70,38 @@ def create_rent_details_income(
     etin: str = Body(...),
     db: Session = Depends(get_db)
 ):
-    # Validate rent income details
-    if len(rent_income_details) != rent_income_master.total_flats:
-        return {"error": f"Expected {rent_income_master.total_flats} rent income details, but received {len(rent_income_details)}."}
+    
 
     # Check for existing master
     master = db.query(models.RentIncomeMaster).filter(
         models.RentIncomeMaster.etin == etin,
-        # models.RentIncomeMaster.asset_address == rent_income_master.asset_address,
-        models.RentIncomeMaster.area_type == rent_income_master.area_type
+        models.RentIncomeMaster.id == rent_income_master.id
     ).first()
 
     if not master:
         # Create master if it doesn't exist
-        master = crud.create_rent_master_income(db=db, rent_income_master=rent_income_master, etin=etin)
+        master = crud.create_rent_master_income(db=db, rent_income_master=rent_income_master, etin=etin, total_flats=len(rent_income_details))
 
     else:
         # Update the master if it exists
-        master = crud.update_rent_master_income(db=db, etin=etin, updated_data=rent_income_master)
+        master = crud.update_rent_master_income(db=db, etin=etin, updated_data=rent_income_master, total_flats=len(rent_income_details))
 
     for details in rent_income_details:
         # Check if details exist for the current master
         existing_detail = db.query(models.RentIncomeDetails).filter(
             models.RentIncomeDetails.etin == etin,
-            models.RentIncomeDetails.master_id == master.id,
-            models.RentIncomeDetails.space_type == details.space_type
+            models.RentIncomeDetails.id == details.id,
+            models.RentIncomeDetails.master_id == master.id
         ).first()
 
         if existing_detail:
             # Update existing details
-            crud.update_rent_details_income(db=db, etin=etin, updated_data=details)
+            crud.update_rent_details_income(db=db, etin=etin, updated_data=details, id = details.id)
         else:
             # Create new details under the existing master
             crud.create_rent_details_income(db=db, rent_income_details=details, etin=etin, master_id= master.id)
+            
+            
 
     # Recalculate and update totals and allowances
     all_details = db.query(models.RentIncomeDetails).filter(

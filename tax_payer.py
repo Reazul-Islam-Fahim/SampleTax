@@ -21,39 +21,38 @@ app.add_middleware(
 )
 
 
-@app.post("/tax_payer/", response_model=schemas.TaxPayers)
-def create_tax_payer(taxpayer: schemas.TaxPayerCreate = Body(...), user_id: int = Body(...), db: Session = Depends(get_db)): 
-    return crud.create_tax_payer(db=db, tax_payer=taxpayer, user_id=user_id)
+@app.post("/tax_payer/")
+def create_tax_payer(taxpayer: schemas.TaxPayerCreate = Body(...), db: Session = Depends(get_db)): 
+    return crud.create_tax_payer(db=db, tax_payer=taxpayer, user_id=taxpayer.user_id)
 
-@app.put("/tax_payer/{etin}", response_model=schemas.TaxPayerCreate)
+@app.put("/tax_payer/{etin}")
 async def update_tax_payer_endpoint(
-    etin: str,
     updated_tax_payer: schemas.TaxPayerCreate,
     db: Session = Depends(get_db),
 ):
-    updated_record = crud.update_tax_payer(db, etin, updated_tax_payer)
+    updated_record = crud.update_tax_payer(db, updated_tax_payer.etin, updated_tax_payer)
     if updated_record is None:
         raise HTTPException(status_code=404, detail="Taxpayer record not found")
     return updated_record
 
 
-@app.get("/tax_payer/{etin}", response_model=schemas.TaxPayers)
+@app.get("/tax_payer/{etin}")
 def read_tax_payer(etin: str, db: Session = Depends(get_db)):
     db_item = crud.get_tax_payer(db, etin= etin)
     if db_item is None:
         raise HTTPException(status_code=404, detail="Item not found")
     return db_item
 
-@app.get("/tax_payer/", response_model=list[schemas.TaxPayers])
+@app.get("/tax_payer/")
 def read_tax_payers(skip : int = Query(...), limit : int = Query(...), db: Session = Depends(get_db)):
     items = crud.get_tax_payers(db, skip=skip, limit=limit)
     return items
 
 
-@app.post("/tax_payer_post_update/", response_model=schemas.TaxPayers)
-def create_tax_payer(taxpayer: schemas.TaxPayerCreate = Body(...), user_id: int = Body(...), etin : str = Body(...), db: Session = Depends(get_db)): 
-    db_item = crud.get_tax_payer(db, etin= etin)
+@app.post("/tax_payer_post_update/")
+def create_tax_payer(taxpayer: schemas.TaxPayerCreate = Body(...), db: Session = Depends(get_db)): 
+    db_item = crud.get_tax_payer(db, etin= taxpayer.etin)
     if db_item is None:
-        return crud.create_tax_payer(db=db, tax_payer=taxpayer, user_id=user_id)
+        return crud.create_tax_payer(db=db, tax_payer=taxpayer, user_id=taxpayer.user_id)
     else:
-        return crud.update_tax_payer(db, etin, taxpayer)
+        return crud.update_tax_payer(db, taxpayer.etin, taxpayer)
