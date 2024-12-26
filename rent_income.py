@@ -84,7 +84,7 @@ def create_rent_details_income(
 
     else:
         # Update the master if it exists
-        master = crud.update_rent_master_income(db=db, etin=etin, updated_data=rent_income_master, total_flats=len(rent_income_details))
+        master = crud.update_rent_master_income(db=db, etin=etin, updated_data=rent_income_master, total_flats=len(rent_income_details), master_id = rent_income_master.id)
 
     for details in rent_income_details:
         # Check if details exist for the current master
@@ -96,7 +96,7 @@ def create_rent_details_income(
 
         if existing_detail:
             # Update existing details
-            crud.update_rent_details_income(db=db, etin=etin, updated_data=details, id = details.id)
+            crud.update_rent_details_income(db=db, etin=etin, updated_data=details, details_id = details.id, master_id = master.id)
         else:
             # Create new details under the existing master
             crud.create_rent_details_income(db=db, rent_income_details=details, etin=etin, master_id= master.id)
@@ -174,7 +174,8 @@ def create_rent_details_income(
     models.RentIncomeMaster, models.RentIncomeMaster.id == models.RentIncomeDetails.master_id
     ).filter(
         models.RentIncomeMaster.etin == etin,
-        models.RentIncomeMaster.area_type == master.area_type
+        models.RentIncomeMaster.area_type == master.area_type,
+        models.RentIncomeMaster.id == master.id
     ).count()
     
     

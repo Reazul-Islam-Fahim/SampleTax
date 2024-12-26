@@ -1780,9 +1780,9 @@ def create_rent_master_income(db: Session, rent_income_master : schemas.Rent_Inc
     return rent_income_master
 
 
-def update_rent_master_income(db: Session, etin: str, updated_data: schemas.Rent_Income_Master, total_flats: int):
+def update_rent_master_income(db: Session, etin: str, updated_data: schemas.Rent_Income_Master, total_flats: int, master_id : int):
     
-    rent_income_master = db.query(models.RentIncomeMaster).filter(models.RentIncomeMaster.etin == etin).first()
+    rent_income_master = db.query(models.RentIncomeMaster).filter(models.RentIncomeMaster.etin == etin, models.RentIncomeMaster.id == master_id).first()
 
     if not rent_income_master:
         return None
@@ -1893,10 +1893,11 @@ def update_rent_details_income(
     db: Session, 
     etin: str, 
     updated_data: schemas.Rent_Income_Details,
-    id: int
+    details_id: int,
+    master_id: int
 ):
     # Fetch the existing record
-    rent_income_details = db.query(models.RentIncomeDetails).filter(models.RentIncomeDetails.etin == etin, models.RentIncomeDetails.id == id).first()
+    rent_income_details = db.query(models.RentIncomeDetails).filter(models.RentIncomeDetails.etin == etin, models.RentIncomeDetails.id == details_id, models.RentIncomeDetails.master_id == master_id).first()
     
     if not rent_income_details:
         return None  # Record not found
