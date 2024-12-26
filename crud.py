@@ -1947,9 +1947,6 @@ def get_rent_summary_incomes(db: Session, skip: int , limit: int):
 def create_rent_summary_income(db: Session, rent_income_summary : schemas.Rent_Income_Summary, etin : str):
     rent_income_summary = models.RentIncomeSummary(
         etin = etin,
-        # area_type = rent_income_summary.area_type,
-        # asset_name = rent_income_summary.asset_name,
-        # asset_address = rent_income_summary.asset_address,
         gross_total_income = rent_income_summary.gross_total_income,
         gross_total_expense = rent_income_summary.gross_total_expense,
         gross_net_income = rent_income_summary.gross_net_income
@@ -1966,9 +1963,6 @@ def update_rent_summary_income(db: Session, etin: str, updated_data: schemas.Ren
     if not rent_income_summary:
         return None
 
-    # rent_income_summary.area_type = updated_data.area_type
-    # rent_income_summary.asset_name = updated_data.asset_name
-    # rent_income_summary.asset_address = updated_data.asset_address
     rent_income_summary.gross_total_income = updated_data.gross_total_income
     rent_income_summary.gross_total_expense = updated_data.gross_total_expense
     rent_income_summary.gross_net_income = updated_data.gross_net_income

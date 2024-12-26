@@ -22,12 +22,12 @@ app.add_middleware(
 
 
 @app.post("/tax_payer/")
-def create_tax_payer(taxpayer: schemas.TaxPayerCreate = Body(...), db: Session = Depends(get_db)): 
+def create_tax_payer(taxpayer: schemas.TaxPayers = Body(...), db: Session = Depends(get_db)): 
     return crud.create_tax_payer(db=db, tax_payer=taxpayer, user_id=taxpayer.user_id)
 
 @app.put("/tax_payer/{etin}")
 async def update_tax_payer_endpoint(
-    updated_tax_payer: schemas.TaxPayerCreate,
+    updated_tax_payer: schemas.TaxPayers,
     db: Session = Depends(get_db),
 ):
     updated_record = crud.update_tax_payer(db, updated_tax_payer.etin, updated_tax_payer)
@@ -50,7 +50,7 @@ def read_tax_payers(skip : int = Query(...), limit : int = Query(...), db: Sessi
 
 
 @app.post("/tax_payer_post_update/")
-def create_tax_payer(taxpayer: schemas.TaxPayerCreate = Body(...), db: Session = Depends(get_db)): 
+def create_tax_payer(taxpayer: schemas.TaxPayers = Body(...), db: Session = Depends(get_db)): 
     db_item = crud.get_tax_payer(db, etin= taxpayer.etin)
     if db_item is None:
         item = crud.create_tax_payer(db=db, tax_payer=taxpayer, user_id=taxpayer.user_id)
