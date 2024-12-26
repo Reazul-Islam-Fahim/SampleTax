@@ -221,3 +221,41 @@ def create_rent_details_income(
         "master": crud.get_rent_master_income(db, etin),
         "details": crud.get_rent_detail_income(db, etin)
     }
+    
+    
+    
+    
+@app.post("/rent_income_summary/{etin}")
+def create_rent_summary_income(
+    etin: str = Path(...),
+    db: Session = Depends(get_db)
+):
+    masters = crud.get_rent_master_income(db, etin)
+    
+    gross_total_income = 0
+    gross_total_expense = 0
+    gross_net_income = 0
+    
+    for master in masters:
+        gross_total_income += master.total_income
+        gross_total_expense += master.total_expense
+        gross_net_income += master.net_income
+        
+    rent_income_summay = schemas.Rent_Income_Summary(
+        etin = etin,
+        gross_total_income = int(gross_total_income),
+        gross_total_expense = int(gross_total_expense),
+        gross_net_income = int(gross_net_income)
+    )
+    
+    summary = crud.get_salary_income_summary(db, etin)
+    
+    if summary:
+        crud.update_rent_summary_income(db, etin, rent_income_summay)
+    else:  
+        crud.create_rent_summary_income(db, rent_income_summay, etin)
+    
+    return {
+        "summary" : crud.get_salary_income_summary(db, etin)
+        }
+        

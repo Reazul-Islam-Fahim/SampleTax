@@ -531,9 +531,9 @@ class Rent_Income_Details(BaseModel):
 
 class Rent_Income_Summary(BaseModel):
     etin : str
-    area_type : AreaType
-    asset_name : str
-    asset_address : str
+    # area_type : AreaType
+    # asset_name : str
+    # asset_address : str
     gross_total_income : int = 0
     gross_total_expense : int = 0
     gross_net_income : int = 0

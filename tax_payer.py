@@ -53,6 +53,10 @@ def read_tax_payers(skip : int = Query(...), limit : int = Query(...), db: Sessi
 def create_tax_payer(taxpayer: schemas.TaxPayerCreate = Body(...), db: Session = Depends(get_db)): 
     db_item = crud.get_tax_payer(db, etin= taxpayer.etin)
     if db_item is None:
-        return crud.create_tax_payer(db=db, tax_payer=taxpayer, user_id=taxpayer.user_id)
+        item = crud.create_tax_payer(db=db, tax_payer=taxpayer, user_id=taxpayer.user_id)
     else:
-        return crud.update_tax_payer(db, taxpayer.etin, taxpayer)
+        item = crud.update_tax_payer(db, taxpayer.etin, taxpayer)
+    
+    print(item.gender)
+        
+    return item

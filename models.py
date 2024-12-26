@@ -5,7 +5,7 @@ from enum import Enum
 
 
 class SourceArea(str, Enum):
-    dahaka_chittagong = "Dhaka | Chittagong"
+    dahaka_chittagong = "Dhaka_Chittagong"
     city = "City"
     other = "Other"
 
@@ -95,7 +95,7 @@ class Taxpayer(Base):
     nid = Column (String(12), unique= True, index= True, nullable= False)
     name = Column(String(100), index = True, nullable= False)
     gender = Column(senum(Gender), index=True, nullable= False)
-    source_area = Column(senum(SourceArea), index=True, default="Dhaka | Chittagong")
+    source_area = Column(senum(SourceArea), index=True, default="Dhaka_Chittagong")
     circle = Column (String(50), index= True, nullable= False)
     zone = Column (String(50), index= True, nullable= False)
     employment_type = Column(senum(EmploymentType), index= True, nullable= False)
@@ -641,9 +641,9 @@ class RentIncomeSummary(Base):
     
     
     id = Column(Integer, primary_key=True, index=True, unique= True)
-    area_type = Column(String(20), default=None)
-    asset_name = Column(String(100), nullable=False)
-    asset_address = Column(String(500), nullable=False)
+    # area_type = Column(String(20), default=None)
+    # asset_name = Column(String(100), nullable=False)
+    # asset_address = Column(String(500), nullable=False)
     gross_total_income = Column(Integer, default=0)
     gross_total_expense = Column(Integer, default=0)
     gross_net_income = Column(Integer, default=0)
