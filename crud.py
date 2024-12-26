@@ -33,9 +33,9 @@ def update_user_auth(db: Session, id: int, updated_user_auth: schemas.User_Auth)
     if not db_user_auth:
         return None  # Record does not exist
 
-    db_user_auth.username = updated_user_auth.username,
-    db_user_auth.email = updated_user_auth.email,
-    db_user_auth.password = updated_user_auth.password, # Ensure password is handled securely in production
+    db_user_auth.username = updated_user_auth.username
+    db_user_auth.email = updated_user_auth.email
+    db_user_auth.password = updated_user_auth.password # Ensure password is handled securely in production
 
     db.commit()
     db.refresh(db_user_auth)
@@ -103,36 +103,36 @@ def update_tax_payer(db: Session, etin: str, updated_tax_payer: schemas.TaxPayer
     if not db_tax_payer:
         return None 
 
-    db_tax_payer.nid = updated_tax_payer.nid,
-    db_tax_payer.name = updated_tax_payer.name,
-    db_tax_payer.gender = updated_tax_payer.gender,
-    db_tax_payer.source_area = updated_tax_payer.source_area,
-    db_tax_payer.circle = updated_tax_payer.circle,
-    db_tax_payer.zone = updated_tax_payer.zone,
-    db_tax_payer.employment_type = updated_tax_payer.employment_type,
-    db_tax_payer.company_name = updated_tax_payer.company_name,
-    db_tax_payer.assesment_year = updated_tax_payer.assesment_year,
-    db_tax_payer.residential_status = updated_tax_payer.residential_status,
-    db_tax_payer.tax_payer_status = updated_tax_payer.tax_payer_status,
-    db_tax_payer.freedom_fighter = updated_tax_payer.freedom_fighter,
-    db_tax_payer.disable = updated_tax_payer.disable,
-    db_tax_payer.parent_of_disable = updated_tax_payer.parent_of_disable,
-    db_tax_payer.num_autistic_children = updated_tax_payer.num_autistic_children,
-    db_tax_payer.age_above_65 = updated_tax_payer.age_above_65,
-    db_tax_payer.date_of_birth = updated_tax_payer.date_of_birth,
-    db_tax_payer.father_name = updated_tax_payer.father_name,
-    db_tax_payer.marital_status = updated_tax_payer.marital_status,
-    db_tax_payer.spouse_name = updated_tax_payer.spouse_name,
-    db_tax_payer.spouse_tin = updated_tax_payer.spouse_tin,
-    db_tax_payer.permanent_address = updated_tax_payer.permanent_address,
-    db_tax_payer.present_address = updated_tax_payer.present_address,
-    db_tax_payer.telephone = updated_tax_payer.telephone,
-    db_tax_payer.mobile = updated_tax_payer.mobile,
-    db_tax_payer.email = updated_tax_payer.email,
-    db_tax_payer.employer_name = updated_tax_payer.employer_name,
-    db_tax_payer.name_of_organization = updated_tax_payer.name_of_organization,
-    db_tax_payer.bin_no = updated_tax_payer.bin_no,
-    db_tax_payer.name_tin_partners = updated_tax_payer.name_tin_partners,
+    db_tax_payer.nid = updated_tax_payer.nid
+    db_tax_payer.name = updated_tax_payer.name
+    db_tax_payer.gender = updated_tax_payer.gender.value
+    db_tax_payer.source_area = updated_tax_payer.source_area.value
+    db_tax_payer.circle = updated_tax_payer.circle
+    db_tax_payer.zone = updated_tax_payer.zone
+    db_tax_payer.employment_type = updated_tax_payer.employment_type.value
+    db_tax_payer.company_name = updated_tax_payer.company_name
+    db_tax_payer.assesment_year = updated_tax_payer.assesment_year
+    db_tax_payer.residential_status = updated_tax_payer.residential_status.value
+    db_tax_payer.tax_payer_status = updated_tax_payer.tax_payer_status.value
+    db_tax_payer.freedom_fighter = updated_tax_payer.freedom_fighter.value
+    db_tax_payer.disable = updated_tax_payer.disable.value
+    db_tax_payer.parent_of_disable = updated_tax_payer.parent_of_disable.value
+    db_tax_payer.num_autistic_children = updated_tax_payer.num_autistic_children
+    db_tax_payer.age_above_65 = updated_tax_payer.age_above_65.value
+    db_tax_payer.date_of_birth = updated_tax_payer.date_of_birth
+    db_tax_payer.father_name = updated_tax_payer.father_name
+    db_tax_payer.marital_status = updated_tax_payer.marital_status.value
+    db_tax_payer.spouse_name = updated_tax_payer.spouse_name
+    db_tax_payer.spouse_tin = updated_tax_payer.spouse_tin
+    db_tax_payer.permanent_address = updated_tax_payer.permanent_address
+    db_tax_payer.present_address = updated_tax_payer.present_address
+    db_tax_payer.telephone = updated_tax_payer.telephone
+    db_tax_payer.mobile = updated_tax_payer.mobile
+    db_tax_payer.email = updated_tax_payer.email
+    db_tax_payer.employer_name = updated_tax_payer.employer_name
+    db_tax_payer.name_of_organization = updated_tax_payer.name_of_organization
+    db_tax_payer.bin_no = updated_tax_payer.bin_no
+    db_tax_payer.name_tin_partners = updated_tax_payer.name_tin_partners
 
     db.commit()
     db.refresh(db_tax_payer)
@@ -171,9 +171,9 @@ def update_employer_info(db: Session, etin: str, updated_employer_info: schemas.
         return None  # Record does not exist
 
     # Update fields with new data
-    db_employer_info.name = updated_employer_info.name,
-    db_employer_info.start_date = updated_employer_info.start_date,
-    db_employer_info.end_date = updated_employer_info.end_date,
+    db_employer_info.name = updated_employer_info.name
+    db_employer_info.start_date = updated_employer_info.start_date
+    db_employer_info.end_date = updated_employer_info.end_date
 
     # Commit changes to the database
     db.commit()
@@ -353,112 +353,112 @@ def update_salary_income_record(db: Session, etin: str, updated_salary: schemas.
         return None  # Record does not exist
 
     # Update the fields of the existing record with new data
-    salary_income_record.basic_salary = updated_salary.basic_salary,
-    salary_income_record.basic_salary_exempted=0,
-    salary_income_record.basic_salary_taxable=updated_salary.basic_salary,
-    salary_income_record.basic_salary_remarks = updated_salary.basic_salary_remarks,
+    salary_income_record.basic_salary = updated_salary.basic_salary
+    salary_income_record.basic_salary_exempted=0
+    salary_income_record.basic_salary_taxable=updated_salary.basic_salary
+    salary_income_record.basic_salary_remarks = updated_salary.basic_salary_remarks
     
-    salary_income_record.private_allowances = updated_salary.private_allowances,
-    salary_income_record.private_allowances_remarks = updated_salary.private_allowances_remarks,
-    salary_income_record.private_arrear_salary = updated_salary.private_arrear_salary,
-    salary_income_record.private_arrear_salary_remarks = updated_salary.private_arrear_salary_remarks,
-    salary_income_record.private_gratuity = updated_salary.private_gratuity,
-    salary_income_record.private_gratuity_remarks = updated_salary.private_gratuity_remarks,
-    salary_income_record.private_perquisites = updated_salary.private_perquisites,
-    salary_income_record.private_perquisites_remarks = updated_salary.private_perquisites_remarks,
-    salary_income_record.private_receipts_or_additional_receipts_in_lieu_of_salary = updated_salary.private_receipts_or_additional_receipts_in_lieu_of_salary,
-    salary_income_record.private_receipts_or_additional_receipts_in_lieu_of_salary_remarks = updated_salary.private_receipts_or_additional_receipts_in_lieu_of_salary_remarks,
-    salary_income_record.private_income_from_employee_share_scheme = updated_salary.private_income_from_employee_share_scheme,
-    salary_income_record.private_income_from_employee_share_scheme_remarks = updated_salary.private_income_from_employee_share_scheme_remarks,
-    salary_income_record.private_housing_facility = updated_salary.private_housing_facility,
-    salary_income_record.private_housing_facility_remarks = updated_salary.private_housing_facility_remarks,
-    salary_income_record.private_vehicle_facility = updated_salary.private_vehicle_facility,
-    salary_income_record.private_vehicle_facility_remarks = updated_salary.private_vehicle_facility_remarks,
-    salary_income_record.private_any_other_benefit_provided_by_the_employer = updated_salary.private_any_other_benefit_provided_by_the_employer,
-    salary_income_record.private_any_other_benefit_provided_by_the_employer_remarks = updated_salary.private_any_other_benefit_provided_by_the_employer_remarks,
-    salary_income_record.private_contribution_paid_by_employer_to_recognized_pf = updated_salary.private_contribution_paid_by_employer_to_recognized_pf,
-    salary_income_record.private_contribution_paid_by_employer_to_recognized_pf_remarks = updated_salary.private_contribution_paid_by_employer_to_recognized_pf_remarks,
-    salary_income_record.private_others = updated_salary.private_others,
-    salary_income_record.private_others_remarks = updated_salary.private_others_remarks,
+    salary_income_record.private_allowances = updated_salary.private_allowances
+    salary_income_record.private_allowances_remarks = updated_salary.private_allowances_remarks
+    salary_income_record.private_arrear_salary = updated_salary.private_arrear_salary
+    salary_income_record.private_arrear_salary_remarks = updated_salary.private_arrear_salary_remarks
+    salary_income_record.private_gratuity = updated_salary.private_gratuity
+    salary_income_record.private_gratuity_remarks = updated_salary.private_gratuity_remarks
+    salary_income_record.private_perquisites = updated_salary.private_perquisites
+    salary_income_record.private_perquisites_remarks = updated_salary.private_perquisites_remarks
+    salary_income_record.private_receipts_or_additional_receipts_in_lieu_of_salary = updated_salary.private_receipts_or_additional_receipts_in_lieu_of_salary
+    salary_income_record.private_receipts_or_additional_receipts_in_lieu_of_salary_remarks = updated_salary.private_receipts_or_additional_receipts_in_lieu_of_salary_remarks
+    salary_income_record.private_income_from_employee_share_scheme = updated_salary.private_income_from_employee_share_scheme
+    salary_income_record.private_income_from_employee_share_scheme_remarks = updated_salary.private_income_from_employee_share_scheme_remarks
+    salary_income_record.private_housing_facility = updated_salary.private_housing_facility
+    salary_income_record.private_housing_facility_remarks = updated_salary.private_housing_facility_remarks
+    salary_income_record.private_vehicle_facility = updated_salary.private_vehicle_facility
+    salary_income_record.private_vehicle_facility_remarks = updated_salary.private_vehicle_facility_remarks
+    salary_income_record.private_any_other_benefit_provided_by_the_employer = updated_salary.private_any_other_benefit_provided_by_the_employer
+    salary_income_record.private_any_other_benefit_provided_by_the_employer_remarks = updated_salary.private_any_other_benefit_provided_by_the_employer_remarks
+    salary_income_record.private_contribution_paid_by_employer_to_recognized_pf = updated_salary.private_contribution_paid_by_employer_to_recognized_pf
+    salary_income_record.private_contribution_paid_by_employer_to_recognized_pf_remarks = updated_salary.private_contribution_paid_by_employer_to_recognized_pf_remarks
+    salary_income_record.private_others = updated_salary.private_others
+    salary_income_record.private_others_remarks = updated_salary.private_others_remarks
 
-    salary_income_record.gov_arrear_pay = updated_salary.gov_arrear_pay,
-    salary_income_record.gov_arrear_pay_exempted = updated_salary.gov_arrear_pay,
-    salary_income_record.gov_arrear_pay_taxable = 0,
-    salary_income_record.gov_arrear_pay_remarks = updated_salary.gov_arrear_pay_remarks,
+    salary_income_record.gov_arrear_pay = updated_salary.gov_arrear_pay
+    salary_income_record.gov_arrear_pay_exempted = updated_salary.gov_arrear_pay
+    salary_income_record.gov_arrear_pay_taxable = 0
+    salary_income_record.gov_arrear_pay_remarks = updated_salary.gov_arrear_pay_remarks
     
-    salary_income_record.gov_special_allowance = updated_salary.gov_special_allowance,
-    salary_income_record.gov_special_allowance_exempted = updated_salary.gov_special_allowance,
-    salary_income_record.gov_special_allowance_taxable = 0,
-    salary_income_record.gov_special_allowance_remarks = updated_salary.gov_special_allowance_remarks,
+    salary_income_record.gov_special_allowance = updated_salary.gov_special_allowance
+    salary_income_record.gov_special_allowance_exempted = updated_salary.gov_special_allowance
+    salary_income_record.gov_special_allowance_taxable = 0
+    salary_income_record.gov_special_allowance_remarks = updated_salary.gov_special_allowance_remarks
 
-    salary_income_record.gov_medical_allowance = updated_salary.gov_medical_allowance,
-    salary_income_record.gov_medical_allowance_exempted = updated_salary.gov_medical_allowance,
-    salary_income_record.gov_medical_allowance_taxable = 0,
-    salary_income_record.gov_medical_allowance_remarks = updated_salary.gov_medical_allowance_remarks,
+    salary_income_record.gov_medical_allowance = updated_salary.gov_medical_allowance
+    salary_income_record.gov_medical_allowance_exempted = updated_salary.gov_medical_allowance
+    salary_income_record.gov_medical_allowance_taxable = 0
+    salary_income_record.gov_medical_allowance_remarks = updated_salary.gov_medical_allowance_remarks
 
-    salary_income_record.gov_conveyance_allowance = updated_salary.gov_conveyance_allowance,
-    salary_income_record.gov_conveyance_allowance_exempted = updated_salary.gov_conveyance_allowance,
-    salary_income_record.gov_conveyance_allowance_taxable = 0,
-    salary_income_record.gov_conveyance_allowance_remarks = updated_salary.gov_conveyance_allowance_remarks,
+    salary_income_record.gov_conveyance_allowance = updated_salary.gov_conveyance_allowance
+    salary_income_record.gov_conveyance_allowance_exempted = updated_salary.gov_conveyance_allowance
+    salary_income_record.gov_conveyance_allowance_taxable = 0
+    salary_income_record.gov_conveyance_allowance_remarks = updated_salary.gov_conveyance_allowance_remarks
     
-    salary_income_record.gov_festival_allowance = updated_salary.gov_festival_allowance,
-    salary_income_record.gov_festival_allowance_exempted = 0,
-    salary_income_record.gov_festival_allowance_taxable = updated_salary.gov_festival_allowance,
-    salary_income_record.gov_festival_allowance_remarks = updated_salary.gov_festival_allowance_remarks,
+    salary_income_record.gov_festival_allowance = updated_salary.gov_festival_allowance
+    salary_income_record.gov_festival_allowance_exempted = 0
+    salary_income_record.gov_festival_allowance_taxable = updated_salary.gov_festival_allowance
+    salary_income_record.gov_festival_allowance_remarks = updated_salary.gov_festival_allowance_remarks
 
-    salary_income_record.gov_house_rent_allowance = updated_salary.gov_house_rent_allowance,
-    salary_income_record.gov_house_rent_allowance_exempted = updated_salary.gov_house_rent_allowance_exempted,
-    salary_income_record.gov_house_rent_allowance_taxable = 0,
-    salary_income_record.gov_house_rent_allowance_remarks = updated_salary.gov_house_rent_allowance_remarks,
+    salary_income_record.gov_house_rent_allowance = updated_salary.gov_house_rent_allowance
+    salary_income_record.gov_house_rent_allowance_exempted = updated_salary.gov_house_rent_allowance_exempted
+    salary_income_record.gov_house_rent_allowance_taxable = 0
+    salary_income_record.gov_house_rent_allowance_remarks = updated_salary.gov_house_rent_allowance_remarks
 
-    salary_income_record.gov_support_staff_allowance = updated_salary.gov_support_staff_allowance,
-    salary_income_record.gov_support_staff_allowance_exempted = updated_salary.gov_support_staff_allowance,
-    salary_income_record.gov_support_staff_allowance_taxable = 0,
-    salary_income_record.gov_support_staff_allowance_remarks = updated_salary.gov_support_staff_allowance_remarks,
+    salary_income_record.gov_support_staff_allowance = updated_salary.gov_support_staff_allowance
+    salary_income_record.gov_support_staff_allowance_exempted = updated_salary.gov_support_staff_allowance
+    salary_income_record.gov_support_staff_allowance_taxable = 0
+    salary_income_record.gov_support_staff_allowance_remarks = updated_salary.gov_support_staff_allowance_remarks
     
-    salary_income_record.gov_leave_allowance = updated_salary.gov_leave_allowance,
-    salary_income_record.gov_leave_allowance_exempted = updated_salary.gov_leave_allowance,
-    salary_income_record.gov_leave_allowance_taxable = 0,
-    salary_income_record.gov_leave_allowance_remarks = updated_salary.gov_leave_allowance_remarks,
+    salary_income_record.gov_leave_allowance = updated_salary.gov_leave_allowance
+    salary_income_record.gov_leave_allowance_exempted = updated_salary.gov_leave_allowance
+    salary_income_record.gov_leave_allowance_taxable = 0
+    salary_income_record.gov_leave_allowance_remarks = updated_salary.gov_leave_allowance_remarks
     
-    salary_income_record.gov_reward = updated_salary.gov_reward,
-    salary_income_record.gov_reward_exempted = updated_salary.gov_reward,
-    salary_income_record.gov_reward_taxable = 0,
-    salary_income_record.gov_reward_remarks = updated_salary.gov_reward_remarks,
+    salary_income_record.gov_reward = updated_salary.gov_reward
+    salary_income_record.gov_reward_exempted = updated_salary.gov_reward
+    salary_income_record.gov_reward_taxable = 0
+    salary_income_record.gov_reward_remarks = updated_salary.gov_reward_remarks
     
-    salary_income_record.gov_overtime = updated_salary.gov_overtime,
-    salary_income_record.gov_overtime_exempted = updated_salary.gov_overtime,
-    salary_income_record.gov_overtime_taxable = 0,
-    salary_income_record.gov_overtime_remarks = updated_salary.gov_overtime_remarks,
+    salary_income_record.gov_overtime = updated_salary.gov_overtime
+    salary_income_record.gov_overtime_exempted = updated_salary.gov_overtime
+    salary_income_record.gov_overtime_taxable = 0
+    salary_income_record.gov_overtime_remarks = updated_salary.gov_overtime_remarks
     
-    salary_income_record.gov_bangla_noboborsho = updated_salary.gov_bangla_noboborsho,
-    salary_income_record.gov_bangla_noboborsho_exempted = updated_salary.gov_bangla_noboborsho,
-    salary_income_record.gov_bangla_noboborsho_taxable = 0,
-    salary_income_record.gov_bangla_noboborsho_remarks = updated_salary.gov_bangla_noboborsho_remarks,
+    salary_income_record.gov_bangla_noboborsho = updated_salary.gov_bangla_noboborsho
+    salary_income_record.gov_bangla_noboborsho_exempted = updated_salary.gov_bangla_noboborsho
+    salary_income_record.gov_bangla_noboborsho_taxable = 0
+    salary_income_record.gov_bangla_noboborsho_remarks = updated_salary.gov_bangla_noboborsho_remarks
     
-    salary_income_record.gov_interest_accrued_from_PF = updated_salary.gov_interest_accrued_from_PF,
-    salary_income_record.gov_interest_accrued_from_PF_exempted = updated_salary.gov_interest_accrued_from_PF,
-    salary_income_record.gov_interest_accrued_from_PF_taxable = 0,
-    salary_income_record.gov_interest_accrued_from_PF_remarks = updated_salary.gov_interest_accrued_from_PF_remarks,
+    salary_income_record.gov_interest_accrued_from_PF = updated_salary.gov_interest_accrued_from_PF
+    salary_income_record.gov_interest_accrued_from_PF_exempted = updated_salary.gov_interest_accrued_from_PF
+    salary_income_record.gov_interest_accrued_from_PF_taxable = 0
+    salary_income_record.gov_interest_accrued_from_PF_remarks = updated_salary.gov_interest_accrued_from_PF_remarks
     
-    salary_income_record.gov_lump_grant = updated_salary.gov_lump_grant,
-    salary_income_record.gov_lump_grant_exempted = updated_salary.gov_lump_grant,
-    salary_income_record.gov_lump_grant_taxable = 0,
-    salary_income_record.gov_lump_grant_remarks = updated_salary.gov_lump_grant_remarks,
+    salary_income_record.gov_lump_grant = updated_salary.gov_lump_grant
+    salary_income_record.gov_lump_grant_exempted = updated_salary.gov_lump_grant
+    salary_income_record.gov_lump_grant_taxable = 0
+    salary_income_record.gov_lump_grant_remarks = updated_salary.gov_lump_grant_remarks
     
-    salary_income_record.gov_gratuity = updated_salary.gov_gratuity,
-    salary_income_record.gov_gratuity_exempted = updated_salary.gov_gratuity,
-    salary_income_record.gov_gratuity_taxable = 0,
-    salary_income_record.gov_gratuity_remarks = updated_salary.gov_gratuity_remarks,
+    salary_income_record.gov_gratuity = updated_salary.gov_gratuity
+    salary_income_record.gov_gratuity_exempted = updated_salary.gov_gratuity
+    salary_income_record.gov_gratuity_taxable = 0
+    salary_income_record.gov_gratuity_remarks = updated_salary.gov_gratuity_remarks
     
-    salary_income_record.gov_others = updated_salary.gov_others,
-    salary_income_record.gov_others_exempted = updated_salary.gov_others,
-    salary_income_record.gov_others_taxable = 0,
-    salary_income_record.gov_others_remarks = updated_salary.gov_others_remarks,
+    salary_income_record.gov_others = updated_salary.gov_others
+    salary_income_record.gov_others_exempted = updated_salary.gov_others
+    salary_income_record.gov_others_taxable = 0
+    salary_income_record.gov_others_remarks = updated_salary.gov_others_remarks
 
 
-    salary_income_record.etin = updated_salary.etin,
-    salary_income_record.employer_info_id = updated_salary.employer_info_id,
+    salary_income_record.etin = updated_salary.etin
+    salary_income_record.employer_info_id = updated_salary.employer_info_id
 
 
     # Commit changes to the database
@@ -515,23 +515,23 @@ def update_allowance(db: Session, etin: str, allowances: schemas.Allowance_Detai
         raise None
     
     # Update the fields with the new data
-    existing_record.any_allowance = allowances.any_allowance,
-    existing_record.any_allowance_remarks = allowances.any_allowance_remarks,
-    existing_record.leave_allowance = allowances.leave_allowance,
-    existing_record.leave_allowance_remarks = allowances.leave_allowance_remarks,
-    existing_record.lump_grant = allowances.lump_grant,
-    existing_record.lump_grant_remarks = allowances.lump_grant_remarks,
-    existing_record.bonus = allowances.bonus,
-    existing_record.bonus_remarks = allowances.bonus_remarks,
-    existing_record.fee = allowances.fee,
-    existing_record.fee_remarks = allowances.fee_remarks,
-    existing_record.commission = allowances.commission,
-    existing_record.commission_remarks = allowances.commission_remarks,
-    existing_record.overtime = allowances.overtime,
-    existing_record.overtime_remarks = allowances.overtime_remarks,
-    existing_record.other = allowances.other,
-    existing_record.other_details = allowances.other_details,
-    existing_record.total = allowances.total,
+    existing_record.any_allowance = allowances.any_allowance
+    existing_record.any_allowance_remarks = allowances.any_allowance_remarks
+    existing_record.leave_allowance = allowances.leave_allowance
+    existing_record.leave_allowance_remarks = allowances.leave_allowance_remarks
+    existing_record.lump_grant = allowances.lump_grant
+    existing_record.lump_grant_remarks = allowances.lump_grant_remarks
+    existing_record.bonus = allowances.bonus
+    existing_record.bonus_remarks = allowances.bonus_remarks
+    existing_record.fee = allowances.fee
+    existing_record.fee_remarks = allowances.fee_remarks
+    existing_record.commission = allowances.commission
+    existing_record.commission_remarks = allowances.commission_remarks
+    existing_record.overtime = allowances.overtime
+    existing_record.overtime_remarks = allowances.overtime_remarks
+    existing_record.other = allowances.other
+    existing_record.other_details = allowances.other_details
+    existing_record.total = allowances.total
     existing_record.employer_info_id = employer_info_id
 
     # Commit the changes to the database
@@ -595,28 +595,28 @@ def update_perquisite(db: Session, etin: str, perquisite: schemas.Perquisite_Det
         raise None
     
     # Update the fields with the new data
-    existing_record.mohargha_allowance = perquisite.mohargha_allowance,
-    existing_record.mohargha_allowance_remarks = perquisite.mohargha_allowance_remarks,
-    existing_record.insurance_premium_borne_by_the_employer = perquisite.insurance_premium_borne_by_the_employer,
-    existing_record.insurance_premium_borne_by_the_employer_remarks = perquisite.insurance_premium_borne_by_the_employer_remarks,
-    existing_record.housing_allowance = perquisite.housing_allowance,
-    existing_record.housing_allowance_remarks = perquisite.housing_allowance_remarks,
-    existing_record.house_rent_allowance = perquisite.house_rent_allowance,
-    existing_record.house_rent_allowance_remarks = perquisite.house_rent_allowance_remarks,
-    existing_record.entertainment_allowance = perquisite.entertainment_allowance,
-    existing_record.entertainment_allowance_remarks = perquisite.entertainment_allowance_remarks,
-    existing_record.transportation_allowance = perquisite.transportation_allowance,
-    existing_record.transportation_allowance_remarks = perquisite.transportation_allowance_remarks,
-    existing_record.passage_leave = perquisite.passage_leave,
-    existing_record.passage_leave_remarks = perquisite.passage_leave_remarks,
-    existing_record.medical_allowance = perquisite.medical_allowance,
-    existing_record.medical_allowance_remarks = perquisite.medical_allowance_remarks,
-    existing_record.any_other_obligations_of_the_employee = perquisite.any_other_obligations_of_the_employee,
-    existing_record.any_other_obligations_of_the_employee_remarks = perquisite.any_other_obligations_of_the_employee_remarks,
-    existing_record.other = perquisite.other,
-    existing_record.other_remarks = perquisite.other_remarks,
-    existing_record.total = perquisite.total,
-    existing_record.employer_info_id = employer_info_id,
+    existing_record.mohargha_allowance = perquisite.mohargha_allowance
+    existing_record.mohargha_allowance_remarks = perquisite.mohargha_allowance_remarks
+    existing_record.insurance_premium_borne_by_the_employer = perquisite.insurance_premium_borne_by_the_employer
+    existing_record.insurance_premium_borne_by_the_employer_remarks = perquisite.insurance_premium_borne_by_the_employer_remarks
+    existing_record.housing_allowance = perquisite.housing_allowance
+    existing_record.housing_allowance_remarks = perquisite.housing_allowance_remarks
+    existing_record.house_rent_allowance = perquisite.house_rent_allowance
+    existing_record.house_rent_allowance_remarks = perquisite.house_rent_allowance_remarks
+    existing_record.entertainment_allowance = perquisite.entertainment_allowance
+    existing_record.entertainment_allowance_remarks = perquisite.entertainment_allowance_remarks
+    existing_record.transportation_allowance = perquisite.transportation_allowance
+    existing_record.transportation_allowance_remarks = perquisite.transportation_allowance_remarks
+    existing_record.passage_leave = perquisite.passage_leave
+    existing_record.passage_leave_remarks = perquisite.passage_leave_remarks
+    existing_record.medical_allowance = perquisite.medical_allowance
+    existing_record.medical_allowance_remarks = perquisite.medical_allowance_remarks
+    existing_record.any_other_obligations_of_the_employee = perquisite.any_other_obligations_of_the_employee
+    existing_record.any_other_obligations_of_the_employee_remarks = perquisite.any_other_obligations_of_the_employee_remarks
+    existing_record.other = perquisite.other
+    existing_record.other_remarks = perquisite.other_remarks
+    existing_record.total = perquisite.total
+    existing_record.employer_info_id = employer_info_id
 
     # Commit the changes to the database
     db.commit()
@@ -662,12 +662,12 @@ def update_vehicle_facility(db: Session, etin: str, vehicle_facility: schemas.Ve
         raise None
     
     # Update the fields with the new data
-    existing_record.upto_2500CC = vehicle_facility.upto_2500CC,
-    existing_record.cost_for_upto_2500 = vehicle_facility.cost_for_upto_2500,
-    existing_record.greater_than_2500cc = vehicle_facility.greater_than_2500cc,
-    existing_record.cost_for_more_than_2500 = vehicle_facility.cost_for_more_than_2500,
-    existing_record.no_of_months = vehicle_facility.no_of_months,
-    existing_record.total = vehicle_facility.total,
+    existing_record.upto_2500CC = vehicle_facility.upto_2500CC
+    existing_record.cost_for_upto_2500 = vehicle_facility.cost_for_upto_2500
+    existing_record.greater_than_2500cc = vehicle_facility.greater_than_2500cc
+    existing_record.cost_for_more_than_2500 = vehicle_facility.cost_for_more_than_2500
+    existing_record.no_of_months = vehicle_facility.no_of_months
+    existing_record.total = vehicle_facility.total
     existing_record.employer_info_id = employer_info_id
 
     # Commit the changes to the database
@@ -712,10 +712,10 @@ def update_salary_income_summary(
     if not db_salary_summary:
         return None  
     
-    db_salary_summary.total_income = updated_summary.total_income,
-    db_salary_summary.exempted_income = updated_summary.exempted_income,
-    db_salary_summary.taxable_income = updated_summary.taxable_income,
-    db_salary_summary.tax_liability = updated_summary.tax_liability,
+    db_salary_summary.total_income = updated_summary.total_income
+    db_salary_summary.exempted_income = updated_summary.exempted_income
+    db_salary_summary.taxable_income = updated_summary.taxable_income
+    db_salary_summary.tax_liability = updated_summary.tax_liability
 
     # Commit changes to the database
     db.commit()
@@ -847,93 +847,94 @@ def update_investment_record(
         return None  # Record does not exist
 
     # Update the fields with new data
-    db_investment_record.gov_securities_actual = updated_record.gov_securities_actual,
-    db_investment_record.gov_securities_allowable = updated_record.gov_securities_allowable,
-    db_investment_record.gov_securities_remarks = updated_record.gov_securities_remarks,
+    db_investment_record.gov_securities_actual = updated_record.gov_securities_actual
+    db_investment_record.gov_securities_allowable = updated_record.gov_securities_allowable
+    db_investment_record.gov_securities_remarks = updated_record.gov_securities_remarks
 
-    db_investment_record.eft_actual = updated_record.eft_actual,
-    db_investment_record.eft_allowable = updated_record.eft_allowable,
-    db_investment_record.eft_remarks = updated_record.eft_remarks,
-    
-    db_investment_record.life_insurance_given_premium_actual = updated_record.life_insurance_given_premium_actual,
-    db_investment_record.life_insurance_given_premium_allowable = updated_record.life_insurance_given_premium_allowable,
-    db_investment_record.life_insurance_given_premium_remarks = updated_record.life_insurance_given_premium_remarks,
+    db_investment_record.eft_actual = updated_record.eft_actual
+    db_investment_record.eft_allowable = updated_record.eft_allowable
+    db_investment_record.eft_remarks = updated_record.eft_remarks
 
-    db_investment_record.contribution_paid_to_deposit_pension_actual = updated_record.contribution_paid_to_deposit_pension_actual,
-    db_investment_record.contribution_paid_to_deposit_pension_allowable = updated_record.contribution_paid_to_deposit_pension_allowable,
-    db_investment_record.contribution_paid_to_deposit_pension_remarks = updated_record.contribution_paid_to_deposit_pension_remarks,
+    db_investment_record.life_insurance_given_premium_actual = updated_record.life_insurance_given_premium_actual
+    db_investment_record.life_insurance_given_premium_allowable = updated_record.life_insurance_given_premium_allowable
+    db_investment_record.life_insurance_given_premium_remarks = updated_record.life_insurance_given_premium_remarks
 
-    db_investment_record.investment_in_any_securities_actual = updated_record.investment_in_any_securities_actual,
-    db_investment_record.investment_in_any_securities_allowable = updated_record.investment_in_any_securities_actual,
-    db_investment_record.investment_in_any_securities_remarks = updated_record.investment_in_any_securities_remarks,
+    db_investment_record.contribution_paid_to_deposit_pension_actual = updated_record.contribution_paid_to_deposit_pension_actual
+    db_investment_record.contribution_paid_to_deposit_pension_allowable = updated_record.contribution_paid_to_deposit_pension_allowable
+    db_investment_record.contribution_paid_to_deposit_pension_remarks = updated_record.contribution_paid_to_deposit_pension_remarks
 
-    db_investment_record.provisions_of_pf_act_1925_actual = updated_record.provisions_of_pf_act_1925_actual,
-    db_investment_record.provisions_of_pf_act_1925_allowable = updated_record.provisions_of_pf_act_1925_actual,
-    db_investment_record.provisions_of_pf_act_1925_remarks = updated_record.provisions_of_pf_act_1925_remarks,
+    db_investment_record.investment_in_any_securities_actual = updated_record.investment_in_any_securities_actual
+    db_investment_record.investment_in_any_securities_allowable = updated_record.investment_in_any_securities_actual
+    db_investment_record.investment_in_any_securities_remarks = updated_record.investment_in_any_securities_remarks
 
-    db_investment_record.contributions_to_approved_provident_fund_actual = updated_record.contributions_to_approved_provident_fund_actual,
-    db_investment_record.contributions_to_approved_provident_fund_allowable = updated_record.contributions_to_approved_provident_fund_actual,
-    db_investment_record.contributions_to_approved_provident_fund_remarks = updated_record.contributions_to_approved_provident_fund_remarks,
+    db_investment_record.provisions_of_pf_act_1925_actual = updated_record.provisions_of_pf_act_1925_actual
+    db_investment_record.provisions_of_pf_act_1925_allowable = updated_record.provisions_of_pf_act_1925_actual
+    db_investment_record.provisions_of_pf_act_1925_remarks = updated_record.provisions_of_pf_act_1925_remarks
 
-    db_investment_record.contributions_to_superannuation_funds_actual = updated_record.contributions_to_superannuation_funds_actual,
-    db_investment_record.contributions_to_superannuation_funds_allowable = updated_record.contributions_to_superannuation_funds_actual,
-    db_investment_record.contributions_to_superannuation_funds_remarks = updated_record.contributions_to_superannuation_funds_remarks,
+    db_investment_record.contributions_to_approved_provident_fund_actual = updated_record.contributions_to_approved_provident_fund_actual
+    db_investment_record.contributions_to_approved_provident_fund_allowable = updated_record.contributions_to_approved_provident_fund_actual
+    db_investment_record.contributions_to_approved_provident_fund_remarks = updated_record.contributions_to_approved_provident_fund_remarks
 
-    db_investment_record.contribution_to_welfare_fund_actual = updated_record.contribution_to_welfare_fund_actual,
-    db_investment_record.contribution_to_welfare_fund_allowable = updated_record.contribution_to_welfare_fund_actual,
-    db_investment_record.contribution_to_welfare_fund_remarks = updated_record.contribution_to_welfare_fund_remarks,
+    db_investment_record.contributions_to_superannuation_funds_actual = updated_record.contributions_to_superannuation_funds_actual
+    db_investment_record.contributions_to_superannuation_funds_allowable = updated_record.contributions_to_superannuation_funds_actual
+    db_investment_record.contributions_to_superannuation_funds_remarks = updated_record.contributions_to_superannuation_funds_remarks
 
-    db_investment_record.contribution_to_zakat_fund_actual = updated_record.contribution_to_zakat_fund_actual,
-    db_investment_record.contribution_to_zakat_fund_allowable = updated_record.contribution_to_zakat_fund_actual,
-    db_investment_record.contribution_to_zakat_fund_remarks = updated_record.contribution_to_zakat_fund_remarks,
+    db_investment_record.contribution_to_welfare_fund_actual = updated_record.contribution_to_welfare_fund_actual
+    db_investment_record.contribution_to_welfare_fund_allowable = updated_record.contribution_to_welfare_fund_actual
+    db_investment_record.contribution_to_welfare_fund_remarks = updated_record.contribution_to_welfare_fund_remarks
 
-    db_investment_record.donation_to_liberation_war_memory_actual = updated_record.donation_to_liberation_war_memory_actual,
-    db_investment_record.donation_to_liberation_war_memory_allowable = updated_record.donation_to_liberation_war_memory_actual,
-    db_investment_record.donation_to_liberation_war_memory_remarks = updated_record.donation_to_liberation_war_memory_remarks,
+    db_investment_record.contribution_to_zakat_fund_actual = updated_record.contribution_to_zakat_fund_actual
+    db_investment_record.contribution_to_zakat_fund_allowable = updated_record.contribution_to_zakat_fund_actual
+    db_investment_record.contribution_to_zakat_fund_remarks = updated_record.contribution_to_zakat_fund_remarks
 
-    db_investment_record.donations_to_father_of_nation_memory_actual = updated_record.donations_to_father_of_nation_memory_actual,
-    db_investment_record.donations_to_father_of_nation_memory_allowable = updated_record.donations_to_father_of_nation_memory_actual,
-    db_investment_record.donations_to_father_of_nation_memory_remarks = updated_record.donations_to_father_of_nation_memory_remarks,
+    db_investment_record.donation_to_liberation_war_memory_actual = updated_record.donation_to_liberation_war_memory_actual
+    db_investment_record.donation_to_liberation_war_memory_allowable = updated_record.donation_to_liberation_war_memory_actual
+    db_investment_record.donation_to_liberation_war_memory_remarks = updated_record.donation_to_liberation_war_memory_remarks
 
-    db_investment_record.donation_to_disabled_organizations_actual = updated_record.donation_to_disabled_organizations_actual,
-    db_investment_record.donation_to_disabled_organizations_allowable = updated_record.donation_to_disabled_organizations_actual,
-    db_investment_record.donation_to_disabled_organizations_remarks = updated_record.donation_to_disabled_organizations_remarks,
-    
-    db_investment_record.donations_to_liberation_war_museum_actual = updated_record.donations_to_liberation_war_museum_actual,
-    db_investment_record.donations_to_liberation_war_museum_allowable = updated_record.donations_to_liberation_war_museum_actual,
-    db_investment_record.donations_to_liberation_war_museum_remarks = updated_record.donations_to_liberation_war_museum_remarks,
+    db_investment_record.donations_to_father_of_nation_memory_actual = updated_record.donations_to_father_of_nation_memory_actual
+    db_investment_record.donations_to_father_of_nation_memory_allowable = updated_record.donations_to_father_of_nation_memory_actual
+    db_investment_record.donations_to_father_of_nation_memory_remarks = updated_record.donations_to_father_of_nation_memory_remarks
 
-    db_investment_record.donation_to_ahsania_cancer_hospital_actual = updated_record.donation_to_ahsania_cancer_hospital_actual,
-    db_investment_record.donation_to_ahsania_cancer_hospital_allowable = updated_record.donation_to_ahsania_cancer_hospital_actual,
-    db_investment_record.donation_to_ahsania_cancer_hospital_remarks = updated_record.donation_to_ahsania_cancer_hospital_remarks,
+    db_investment_record.donation_to_disabled_organizations_actual = updated_record.donation_to_disabled_organizations_actual
+    db_investment_record.donation_to_disabled_organizations_allowable = updated_record.donation_to_disabled_organizations_actual
+    db_investment_record.donation_to_disabled_organizations_remarks = updated_record.donation_to_disabled_organizations_remarks
 
-    db_investment_record.donations_to_icddrb_actual = updated_record.donations_to_icddrb_actual,
-    db_investment_record.donations_to_icddrb_allowable = updated_record.donations_to_icddrb_actual,
-    db_investment_record.donations_to_icddrb_remarks = updated_record.donations_to_icddrb_remarks,
+    db_investment_record.donations_to_liberation_war_museum_actual = updated_record.donations_to_liberation_war_museum_actual
+    db_investment_record.donations_to_liberation_war_museum_allowable = updated_record.donations_to_liberation_war_museum_actual
+    db_investment_record.donations_to_liberation_war_museum_remarks = updated_record.donations_to_liberation_war_museum_remarks
 
-    db_investment_record.donation_to_crp_savar_actual = updated_record.donation_to_crp_savar_actual,
-    db_investment_record.donation_to_crp_savar_allowable = updated_record.donation_to_crp_savar_actual,
-    db_investment_record.donation_to_crp_savar_remarks = updated_record.donation_to_crp_savar_remarks,
+    db_investment_record.donation_to_ahsania_cancer_hospital_actual = updated_record.donation_to_ahsania_cancer_hospital_actual
+    db_investment_record.donation_to_ahsania_cancer_hospital_allowable = updated_record.donation_to_ahsania_cancer_hospital_actual
+    db_investment_record.donation_to_ahsania_cancer_hospital_remarks = updated_record.donation_to_ahsania_cancer_hospital_remarks
 
-    db_investment_record.donations_to_charitable_educational_institutions_actual = updated_record.donations_to_charitable_educational_institutions_actual,
-    db_investment_record.donations_to_charitable_educational_institutions_allowable = updated_record.donations_to_charitable_educational_institutions_actual,
-    db_investment_record.donations_to_charitable_educational_institutions_remarks = updated_record.donations_to_charitable_educational_institutions_remarks,
+    db_investment_record.donations_to_icddrb_actual = updated_record.donations_to_icddrb_actual
+    db_investment_record.donations_to_icddrb_allowable = updated_record.donations_to_icddrb_actual
+    db_investment_record.donations_to_icddrb_remarks = updated_record.donations_to_icddrb_remarks
 
-    db_investment_record.donation_to_asiatic_society_actual = updated_record.donation_to_asiatic_society_actual,
-    db_investment_record.donation_to_asiatic_society_allowable = updated_record.donation_to_asiatic_society_actual,
-    db_investment_record.donation_to_asiatic_society_remarks = updated_record.donation_to_asiatic_society_remarks,
+    db_investment_record.donation_to_crp_savar_actual = updated_record.donation_to_crp_savar_actual
+    db_investment_record.donation_to_crp_savar_allowable = updated_record.donation_to_crp_savar_actual
+    db_investment_record.donation_to_crp_savar_remarks = updated_record.donation_to_crp_savar_remarks
 
-    db_investment_record.donation_to_dhaka_ahsania_mission_actual = updated_record.donation_to_dhaka_ahsania_mission_actual,
-    db_investment_record.donation_to_dhaka_ahsania_mission_allowable = updated_record.donation_to_dhaka_ahsania_mission_actual,
-    db_investment_record.donation_to_dhaka_ahsania_mission_remarks = updated_record.donation_to_dhaka_ahsania_mission_remarks,
+    db_investment_record.donations_to_charitable_educational_institutions_actual = updated_record.donations_to_charitable_educational_institutions_actual
+    db_investment_record.donations_to_charitable_educational_institutions_allowable = updated_record.donations_to_charitable_educational_institutions_actual
+    db_investment_record.donations_to_charitable_educational_institutions_remarks = updated_record.donations_to_charitable_educational_institutions_remarks
 
-    db_investment_record.contribution_to_super_annuity_fund_actual = updated_record.contribution_to_super_annuity_fund_actual,
-    db_investment_record.contribution_to_super_annuity_fund_allowable = updated_record.contribution_to_super_annuity_fund_actual,
-    db_investment_record.contribution_to_super_annuity_fund_remarks = updated_record.contribution_to_super_annuity_fund_remarks,
+    db_investment_record.donation_to_asiatic_society_actual = updated_record.donation_to_asiatic_society_actual
+    db_investment_record.donation_to_asiatic_society_allowable = updated_record.donation_to_asiatic_society_actual
+    db_investment_record.donation_to_asiatic_society_remarks = updated_record.donation_to_asiatic_society_remarks
 
-    db_investment_record.other_actual = updated_record.other_actual,
-    db_investment_record.other_allowable = updated_record.other_actual,
-    db_investment_record.other_remarks = updated_record.other_remarks,
+    db_investment_record.donation_to_dhaka_ahsania_mission_actual = updated_record.donation_to_dhaka_ahsania_mission_actual
+    db_investment_record.donation_to_dhaka_ahsania_mission_allowable = updated_record.donation_to_dhaka_ahsania_mission_actual
+    db_investment_record.donation_to_dhaka_ahsania_mission_remarks = updated_record.donation_to_dhaka_ahsania_mission_remarks
+
+    db_investment_record.contribution_to_super_annuity_fund_actual = updated_record.contribution_to_super_annuity_fund_actual
+    db_investment_record.contribution_to_super_annuity_fund_allowable = updated_record.contribution_to_super_annuity_fund_actual
+    db_investment_record.contribution_to_super_annuity_fund_remarks = updated_record.contribution_to_super_annuity_fund_remarks
+
+    db_investment_record.other_actual = updated_record.other_actual
+    db_investment_record.other_allowable = updated_record.other_actual
+    db_investment_record.other_remarks = updated_record.other_remarks
+
 
     db_investment_record.total_investment = updated_record.total_investment = (
             updated_record.gov_securities_actual +
@@ -1029,12 +1030,12 @@ def update_given_premium(db: Session, etin: str, given_premium: schemas.Given_Pr
         raise HTTPException(status_code=404, detail="Given premium record not found")
     
     # Update the fields with the new data
-    existing_record.policy_no = given_premium.policy_no,
-    existing_record.company = given_premium.company,
-    existing_record.policy_value = given_premium.policy_value,
-    existing_record.given_premium = given_premium.given_premium,
-    existing_record.allowable = given_premium.allowable,
-    existing_record.remarks = given_premium.remarks,
+    existing_record.policy_no = given_premium.policy_no
+    existing_record.company = given_premium.company
+    existing_record.policy_value = given_premium.policy_value
+    existing_record.given_premium = given_premium.given_premium
+    existing_record.allowable = given_premium.allowable
+    existing_record.remarks = given_premium.remarks
 
     # Commit the changes to the database
     db.commit()
@@ -1075,9 +1076,9 @@ def update_gov_securities(db: Session, etin: str, gov_securities: schemas.Gov_Se
         raise HTTPException(status_code=404, detail="Gov securities record not found")
     
     # Update the fields with the new data
-    existing_record.description = gov_securities.description,
-    existing_record.actual = gov_securities.actual,
-    existing_record.allowable = gov_securities.allowable,
+    existing_record.description = gov_securities.description
+    existing_record.actual = gov_securities.actual
+    existing_record.allowable = gov_securities.allowable
 
     # Commit the changes to the database
     db.commit()
@@ -1117,9 +1118,9 @@ def update_eft(db: Session, etin: str, eft: schemas.E_FT):
         raise HTTPException(status_code=404, detail="EFT record not found")
     
     # Update the fields with the new data
-    existing_record.description = eft.description,
-    existing_record.actual = eft.actual,
-    existing_record.allowable = eft.allowable,
+    existing_record.description = eft.description
+    existing_record.actual = eft.actual
+    existing_record.allowable = eft.allowable
 
     # Commit the changes to the database
     db.commit()
@@ -1159,9 +1160,9 @@ def update_dps(db: Session, etin: str, dps: schemas.D_PS):
         raise HTTPException(status_code=404, detail="DPS record not found")
     
     # Update the fields with the new data
-    existing_record.description = dps.description,
-    existing_record.actual = dps.actual,
-    existing_record.allowable = dps.allowable,
+    existing_record.description = dps.description
+    existing_record.actual = dps.actual
+    existing_record.allowable = dps.allowable
 
     # Commit the changes to the database
     db.commit()
@@ -1472,65 +1473,65 @@ def update_financial_asset_income(db: Session, financial_asset_income: schemas.F
         raise ValueError(f"Record with ETIN {petin} not found")
 
     # Update the fields with new values from the provided financial_asset_income
-    existing_record.savings_ban_interest_net_income = financial_asset_income.savings_ban_interest_net_income,
-    existing_record.savings_ban_interest_tax_deduction_at_source = financial_asset_income.savings_ban_interest_tax_deduction_at_source,
-    existing_record.savings_ban_interest_interest_on_loans = financial_asset_income.savings_ban_interest_interest_on_loans,
-    existing_record.savings_ban_interest_allowable_expenditure = financial_asset_income.savings_ban_interest_allowable_expenditure,
+    existing_record.savings_ban_interest_net_income = financial_asset_income.savings_ban_interest_net_income
+    existing_record.savings_ban_interest_tax_deduction_at_source = financial_asset_income.savings_ban_interest_tax_deduction_at_source
+    existing_record.savings_ban_interest_interest_on_loans = financial_asset_income.savings_ban_interest_interest_on_loans
+    existing_record.savings_ban_interest_allowable_expenditure = financial_asset_income.savings_ban_interest_allowable_expenditure
     existing_record.savings_ban_interest_taxable = (
         (financial_asset_income.savings_ban_interest_net_income + financial_asset_income.savings_ban_interest_tax_deduction_at_source) - 
         (financial_asset_income.savings_ban_interest_interest_on_loans + financial_asset_income.savings_ban_interest_allowable_expenditure)
-        ),
-    existing_record.savings_ban_interest_description = financial_asset_income.savings_ban_interest_description,
+        )
+    existing_record.savings_ban_interest_description = financial_asset_income.savings_ban_interest_description
 
-    existing_record.other_securities_net_income = financial_asset_income.other_securities_net_income,
-    existing_record.other_securities_tax_deduction_at_source = financial_asset_income.other_securities_tax_deduction_at_source,
-    existing_record.other_securities_interest_on_loans = financial_asset_income.other_securities_interest_on_loans,
-    existing_record.other_securities_allowable_expenditure = financial_asset_income.other_securities_allowable_expenditure,
+    existing_record.other_securities_net_income = financial_asset_income.other_securities_net_income
+    existing_record.other_securities_tax_deduction_at_source = financial_asset_income.other_securities_tax_deduction_at_source
+    existing_record.other_securities_interest_on_loans = financial_asset_income.other_securities_interest_on_loans
+    existing_record.other_securities_allowable_expenditure = financial_asset_income.other_securities_allowable_expenditure
     existing_record.other_securities_taxable = (
         (financial_asset_income.other_securities_net_income + financial_asset_income.other_securities_tax_deduction_at_source) - 
         (financial_asset_income.other_securities_interest_on_loans + financial_asset_income.other_securities_allowable_expenditure)
-        ),
-    existing_record.other_securities_description = financial_asset_income.other_securities_description,
+        )
+    existing_record.other_securities_description = financial_asset_income.other_securities_description
 
-    existing_record.income_from_islamic_principles_net_income = financial_asset_income.income_from_islamic_principles_net_income,
-    existing_record.income_from_islamic_principles_tax_deduction_at_source = financial_asset_income.income_from_islamic_principles_tax_deduction_at_source,
-    existing_record.income_from_islamic_principles_interest_on_loans = financial_asset_income.income_from_islamic_principles_interest_on_loans,
-    existing_record.income_from_islamic_principles_allowable_expenditure = financial_asset_income.income_from_islamic_principles_allowable_expenditure,
+    existing_record.income_from_islamic_principles_net_income = financial_asset_income.income_from_islamic_principles_net_income
+    existing_record.income_from_islamic_principles_tax_deduction_at_source = financial_asset_income.income_from_islamic_principles_tax_deduction_at_source
+    existing_record.income_from_islamic_principles_interest_on_loans = financial_asset_income.income_from_islamic_principles_interest_on_loans
+    existing_record.income_from_islamic_principles_allowable_expenditure = financial_asset_income.income_from_islamic_principles_allowable_expenditure
     existing_record.income_from_islamic_principles_taxable = (
         (financial_asset_income.income_from_islamic_principles_net_income + financial_asset_income.income_from_islamic_principles_tax_deduction_at_source) - 
         (financial_asset_income.income_from_islamic_principles_interest_on_loans + financial_asset_income.income_from_islamic_principles_allowable_expenditure)
-        ),
-    existing_record.income_from_islamic_principles_description = financial_asset_income.income_from_islamic_principles_description,
+        )
+    existing_record.income_from_islamic_principles_description = financial_asset_income.income_from_islamic_principles_description
 
-    existing_record.bank_interest_savings_deposits_net_income = financial_asset_income.bank_interest_savings_deposits_net_income,
-    existing_record.bank_interest_savings_deposits_tax_deduction_at_source = financial_asset_income.bank_interest_savings_deposits_tax_deduction_at_source,
-    existing_record.bank_interest_savings_deposits_interest_on_loans = financial_asset_income.bank_interest_savings_deposits_interest_on_loans,
-    existing_record.bank_interest_savings_deposits_allowable_expenditure = financial_asset_income.bank_interest_savings_deposits_allowable_expenditure,
+    existing_record.bank_interest_savings_deposits_net_income = financial_asset_income.bank_interest_savings_deposits_net_income
+    existing_record.bank_interest_savings_deposits_tax_deduction_at_source = financial_asset_income.bank_interest_savings_deposits_tax_deduction_at_source
+    existing_record.bank_interest_savings_deposits_interest_on_loans = financial_asset_income.bank_interest_savings_deposits_interest_on_loans
+    existing_record.bank_interest_savings_deposits_allowable_expenditure = financial_asset_income.bank_interest_savings_deposits_allowable_expenditure
     existing_record.bank_interest_savings_deposits_taxable = (
         (financial_asset_income.bank_interest_savings_deposits_net_income + financial_asset_income.bank_interest_savings_deposits_tax_deduction_at_source) - 
         (financial_asset_income.bank_interest_savings_deposits_interest_on_loans + financial_asset_income.bank_interest_savings_deposits_allowable_expenditure)
-        ),
-    existing_record.bank_interest_savings_deposits_description = financial_asset_income.bank_interest_savings_deposits_description,
+        )
+    existing_record.bank_interest_savings_deposits_description = financial_asset_income.bank_interest_savings_deposits_description
 
-    existing_record.fdr_interest_income_net_income = financial_asset_income.fdr_interest_income_net_income,
-    existing_record.fdr_interest_income_tax_deduction_at_source = financial_asset_income.fdr_interest_income_tax_deduction_at_source,
-    existing_record.fdr_interest_income_interest_on_loans = financial_asset_income.fdr_interest_income_interest_on_loans,
-    existing_record.fdr_interest_income_allowable_expenditure = financial_asset_income.fdr_interest_income_allowable_expenditure,
+    existing_record.fdr_interest_income_net_income = financial_asset_income.fdr_interest_income_net_income
+    existing_record.fdr_interest_income_tax_deduction_at_source = financial_asset_income.fdr_interest_income_tax_deduction_at_source
+    existing_record.fdr_interest_income_interest_on_loans = financial_asset_income.fdr_interest_income_interest_on_loans
+    existing_record.fdr_interest_income_allowable_expenditure = financial_asset_income.fdr_interest_income_allowable_expenditure
     existing_record.fdr_interest_income_taxable = (
         (financial_asset_income.fdr_interest_income_net_income + financial_asset_income.fdr_interest_income_tax_deduction_at_source) - 
         (financial_asset_income.fdr_interest_income_interest_on_loans + financial_asset_income.fdr_interest_income_allowable_expenditure)
-        ),
-    existing_record.fdr_interest_income_description = financial_asset_income.fdr_interest_income_description,
+        )
+    existing_record.fdr_interest_income_description = financial_asset_income.fdr_interest_income_description
 
-    existing_record.dividend_income_net_income = financial_asset_income.dividend_income_net_income,
-    existing_record.dividend_income_tax_deduction_at_source = financial_asset_income.dividend_income_tax_deduction_at_source,
-    existing_record.dividend_income_interest_on_loans = financial_asset_income.dividend_income_interest_on_loans,
-    existing_record.dividend_income_allowable_expenditure = financial_asset_income.dividend_income_allowable_expenditure,
+    existing_record.dividend_income_net_income = financial_asset_income.dividend_income_net_income
+    existing_record.dividend_income_tax_deduction_at_source = financial_asset_income.dividend_income_tax_deduction_at_source
+    existing_record.dividend_income_interest_on_loans = financial_asset_income.dividend_income_interest_on_loans
+    existing_record.dividend_income_allowable_expenditure = financial_asset_income.dividend_income_allowable_expenditure
     existing_record.dividend_income_taxable = (
         (financial_asset_income.dividend_income_net_income + financial_asset_income.dividend_income_tax_deduction_at_source) - 
         (financial_asset_income.dividend_income_interest_on_loans + financial_asset_income.dividend_income_allowable_expenditure)
-        ),
-    existing_record.dividend_income_description = financial_asset_income.dividend_income_description,
+        )
+    existing_record.dividend_income_description = financial_asset_income.dividend_income_description
     
     
     
@@ -1542,7 +1543,7 @@ def update_financial_asset_income(db: Session, financial_asset_income: schemas.F
             financial_asset_income.bank_interest_savings_deposits_net_income + 
             financial_asset_income.fdr_interest_income_net_income + 
             financial_asset_income.dividend_income_net_income
-            ),
+            )
         
     existing_record.total_tax_deduction_at_source = (
         financial_asset_income.savings_ban_interest_tax_deduction_at_source +
@@ -1551,7 +1552,7 @@ def update_financial_asset_income(db: Session, financial_asset_income: schemas.F
         financial_asset_income.bank_interest_savings_deposits_tax_deduction_at_source +
         financial_asset_income.fdr_interest_income_tax_deduction_at_source +
         financial_asset_income.dividend_income_tax_deduction_at_source
-        ),
+        )
     
     existing_record.total_interest_on_loans = (
         financial_asset_income.savings_ban_interest_interest_on_loans +
@@ -1560,7 +1561,7 @@ def update_financial_asset_income(db: Session, financial_asset_income: schemas.F
         financial_asset_income.bank_interest_savings_deposits_interest_on_loans +
         financial_asset_income.fdr_interest_income_interest_on_loans +
         financial_asset_income.dividend_income_interest_on_loans
-    ),
+    )
     
     existing_record.total_allowable_expenditure = (
         financial_asset_income.savings_ban_interest_allowable_expenditure +
@@ -1569,7 +1570,7 @@ def update_financial_asset_income(db: Session, financial_asset_income: schemas.F
         financial_asset_income.bank_interest_savings_deposits_allowable_expenditure +
         financial_asset_income.fdr_interest_income_allowable_expenditure +
         financial_asset_income.dividend_income_allowable_expenditure
-    ),
+    )
 
     existing_record.total_taxable = (
         financial_asset_income.savings_ban_interest_net_income + financial_asset_income.other_securities_net_income +
@@ -1586,72 +1587,72 @@ def update_financial_asset_income(db: Session, financial_asset_income: schemas.F
         financial_asset_income.income_from_islamic_principles_allowable_expenditure + financial_asset_income.bank_interest_savings_deposits_allowable_expenditure + 
         financial_asset_income.fdr_interest_income_allowable_expenditure + financial_asset_income.dividend_income_allowable_expenditure
         )
-    ),
+    )
         
 
     
 
-    existing_record.reduced_tax_rate_securities_net_income = financial_asset_income.reduced_tax_rate_securities_net_income,
-    existing_record.reduced_tax_rate_securities_tax_deduction_at_source = financial_asset_income.reduced_tax_rate_securities_tax_deduction_at_source,
-    existing_record.reduced_tax_rate_securities_interest_on_loans = financial_asset_income.reduced_tax_rate_securities_interest_on_loans,
-    existing_record.reduced_tax_rate_securities_allowable_expenditure = financial_asset_income.reduced_tax_rate_securities_allowable_expenditure,
+    existing_record.reduced_tax_rate_securities_net_income = financial_asset_income.reduced_tax_rate_securities_net_income
+    existing_record.reduced_tax_rate_securities_tax_deduction_at_source = financial_asset_income.reduced_tax_rate_securities_tax_deduction_at_source
+    existing_record.reduced_tax_rate_securities_interest_on_loans = financial_asset_income.reduced_tax_rate_securities_interest_on_loans
+    existing_record.reduced_tax_rate_securities_allowable_expenditure = financial_asset_income.reduced_tax_rate_securities_allowable_expenditure
     existing_record.reduced_tax_rate_securities_taxable = (
         (financial_asset_income.reduced_tax_rate_securities_net_income + financial_asset_income.reduced_tax_rate_securities_tax_deduction_at_source) - 
         (financial_asset_income.reduced_tax_rate_securities_interest_on_loans + financial_asset_income.reduced_tax_rate_securities_allowable_expenditure)
-        ),
-    existing_record.reduced_tax_rate_securities_description = financial_asset_income.reduced_tax_rate_securities_description,
+        )
+    existing_record.reduced_tax_rate_securities_description = financial_asset_income.reduced_tax_rate_securities_description
 
-    existing_record.income_other_resources_net_income = financial_asset_income.income_other_resources_net_income,
-    existing_record.income_other_resources_tax_deduction_at_source = financial_asset_income.income_other_resources_tax_deduction_at_source,
-    existing_record.income_other_resources_interest_on_loans = financial_asset_income.income_other_resources_interest_on_loans,
-    existing_record.income_other_resources_allowable_expenditure = financial_asset_income.income_other_resources_allowable_expenditure,
+    existing_record.income_other_resources_net_income = financial_asset_income.income_other_resources_net_income
+    existing_record.income_other_resources_tax_deduction_at_source = financial_asset_income.income_other_resources_tax_deduction_at_source
+    existing_record.income_other_resources_interest_on_loans = financial_asset_income.income_other_resources_interest_on_loans
+    existing_record.income_other_resources_allowable_expenditure = financial_asset_income.income_other_resources_allowable_expenditure
     existing_record.income_other_resources_taxable = (
         (financial_asset_income.income_other_resources_net_income + financial_asset_income.income_other_resources_tax_deduction_at_source) - 
         (financial_asset_income.income_other_resources_interest_on_loans + financial_asset_income.income_other_resources_allowable_expenditure)
-        ),
-    existing_record.income_other_resources_description = financial_asset_income.income_other_resources_description,
+        )
+    existing_record.income_other_resources_description = financial_asset_income.income_other_resources_description
 
-    existing_record.us_dollar_investment_bonds_net_income = financial_asset_income.us_dollar_investment_bonds_net_income,
-    existing_record.us_dollar_investment_bonds_tax_deduction_at_source = financial_asset_income.us_dollar_investment_bonds_tax_deduction_at_source,
-    existing_record.us_dollar_investment_bonds_interest_on_loans = financial_asset_income.us_dollar_investment_bonds_interest_on_loans,
-    existing_record.us_dollar_investment_bonds_allowable_expenditure = financial_asset_income.us_dollar_investment_bonds_allowable_expenditure,
-    existing_record.us_dollar_investment_bonds_taxable = 0,
-    existing_record.us_dollar_investment_bonds_description = financial_asset_income.us_dollar_investment_bonds_description,
+    existing_record.us_dollar_investment_bonds_net_income = financial_asset_income.us_dollar_investment_bonds_net_income
+    existing_record.us_dollar_investment_bonds_tax_deduction_at_source = financial_asset_income.us_dollar_investment_bonds_tax_deduction_at_source
+    existing_record.us_dollar_investment_bonds_interest_on_loans = financial_asset_income.us_dollar_investment_bonds_interest_on_loans
+    existing_record.us_dollar_investment_bonds_allowable_expenditure = financial_asset_income.us_dollar_investment_bonds_allowable_expenditure
+    existing_record.us_dollar_investment_bonds_taxable = 0
+    existing_record.us_dollar_investment_bonds_description = financial_asset_income.us_dollar_investment_bonds_description
 
-    existing_record.euro_premium_bonds_net_income = financial_asset_income.euro_premium_bonds_net_income,
-    existing_record.euro_premium_bonds_tax_deduction_at_source = financial_asset_income.euro_premium_bonds_tax_deduction_at_source,
-    existing_record.euro_premium_bonds_interest_on_loans = financial_asset_income.euro_premium_bonds_interest_on_loans,
-    existing_record.euro_premium_bonds_allowable_expenditure = financial_asset_income.euro_premium_bonds_allowable_expenditure,
-    existing_record.euro_premium_bonds_taxable = 0,
-    existing_record.euro_premium_bonds_description = financial_asset_income.euro_premium_bonds_description,
+    existing_record.euro_premium_bonds_net_income = financial_asset_income.euro_premium_bonds_net_income
+    existing_record.euro_premium_bonds_tax_deduction_at_source = financial_asset_income.euro_premium_bonds_tax_deduction_at_source
+    existing_record.euro_premium_bonds_interest_on_loans = financial_asset_income.euro_premium_bonds_interest_on_loans
+    existing_record.euro_premium_bonds_allowable_expenditure = financial_asset_income.euro_premium_bonds_allowable_expenditure
+    existing_record.euro_premium_bonds_taxable = 0
+    existing_record.euro_premium_bonds_description = financial_asset_income.euro_premium_bonds_description
 
-    existing_record.pound_sterling_premium_bonds_net_income = financial_asset_income.pound_sterling_premium_bonds_net_income,
-    existing_record.pound_sterling_premium_bonds_tax_deduction_at_source = financial_asset_income.pound_sterling_premium_bonds_tax_deduction_at_source,
-    existing_record.pound_sterling_premium_bonds_interest_on_loans = financial_asset_income.pound_sterling_premium_bonds_interest_on_loans,
-    existing_record.pound_sterling_premium_bonds_allowable_expenditure = financial_asset_income.pound_sterling_premium_bonds_allowable_expenditure,
-    existing_record.pound_sterling_premium_bonds_taxable = 0,
-    existing_record.pound_sterling_premium_bonds_description = financial_asset_income.pound_sterling_premium_bonds_description,
+    existing_record.pound_sterling_premium_bonds_net_income = financial_asset_income.pound_sterling_premium_bonds_net_income
+    existing_record.pound_sterling_premium_bonds_tax_deduction_at_source = financial_asset_income.pound_sterling_premium_bonds_tax_deduction_at_source
+    existing_record.pound_sterling_premium_bonds_interest_on_loans = financial_asset_income.pound_sterling_premium_bonds_interest_on_loans
+    existing_record.pound_sterling_premium_bonds_allowable_expenditure = financial_asset_income.pound_sterling_premium_bonds_allowable_expenditure
+    existing_record.pound_sterling_premium_bonds_taxable = 0
+    existing_record.pound_sterling_premium_bonds_description = financial_asset_income.pound_sterling_premium_bonds_description
 
-    existing_record.us_dollar_premium_bonds_net_income = financial_asset_income.us_dollar_premium_bonds_net_income,
-    existing_record.us_dollar_premium_bonds_tax_deduction_at_source = financial_asset_income.us_dollar_premium_bonds_tax_deduction_at_source,
-    existing_record.us_dollar_premium_bonds_interest_on_loans = financial_asset_income.us_dollar_premium_bonds_interest_on_loans,
-    existing_record.us_dollar_premium_bonds_allowable_expenditure = financial_asset_income.us_dollar_premium_bonds_allowable_expenditure,
-    existing_record.us_dollar_premium_bonds_taxable = 0,
-    existing_record.us_dollar_premium_bonds_description = financial_asset_income.us_dollar_premium_bonds_description,
+    existing_record.us_dollar_premium_bonds_net_income = financial_asset_income.us_dollar_premium_bonds_net_income
+    existing_record.us_dollar_premium_bonds_tax_deduction_at_source = financial_asset_income.us_dollar_premium_bonds_tax_deduction_at_source
+    existing_record.us_dollar_premium_bonds_interest_on_loans = financial_asset_income.us_dollar_premium_bonds_interest_on_loans
+    existing_record.us_dollar_premium_bonds_allowable_expenditure = financial_asset_income.us_dollar_premium_bonds_allowable_expenditure
+    existing_record.us_dollar_premium_bonds_taxable = 0
+    existing_record.us_dollar_premium_bonds_description = financial_asset_income.us_dollar_premium_bonds_description
 
-    existing_record.wage_earners_development_bonds_net_income = financial_asset_income.wage_earners_development_bonds_net_income,
-    existing_record.wage_earners_development_bonds_tax_deduction_at_source = financial_asset_income.wage_earners_development_bonds_tax_deduction_at_source,
-    existing_record.wage_earners_development_bonds_interest_on_loans = financial_asset_income.wage_earners_development_bonds_interest_on_loans,
-    existing_record.wage_earners_development_bonds_allowable_expenditure = financial_asset_income.wage_earners_development_bonds_allowable_expenditure,
-    existing_record.wage_earners_development_bonds_taxable = 0,
-    existing_record.wage_earners_development_bonds_description = financial_asset_income.wage_earners_development_bonds_description,
+    existing_record.wage_earners_development_bonds_net_income = financial_asset_income.wage_earners_development_bonds_net_income
+    existing_record.wage_earners_development_bonds_tax_deduction_at_source = financial_asset_income.wage_earners_development_bonds_tax_deduction_at_source
+    existing_record.wage_earners_development_bonds_interest_on_loans = financial_asset_income.wage_earners_development_bonds_interest_on_loans
+    existing_record.wage_earners_development_bonds_allowable_expenditure = financial_asset_income.wage_earners_development_bonds_allowable_expenditure
+    existing_record.wage_earners_development_bonds_taxable = 0
+    existing_record.wage_earners_development_bonds_description = financial_asset_income.wage_earners_development_bonds_description
 
-    existing_record.euro_investment_bonds_net_income = financial_asset_income.euro_investment_bonds_net_income,
-    existing_record.euro_investment_bonds_tax_deduction_at_source = financial_asset_income.euro_investment_bonds_tax_deduction_at_source,
-    existing_record.euro_investment_bonds_interest_on_loans = financial_asset_income.euro_investment_bonds_interest_on_loans,
-    existing_record.euro_investment_bonds_allowable_expenditure = financial_asset_income.euro_investment_bonds_allowable_expenditure,
-    existing_record.euro_investment_bonds_taxable = 0,
-    existing_record.euro_investment_bonds_description = financial_asset_income.euro_investment_bonds_description,
+    existing_record.euro_investment_bonds_net_income = financial_asset_income.euro_investment_bonds_net_income
+    existing_record.euro_investment_bonds_tax_deduction_at_source = financial_asset_income.euro_investment_bonds_tax_deduction_at_source
+    existing_record.euro_investment_bonds_interest_on_loans = financial_asset_income.euro_investment_bonds_interest_on_loans
+    existing_record.euro_investment_bonds_allowable_expenditure = financial_asset_income.euro_investment_bonds_allowable_expenditure
+    existing_record.euro_investment_bonds_taxable = 0
+    existing_record.euro_investment_bonds_description = financial_asset_income.euro_investment_bonds_description
     
     existing_record.total_gross_income =  (
         financial_asset_income.savings_ban_interest_net_income + 
@@ -1670,7 +1671,7 @@ def update_financial_asset_income(db: Session, financial_asset_income: schemas.F
         financial_asset_income.reduced_tax_rate_securities_tax_deduction_at_source + 
         financial_asset_income.income_other_resources_net_income + 
         financial_asset_income.income_other_resources_tax_deduction_at_source
-        ),
+        )
     
     existing_record.total_gross_expense = (
         financial_asset_income.savings_ban_interest_interest_on_loans +
@@ -1689,7 +1690,7 @@ def update_financial_asset_income(db: Session, financial_asset_income: schemas.F
         financial_asset_income.reduced_tax_rate_securities_allowable_expenditure + 
         financial_asset_income.income_other_resources_interest_on_loans + 
         financial_asset_income.income_other_resources_allowable_expenditure
-        ),
+        )
     
     existing_record.total_gross_exampted = (
         financial_asset_income.us_dollar_investment_bonds_net_income + 
@@ -1698,7 +1699,7 @@ def update_financial_asset_income(db: Session, financial_asset_income: schemas.F
         financial_asset_income.us_dollar_premium_bonds_net_income + 
         financial_asset_income.wage_earners_development_bonds_net_income + 
         financial_asset_income.euro_investment_bonds_net_income
-        ),
+        )
     
     existing_record.total_gross_taxable = (
         (
