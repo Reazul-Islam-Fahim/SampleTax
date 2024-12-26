@@ -248,7 +248,7 @@ def create_rent_summary_income(
         gross_net_income = int(gross_net_income)
     )
     
-    summary = crud.get_salary_income_summary(db, etin)
+    summary = crud.get_rent_summary_income(db, etin= etin)
     
     if summary:
         crud.update_rent_summary_income(db, etin, rent_income_summay)
@@ -256,6 +256,6 @@ def create_rent_summary_income(
         crud.create_rent_summary_income(db, rent_income_summay, etin)
     
     return {
-        "summary" : crud.get_salary_income_summary(db, etin)
+        "summary" : crud.get_rent_summary_income(db, etin= etin)
         }
         

@@ -18,7 +18,7 @@ class TaxPayers(BaseModel):
     name: str
     nid : str
     etin : str
-    source_area: Optional[SourceArea] = SourceArea.dahaka_chittagong
+    source_area: Optional[SourceArea] = SourceArea.dhaka_chittagong
     circle : str
     zone : str
     assesment_year : str

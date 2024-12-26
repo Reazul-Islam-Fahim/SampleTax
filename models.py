@@ -5,9 +5,9 @@ from enum import Enum
 
 
 class SourceArea(str, Enum):
-    dahaka_chittagong = "Dhaka_Chittagong"
-    city = "City"
-    other = "Other"
+    dhaka_chittagong = "dhaka_chittagong"
+    city = "city"
+    other = "other"
 
 
 
@@ -23,15 +23,15 @@ class EmploymentType(str, Enum):
 
 
 class ResidentialStatus(str, Enum):
-    resident = "Resident"
-    non_resident = "Non-resident"
+    resident = "resident"
+    non_resident = "non-resident"
     
 
 class TaxPayerStatus(str, Enum):
-    individual = "Individual"
-    firm = "Firm"
-    hindu = "Hindu Undivided Family"
-    other = "Others"
+    individual = "individual"
+    firm = "firm"
+    hindu = "hindu undivided family"
+    other = "others"
     
     
 class FreedomFighter(str, Enum):
@@ -51,8 +51,8 @@ class  AgeAbove65(str, Enum):
     no = "No"
     
 class MaritalStatus(str,Enum):
-    married = "Married"
-    unmarried = "Unmarried"
+    married = "married"
+    unmarried = "unmarried"
     
     
 class AreaType(str, Enum):
@@ -95,7 +95,7 @@ class Taxpayer(Base):
     nid = Column (String(12), unique= True, index= True, nullable= False)
     name = Column(String(100), index = True, nullable= False)
     gender = Column(senum(Gender), index=True, nullable= False)
-    source_area = Column(senum(SourceArea), index=True, default="Dhaka_Chittagong")
+    source_area = Column(senum(SourceArea, name="source_area"), index=True, nullable= False)
     circle = Column (String(50), index= True, nullable= False)
     zone = Column (String(50), index= True, nullable= False)
     employment_type = Column(senum(EmploymentType), index= True, nullable= False)
