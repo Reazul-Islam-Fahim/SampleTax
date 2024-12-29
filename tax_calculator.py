@@ -55,24 +55,26 @@ def create_tax_record(
     if not taxpayer.zone:
         raise HTTPException(status_code=400, detail="Taxpayer zone not specified")
     
+    financial_asset_income = crud.get_financial_asset_income(db, etin)
+    if not financial_asset_income:
+        raise HTTPException(status_code=404, detail="financial_asset_income not found")
     
-    # net_tax_liability = salary_income_summary.tax_liability - rebate_record.rebate
+    rent_income_summary = crud.get_rent_summary_income(db, etin)
+    
 
     area_tax = calculate_area_tax(taxpayer.source_area.upper())
     
-    financial_asset_income = crud.get_financial_asset_income(db, etin)
+    total_liability_regular_minimum_income = _calculate_tax_liability(salary_income_summary.taxable_income + financial_asset_income.total_taxable + rent_income_summary.gross_net_income - financial_asset_income.savings_ban_interest_taxable)
     
-    total_liability = _calculate_tax_liability(salary_income_summary.taxable_income + financial_asset_income.total_taxable - financial_asset_income.savings_ban_interest_taxable)
+    tax_liability_except_final_exempted_minimum = _calculate_tax_liability(salary_income_summary.taxable_income + rent_income_summary.gross_net_income)
     
-    salary_income_liability = salary_income_summary.tax_liability
-    
-    minimum_tax = total_liability - salary_income_liability
+    minimum_tax = total_liability_regular_minimum_income - tax_liability_except_final_exempted_minimum
     
     ait = financial_asset_income.total_tax_deduction_at_source - financial_asset_income.savings_ban_interest_tax_deduction_at_source
     
     minimum_tax = max(minimum_tax, ait)
     
-    total_tax = salary_income_liability + minimum_tax
+    total_tax = tax_liability_except_final_exempted_minimum + minimum_tax
     
     final_tax = financial_asset_income.savings_ban_interest_tax_deduction_at_source
     
