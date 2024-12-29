@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, Query, Body, Depends
+from fastapi import FastAPI, HTTPException, Query, Path, Depends
 from sqlalchemy.orm import Session
 from db import get_db
 from fastapi.middleware.cors import CORSMiddleware
@@ -34,10 +34,9 @@ def calculate_area_tax(source_area):
     return area_tax
 
 
-@app.post("/tax/", response_model=schemas.Tax_Record)
+@app.post("/tax/{etin}",)
 def create_tax_record(
-    # tax_record: schemas.Tax_Record = Body(...), 
-    etin : str = Query(...), 
+    etin : str = Path(...), 
     db: Session = Depends(get_db)
     ):
     

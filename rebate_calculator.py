@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, Query, Body, Depends
+from fastapi import FastAPI, HTTPException, Query, Path, Depends
 from sqlalchemy.orm import Session
 from db import get_db
 from fastapi.middleware.cors import CORSMiddleware
@@ -21,8 +21,8 @@ app.add_middleware(
 )
 
 
-@app.post("/rebate/", response_model=schemas.Rebate_Record)
-def create_rebate_record(etin : str = Body(...), db: Session = Depends(get_db)):
+@app.post("/rebate/{etin}")
+def create_rebate_record(etin : str = Path(...), db: Session = Depends(get_db)):
     
     try:
         investment_amount_record = (

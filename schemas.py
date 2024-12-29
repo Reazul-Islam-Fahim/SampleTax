@@ -36,16 +36,16 @@ class TaxPayers(BaseModel):
     father_name : str
     marital_status : MaritalStatus
     spouse_name : str
-    spouse_tin : str | None = None
+    spouse_tin : Optional[str] = None
     permanent_address : str
     present_address : str
-    telephone : str | None = None
+    telephone : Optional[str] = None
     mobile : str
     email : EmailStr
     employer_name : str
     name_of_organization : str
     bin_no : str
-    name_tin_partners : str | None = None
+    name_tin_partners : Optional[str] = None
     
     class Config:
         orm_mode = True  # Enables from_orm()
