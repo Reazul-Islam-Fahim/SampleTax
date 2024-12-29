@@ -52,8 +52,8 @@ def create_tax_record(
     if not taxpayer:
         raise HTTPException(status_code=404, detail="Taxpayer not found")
     
-    if not taxpayer.zone:
-        raise HTTPException(status_code=400, detail="Taxpayer zone not specified")
+    if not taxpayer.source_area:
+        raise HTTPException(status_code=400, detail="Taxpayer source area not specified")
     
     financial_asset_income = crud.get_financial_asset_income(db, etin)
     if not financial_asset_income:
