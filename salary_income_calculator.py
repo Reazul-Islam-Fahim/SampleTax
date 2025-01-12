@@ -190,7 +190,7 @@ def read_tax_slab(etin: str, db: Session = Depends(get_db)):
 
 
 @app.post("/salary_income/")
-async def update_salary_income(
+def update_salary_income(
     salary_data: schemas.SalaryIncome_Record = Body(...),
     allowances: schemas.Allowance_Details = Body(...),
     perquisites: schemas.Perquisite_Details = Body(...),
