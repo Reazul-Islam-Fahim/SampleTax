@@ -79,7 +79,7 @@ class UserAuth(Base):
     id = Column(Integer, primary_key= True, nullable= False, unique= True, index= True)
     username = Column(String(50), unique= True, nullable= False)
     email = Column(String(50), unique= True, nullable= False)
-    password = Column(String(50), unique= True, nullable= False)
+    password = Column(String(50), nullable= False)
 
 
     taxpayer = relationship("Taxpayer", back_populates="user_auth")
