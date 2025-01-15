@@ -540,6 +540,29 @@ class Rent_Income_Summary(BaseModel):
         from_attributes = True  
     
 
+
+
+class foreign_income(BaseModel):
+    
+    class Config:
+        orm_mode = True  # Enables from_orm()
+        from_attributes = True  
+        
+        
+        
+
+class foreign_income_summary(BaseModel):
+    etin : str
+    total_income : int = 0
+    taxable : int = 0
+    exampted : int = 0
+    expense : int = 0
+    
+    class Config:
+        orm_mode = True  # Enables from_orm()
+        from_attributes = True 
+    
+
    
    
 class Investment_Record(BaseModel):
